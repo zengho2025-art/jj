@@ -172,7 +172,7 @@
             `;
         }
 
-        // 渲染深度精读文章详情页（支持段落立论、主干提取、词汇剖析卡片）
+        // 渲染深度精读文章详情页（完美呈现干净原文 + 独立语法成分拆解行）
         function renderDetailView(article) {
             const container = document.getElementById('app-view');
             container.innerHTML = `
@@ -199,13 +199,30 @@
                                     <p class="text-sm text-sage mt-1 font-sans leading-relaxed"><strong>段落立论功能：</strong>${p.thesisAndContext}</p>
                                 </div>
 
-                                <!-- 原文与翻译 -->
+                                <!-- 原文与翻译（干净整洁） -->
                                 <div class="space-y-3 font-serif text-lg leading-relaxed text-gray-900 border-l-2 border-gold pl-4 py-1">
                                     <p class="font-semibold text-ink">${p.englishText}</p>
                                     <p class="text-gray-600 text-base">${p.chineseText}</p>
                                 </div>
 
-                                <!-- 句子结构与长难句主干提取 -->
+                                <!-- 独立语法成分逐句拆解行（全新学术风表格对照） -->
+                                ${p.syntaxBreakdown && p.syntaxBreakdown.length > 0 ? `
+                                    <div class="bg-white p-5 rounded-lg border border-sand text-sm font-sans space-y-3">
+                                        <h4 class="font-bold text-moss flex items-center space-x-1.5">
+                                            <span>🔍 逐句语法成分对照拆解</span>
+                                        </h4>
+                                        <div class="divide-y divide-sand/60">
+                                            ${p.syntaxBreakdown.map(sb => `
+                                                <div class="py-2 flex flex-col md:flex-row md:items-center justify-between gap-1">
+                                                    <span class="font-serif text-ink font-medium">${sb.part}</span>
+                                                    <span class="text-xs px-2 py-1 bg-wheat text-moss rounded font-semibold whitespace-nowrap self-start md:self-auto">${sb.role}</span>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                ` : ''}
+
+                                <!-- 核心句式与主干提取 -->
                                 ${p.sentenceAnalysis ? `
                                     <div class="bg-white p-5 rounded-lg border border-sand text-sm font-sans space-y-2">
                                         <h4 class="font-bold text-ink flex items-center space-x-1.5">
