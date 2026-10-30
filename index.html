@@ -1,880 +1,121 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="h-full">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LexiView | 外刊精读与深度解析</title>
-    <!-- Tailwind CSS CDN -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Academic Digest · 外刊精读</title>
+    <!-- Google Fonts & Tailwind CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        academic: {
-                            bg: '#FAF9F1',
-                            card: '#FFFFFF',
-                            text: '#2C2A29',
-                            muted: '#6B6865',
-                            accent: '#1B3B36', // 沉稳墨绿色
-                            accentHover: '#132A26',
-                            border: '#E8E5DF',
-                            highlight: '#F3EFEA',
-                        },
-                        academicDark: {
-                            bg: '#18181B',
-                            card: '#222226',
-                            text: '#E4E4E7',
-                            muted: '#A1A1AA',
-                            accent: '#34D399',
-                            accentHover: '#10B981',
-                            border: '#2E2E35',
-                            highlight: '#27272A',
-                        }
+                        paper: "#FAF9F5",
+                        ink: "#1B3B36",
+                        moss: "#2F5D54",
+                        sage: "#5C7A74",
+                        sand: "#E8E4D9",
+                        wheat: "#F3F0E7",
+                        gold: "#C4A35A",
                     },
                     fontFamily: {
-                        serif: ['"Noto Serif SC"', '"Source Serif Pro"', 'Georgia', 'serif'],
-                        sans: ['"Inter"', '"PingFang SC"', '"Microsoft YaHei"', 'sans-serif'],
-                    }
-                }
-            }
-        }
+                        display: ["Playfair Display", "Georgia", "serif"],
+                        serif: ["Source Serif 4", "Noto Serif SC", "Georgia", "serif"],
+                        sans: ["Source Sans 3", "system-ui", "sans-serif"],
+                    },
+                },
+            },
+        };
     </script>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .serif-text {
-            font-family: 'Noto Serif SC', serif;
-        }
-        /* Custom scrollbar for academic look */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #D1CDC4;
-            border-radius: 3px;
-        }
-        .dark ::-webkit-scrollbar-thumb {
-            background: #3F3F46;
-        }
-        /* Highlight tooltips */
-        .vocab-highlight {
-            border-bottom: 2px dashed #1B3B36;
-            background-color: rgba(27, 59, 54, 0.06);
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .dark .vocab-highlight {
-            border-bottom: 2px dashed #34D399;
-            background-color: rgba(52, 211, 153, 0.1);
-        }
-        .vocab-highlight:hover {
-            background-color: rgba(27, 59, 54, 0.15);
-        }
-        .syntax-highlight {
-            border-bottom: 2px solid #D97706;
-            background-color: rgba(217, 119, 6, 0.06);
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .dark .syntax-highlight {
-            border-bottom: 2px solid #FBBF24;
-            background-color: rgba(251, 191, 36, 0.1);
-        }
-        .syntax-highlight:hover {
-            background-color: rgba(217, 119, 6, 0.15);
-        }
+        body { background-color: #FAF9F5; color: #1B3B36; font-family: 'Source Sans 3', 'Noto Serif SC', serif; }
+        /* 单词点击气泡样式 */
+        .vocab-word { border-bottom: 1.5px dashed #C4A35A; cursor: pointer; position: relative; }
+        .vocab-word:hover { background-color: #F3F0E7; }
     </style>
 </head>
-<body class="bg-[#FAF9F5] text-[#2C2A29] dark:bg-[#18181B] dark:text-[#E4E4E7] h-full flex flex-col transition-colors duration-300">
-
+<body class="min-h-screen flex flex-col antialiased selection:bg-moss selection:text-paper">
     <!-- 顶部导航栏 -->
-    <header class="sticky top-0 z-40 backdrop-blur-md bg-[#FAF9F5]/90 dark:bg-[#18181B]/90 border-b border-[#E8E5DF] dark:border-[#2E2E35] px-4 lg:px-8 py-3.5 flex items-center justify-between">
-        <div class="flex items-center space-x-3 cursor-pointer" onclick="app.goHome()">
-            <div class="w-10 h-10 rounded-lg bg-[#1B3B36] dark:bg-emerald-600 flex items-center justify-center text-white font-serif font-bold text-xl shadow-sm">
-                L
+    <header class="border-b border-sand bg-paper/80 backdrop-blur-md sticky top-0 z-30">
+        <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <span class="font-display italic text-2xl font-bold tracking-tight text-ink">Academic Digest</span>
+                <span class="text-xs uppercase tracking-widest px-2 py-0.5 bg-wheat text-moss font-semibold rounded">外刊精读</span>
             </div>
-            <div>
-                <h1 class="font-serif font-bold text-lg tracking-tight">LexiView <span class="text-xs font-sans px-1.5 py-0.5 rounded bg-[#1B3B36]/10 dark:bg-emerald-500/20 text-[#1B3B36] dark:text-emerald-400 font-semibold ml-1">精读空间</span></h1>
-                <p class="text-xs text-[#6B6865] dark:text-[#A1A1AA] hidden sm:block">深度外刊解析 · 洞察全球视野</p>
-            </div>
-        </div>
-
-        <!-- 搜索框 -->
-        <div class="flex-1 max-w-md mx-4 hidden md:block">
-            <div class="relative">
-                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-[#6B6865] dark:text-[#A1A1AA] text-sm"></i>
-                <input type="text" id="searchInput" oninput="app.handleSearch(this.value)" placeholder="搜索文章标题、关键词、出处..." 
-                    class="w-full bg-white dark:bg-[#222226] border border-[#E8E5DF] dark:border-[#2E2E35] rounded-full pl-10 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1B3B36] dark:focus:ring-emerald-500 transition-all shadow-sm">
-            </div>
-        </div>
-
-        <!-- 右侧操作区 -->
-        <div class="flex items-center space-x-3">
-            <button onclick="app.toggleDarkMode()" class="w-9 h-9 rounded-full border border-[#E8E5DF] dark:border-[#2E2E35] flex items-center justify-center text-[#6B6865] dark:text-[#A1A1AA] hover:bg-[#F3EFEA] dark:hover:bg-[#27272A] transition-colors" title="切换暗黑模式">
-                <i id="themeIcon" class="fa-solid fa-moon"></i>
-            </button>
-            <button onclick="app.openVocabModal()" class="relative px-3.5 py-1.5 rounded-full border border-[#E8E5DF] dark:border-[#2E2E35] text-xs font-medium flex items-center space-x-1.5 hover:bg-[#F3EFEA] dark:hover:bg-[#27272A] transition-colors">
-                <i class="fa-solid fa-bookmark text-[#1B3B36] dark:text-emerald-400"></i>
-                <span class="hidden sm:inline">生词本</span>
-                <span id="vocabCountBadge" class="bg-[#1B3B36] dark:bg-emerald-500 text-white rounded-full px-1.5 py-0.2 text-[10px]">0</span>
-            </button>
+            <div class="text-sm text-sage font-medium">www.scopix.cn</div>
         </div>
     </header>
 
-    <!-- 移动端搜索栏 -->
-    <div class="p-3 bg-[#FAF9F5] dark:bg-[#18181B] border-b border-[#E8E5DF] dark:border-[#2E2E35] md:hidden">
-        <div class="relative">
-            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-[#6B6865] dark:text-[#A1A1AA] text-sm"></i>
-            <input type="text" oninput="app.handleSearch(this.value)" placeholder="搜索文章、关键词..." 
-                class="w-full bg-white dark:bg-[#222226] border border-[#E8E5DF] dark:border-[#2E2E35] rounded-full pl-10 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1B3B36]">
-        </div>
-    </div>
-
-    <!-- 主体区域 -->
-    <main class="flex-1 max-w-7xl w-full mx-auto px-4 lg:px-8 py-6 flex flex-col">
-
-        <!-- 视图 1：文章列表与分类浏览 -->
-        <div id="listView" class="flex flex-col space-y-6">
-            <!-- 欢迎 Banner -->
-            <div class="bg-gradient-to-r from-[#F3EFEA] to-[#E8E5DF] dark:from-[#222226] dark:to-[#2A2A30] p-6 lg:p-8 rounded-2xl border border-[#E8E5DF] dark:border-[#2E2E35] flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <span class="text-xs font-semibold uppercase tracking-wider text-[#1B3B36] dark:text-emerald-400 bg-white/80 dark:bg-black/30 px-2.5 py-1 rounded-md shadow-sm">今日精读推荐</span>
-                    <h2 class="font-serif text-2xl lg:text-3xl font-bold mt-2 text-[#2C2A29] dark:text-white">沉浸式外刊精读，拆解地道学术表达</h2>
-                    <p class="text-sm text-[#6B6865] dark:text-[#A1A1AA] mt-1 max-w-xl">精选 The Economist, WSJ, Nature 等全球顶尖外刊。每篇文章配备词汇突破、长难句剖析与背景拓展。</p>
-                </div>
-                <div class="flex items-center space-x-3 text-xs text-[#6B6865] dark:text-[#A1A1AA] bg-white dark:bg-[#18181B] px-4 py-3 rounded-xl border border-[#E8E5DF] dark:border-[#2E2E35] shadow-sm">
-                    <div class="text-center px-2">
-                        <div class="font-bold text-base text-[#1B3B36] dark:text-emerald-400">12</div>
-                        <div>本周文章</div>
-                    </div>
-                    <div class="h-8 w-px bg-[#E8E5DF] dark:bg-[#2E2E35]"></div>
-                    <div class="text-center px-2">
-                        <div class="font-bold text-base text-[#1B3B36] dark:text-emerald-400" id="savedVocabTotal">0</div>
-                        <div>收藏生词</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 分类标签栏 -->
-            <div class="flex items-center space-x-2 overflow-x-auto pb-2 scrollbar-none">
-                <button onclick="app.filterCategory('all')" id="cat-all" class="category-btn px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap bg-[#1B3B36] text-white transition-all shadow-sm">
-                    全部文章
-                </button>
-                <button onclick="app.filterCategory('economy')" id="cat-economy" class="category-btn px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap bg-white dark:bg-[#222226] text-[#6B6865] dark:text-[#A1A1AA] border border-[#E8E5DF] dark:border-[#2E2E35] hover:border-[#1B3B36] transition-all">
-                    经济与商业
-                </button>
-                <button onclick="app.filterCategory('tech')" id="cat-tech" class="category-btn px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap bg-white dark:bg-[#222226] text-[#6B6865] dark:text-[#A1A1AA] border border-[#E8E5DF] dark:border-[#2E2E35] hover:border-[#1B3B36] transition-all">
-                    科技与未来
-                </button>
-                <button onclick="app.filterCategory('politics')" id="cat-politics" class="category-btn px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap bg-white dark:bg-[#222226] text-[#6B6865] dark:text-[#A1A1AA] border border-[#E8E5DF] dark:border-[#2E2E35] hover:border-[#1B3B36] transition-all">
-                    国际政治
-                </button>
-                <button onclick="app.filterCategory('society')" id="cat-society" class="category-btn px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap bg-white dark:bg-[#222226] text-[#6B6865] dark:text-[#A1A1AA] border border-[#E8E5DF] dark:border-[#2E2E35] hover:border-[#1B3B36] transition-all">
-                    社会文化
-                </button>
-            </div>
-
-            <!-- 文章卡片列表 -->
-            <div id="articlesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- JS 动态渲染文章卡片 -->
-            </div>
+    <!-- 主体内容区 -->
+    <main class="max-w-5xl mx-auto px-6 py-10 flex-grow w-full">
+        <!-- 头部欢迎语 -->
+        <div class="mb-10 border-b border-sand pb-6">
+            <h1 class="font-display text-4xl font-bold tracking-tight text-ink mb-2">Curated Insights</h1>
+            <p class="text-sage text-sm font-sans">深度剖析全球顶级外刊，提炼核心词汇与长难句逻辑结构。</p>
         </div>
 
-        <!-- 视图 2：文章详情与深度精读面板 -->
-        <div id="detailView" class="hidden flex-col space-y-6">
-            <!-- 返回按钮与工具条 -->
-            <div class="flex items-center justify-between bg-white dark:bg-[#222226] px-4 py-3 rounded-xl border border-[#E8E5DF] dark:border-[#2E2E35] shadow-sm">
-                <button onclick="app.goHome()" class="flex items-center space-x-2 text-sm font-medium text-[#6B6865] dark:text-[#A1A1AA] hover:text-[#1B3B36] dark:hover:text-emerald-400 transition-colors">
-                    <i class="fa-solid fa-arrow-left"></i>
-                    <span>返回文章列表</span>
-                </button>
-                <div class="flex items-center space-x-3 text-sm">
-                    <span id="detailSourceBadge" class="px-2.5 py-1 rounded-md text-xs font-semibold bg-[#1B3B36]/10 text-[#1B3B36] dark:bg-emerald-500/20 dark:text-emerald-400">The Economist</span>
-                    <span id="detailDate" class="text-[#6B6865] dark:text-[#A1A1AA] text-xs">2026-06-06</span>
-                </div>
-            </div>
-
-            <!-- 主内容双栏布局 (左侧原文精读，右侧解析面板) -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                
-                <!-- 左侧：中英双语对照与高亮正文 (占 7 列) -->
-                <div class="lg:col-span-7 bg-white dark:bg-[#222226] p-6 lg:p-8 rounded-2xl border border-[#E8E5DF] dark:border-[#2E2E35] shadow-sm flex flex-col space-y-6">
-                    <div>
-                        <h2 id="detailTitleEn" class="font-serif text-2xl lg:text-3xl font-bold tracking-tight text-[#2C2A29] dark:text-white leading-snug"></h2>
-                        <h3 id="detailTitleZh" class="text-base font-medium text-[#6B6865] dark:text-[#A1A1AA] mt-2"></h3>
-                    </div>
-
-                    <!-- 沉浸式阅读控制器 (字体大小切换、对照模式) -->
-                    <div class="flex items-center justify-between py-2 border-y border-[#E8E5DF] dark:border-[#2E2E35] text-xs text-[#6B6865] dark:text-[#A1A1AA]">
-                        <div class="flex items-center space-x-4">
-                            <span><i class="fa-solid fa-book-open mr-1.5"></i>沉浸精读模式</span>
-                            <span><i class="fa-solid fa-clock mr-1.5"></i>预计阅读 <span id="detailTime">5</span> 分钟</span>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <span>字号:</span>
-                            <button onclick="app.adjustFontSize('sm')" class="px-2 py-0.5 rounded border border-[#E8E5DF] dark:border-[#2E2E35]">小</button>
-                            <button onclick="app.adjustFontSize('md')" class="px-2 py-0.5 rounded border border-[#E8E5DF] dark:border-[#2E2E35] bg-[#F3EFEA] dark:bg-[#27272A]">中</button>
-                            <button onclick="app.adjustFontSize('lg')" class="px-2 py-0.5 rounded border border-[#E8E5DF] dark:border-[#2E2E35]">大</button>
-                        </div>
-                    </div>
-
-                    <!-- 文章正文内容区 -->
-                    <div id="articleContentContainer" class="space-y-8 font-serif text-lg leading-relaxed text-[#2C2A29] dark:text-[#E4E4E7]">
-                        <!-- 动态渲染段落 -->
-                    </div>
-                </div>
-
-                <!-- 右侧：重难点精读解析面板 (占 5 列) -->
-                <div class="lg:col-span-5 space-y-6 lg:sticky lg:top-24">
-                    
-                    <!-- 面板选项卡 -->
-                    <div class="bg-white dark:bg-[#222226] p-1.5 rounded-xl border border-[#E8E5DF] dark:border-[#2E2E35] flex items-center justify-between shadow-sm">
-                        <button onclick="app.switchTab('vocab')" id="tab-vocab" class="flex-1 py-2 rounded-lg text-xs font-semibold bg-[#1B3B36] text-white transition-all shadow-sm">
-                            <i class="fa-solid fa-language mr-1.5"></i>核心词汇突破 (<span id="vocabCount">0</span>)
-                        </button>
-                        <button onclick="app.switchTab('syntax')" id="tab-syntax" class="flex-1 py-2 rounded-lg text-xs font-semibold text-[#6B6865] dark:text-[#A1A1AA] transition-all">
-                            <i class="fa-solid fa-puzzle-piece mr-1.5"></i>长难句剖析 (<span id="syntaxCount">0</span>)
-                        </button>
-                        <button onclick="app.switchTab('background')" id="tab-background" class="flex-1 py-2 rounded-lg text-xs font-semibold text-[#6B6865] dark:text-[#A1A1AA] transition-all">
-                            <i class="fa-solid fa-globe mr-1.5"></i>背景点评
-                        </button>
-                    </div>
-
-                    <!-- 选项卡内容面板 -->
-                    <div class="bg-white dark:bg-[#222226] p-6 rounded-2xl border border-[#E8E5DF] dark:border-[#2E2E35] shadow-sm min-h-[480px] max-h-[75vh] overflow-y-auto">
-                        
-                        <!-- 1. 词汇面板 -->
-                        <div id="panel-vocab" class="space-y-4">
-                            <div class="border-b border-[#E8E5DF] dark:border-[#2E2E35] pb-3">
-                                <h3 class="font-serif font-bold text-base text-[#1B3B36] dark:text-emerald-400">核心词汇与短语突破</h3>
-                                <p class="text-xs text-[#6B6865] dark:text-[#A1A1AA]">点击下方卡片中的“收藏”可加入个人生词本随时复习</p>
-                            </div>
-                            <div id="vocabListContainer" class="space-y-4">
-                                <!-- 动态加载词汇 -->
-                            </div>
-                        </div>
-
-                        <!-- 2. 长难句面板 -->
-                        <div id="panel-syntax" class="space-y-4 hidden">
-                            <div class="border-b border-[#E8E5DF] dark:border-[#2E2E35] pb-3">
-                                <h3 class="font-serif font-bold text-base text-amber-700 dark:text-amber-400">长难句结构拆解</h3>
-                                <p class="text-xs text-[#6B6865] dark:text-[#A1A1AA]">主干提取、从句嵌套分析与地道翻译技巧</p>
-                            </div>
-                            <div id="syntaxListContainer" class="space-y-6">
-                                <!-- 动态加载长难句 -->
-                            </div>
-                        </div>
-
-                        <!-- 3. 背景拓展面板 -->
-                        <div id="panel-background" class="space-y-4 hidden">
-                            <div class="border-b border-[#E8E5DF] dark:border-[#2E2E35] pb-3">
-                                <h3 class="font-serif font-bold text-base text-[#1B3B36] dark:text-emerald-400">背景延伸与主旨点评</h3>
-                                <p class="text-xs text-[#6B6865] dark:text-[#A1A1AA]">深入剖析事件来龙去脉与外刊视角深意</p>
-                            </div>
-                            <div id="backgroundContainer" class="space-y-4 text-sm text-[#2C2A29] dark:text-[#E4E4E7] leading-relaxed">
-                                <!-- 动态加载背景 -->
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
+        <!-- 动态文章列表容器 -->
+        <div id="articles-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- 动态渲染数据将注入到这里 -->
+            <div class="text-sage text-sm py-10">正在加载外刊文章库...</div>
         </div>
-
     </main>
 
-    <!-- 生词本弹窗 Modal -->
-    <div id="vocabModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-[#222226] border border-[#E8E5DF] dark:border-[#2E2E35] rounded-2xl max-w-xl w-full max-h-[80vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
-            <div class="p-5 border-b border-[#E8E5DF] dark:border-[#2E2E35] flex items-center justify-between">
-                <div class="flex items-center space-x-2">
-                    <i class="fa-solid fa-bookmark text-[#1B3B36] dark:text-emerald-400"></i>
-                    <h3 class="font-serif font-bold text-lg">我的生词收藏夹</h3>
-                </div>
-                <button onclick="app.closeVocabModal()" class="w-8 h-8 rounded-full flex items-center justify-center text-[#6B6865] hover:bg-[#F3EFEA] dark:hover:bg-[#27272A]">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            <div id="savedVocabContainer" class="p-6 overflow-y-auto space-y-4 flex-1">
-                <!-- 动态渲染收藏的生词 -->
-            </div>
-            <div class="p-4 border-t border-[#E8E5DF] dark:border-[#2E2E35] bg-[#FAF9F5] dark:bg-[#18181B] flex justify-between items-center text-xs text-[#6B6865]">
-                <span>共收藏 <span id="modalVocabCount">0</span> 个核心词汇</span>
-                <button onclick="app.clearSavedVocab()" class="text-red-600 hover:underline">清空生词本</button>
-            </div>
-        </div>
-    </div>
+    <!-- 页脚 -->
+    <footer class="border-t border-sand py-6 text-center text-xs text-sage font-sans">
+        &copy; 2026 Academic Digest · All Rights Reserved. Hosted on Vercel.
+    </footer>
 
-    <!-- 全局提示框 (Toast) -->
-    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-[#1B3B36] text-white dark:bg-emerald-600 px-4 py-3 rounded-xl shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 flex items-center space-x-2 text-sm">
-        <i id="toastIcon" class="fa-solid fa-circle-check"></i>
-        <span id="toastMsg">操作成功</span>
-    </div>
-
-    <!-- 应用程序核心 JavaScript 逻辑 -->
+    <!-- 前端逻辑与数据加载 -->
     <script>
-        // 文章数据库
-        const articlesData = [
-            {
-                id: 1,
-                titleEn: "The AI Revolution in Global Supply Chains: Navigating Uncertainty",
-                titleZh: "全球供应链中的人工智能革命：在不确定性中破局",
-                source: "The Economist",
-                date: "2026-06-04",
-                category: "tech",
-                difficulty: 4, // 1-5 星
-                readTime: 6,
-                tags: ["高级词汇", "长难句拆解", "科技前沿"],
-                summary: "探讨大模型与自主智能体（AI Agents）如何重塑跨国物流网络，应对地缘政治与关税波动带来的供应链断裂风险。",
-                paragraphs: [
-                    {
-                        en: "As geopolitical tensions and protectionist policies continue to fragment international trade, multinational corporations are turning increasingly to artificial intelligence to fortify their supply chains against unforeseen shocks.",
-                        zh: "随着地缘政治紧张局势和保护主义政策不断割裂国际贸易，跨国公司正日益转向人工智能，以巩固其供应链防范不可预见的冲击。"
-                    },
-                    {
-                        en: "Machine-learning algorithms, once utilized merely for demand forecasting, are now evolving into autonomous agents capable of rerouting cargo in real time, renegotiating contracts with suppliers, and mitigating bottlenecks before they materialize.",
-                        zh: "机器学习算法曾仅用于需求预测，如今正演变为能够实时重新规划货运路线、与供应商重新谈判合同并在瓶颈显现之前加以缓解的自主智能体。"
-                    },
-                    {
-                        en: "Critics, however, warn of systemic vulnerabilities inherent in over-reliance on opaque algorithmic decision-making, arguing that hyper-optimized networks often sacrifice resilience for efficiency.",
-                        zh: "然而，批评人士警告称，过度依赖不透明的算法决策存在固有的系统性脆弱性，他们认为过度优化的网络往往牺牲了弹性来换取效率。"
-                    }
-                ],
-                vocabularies: [
-                    {
-                        word: "fragment",
-                        phonetic: "/ˈfræɡmənt/",
-                        pos: "v. / n.",
-                        meaning: "使碎片化，分裂；片段",
-                        example: "As geopolitical tensions continue to fragment international trade...",
-                        synonyms: ["break apart", "splinter", "disintegrate"]
-                    },
-                    {
-                        word: "fortify",
-                        phonetic: "/ˈfɔːrtɪfaɪ/",
-                        pos: "v.",
-                        meaning: "加强，筑路防守，巩固",
-                        example: "...to fortify their supply chains against unforeseen shocks.",
-                        synonyms: ["strengthen", "reinforce", "secure"]
-                    },
-                    {
-                        word: "mitigate",
-                        phonetic: "/ˈmɪtɪɡeɪt/",
-                        pos: "v.",
-                        meaning: "减轻，缓和（风险或危害）",
-                        example: "...mitigating bottlenecks before they materialize.",
-                        synonyms: ["alleviate", "lessen", "ease"]
-                    }
-                ],
-                syntax: [
-                    {
-                        sentence: "Machine-learning algorithms, once utilized merely for demand forecasting, are now evolving into autonomous agents capable of rerouting cargo in real time...",
-                        structure: "主语 (Machine-learning algorithms) + 插入语 (once utilized...) + 谓语 (are now evolving) + 介词短语作状语 (into autonomous agents) + 分词短语作后置定语 (capable of rerouting...).",
-                        analysis: "句中 'once utilized merely for...' 是过去分词短语作状语，省略了 'which were'。末尾的 'capable of...' 作为形容词短语修饰 agents，体现了外刊常用分词及形容词短语后置的紧凑风格。"
-                    }
-                ],
-                background: "文章基于《经济学人》对后全球化时代供应链数字化的深入观察。随着红海危机、关税壁垒等多重因素交织，传统供应链管理正在从'追求绝对低成本（Just-in-Time）'向'兼顾供应链韧性（Just-in-Case）'全面转型。"
-            },
-            {
-                id: 2,
-                titleEn: "Central Banks and the Persistent Ghost of Inflation in 2026",
-                titleZh: "中央银行与 2026 年挥之不去的通胀阴霾",
-                source: "Wall Street Journal",
-                date: "2026-06-02",
-                category: "economy",
-                difficulty: 5,
-                readTime: 8,
-                tags: ["金融宏观", "高级词汇", "背景拓展"],
-                summary: "分析美联储及欧洲央行在面对顽固的服务业通胀与劳动力市场结构性转变时的货币政策困境。",
-                paragraphs: [
-                    {
-                        en: "Central bankers gathered at annual symposiums are finding themselves cornered between sticky service-sector inflation and slowing economic momentum.",
-                        zh: "聚集在年度研讨会上的各国央行行长发现自己陷入了黏性服务业通胀与经济动能放缓之间的夹击之中。"
-                    },
-                    {
-                        en: "Despite aggressive interest-rate hikes implemented over previous cycles, wage pressures refuse to fully abate, complicating the path toward the coveted two percent target.",
-                        zh: "尽管在先前周期中实施了激进的加息，但薪资压力依然拒绝完全消退，这使得通往令人垂涎的 2% 目标的道路变得复杂。"
-                    }
-                ],
-                vocabularies: [
-                    {
-                        word: "sticky",
-                        phonetic: "/ˈstɪki/",
-                        pos: "adj.",
-                        meaning: "（价格或通胀）黏性的，不易回落的",
-                        example: "...cornered between sticky service-sector inflation and slowing momentum.",
-                        synonyms: ["persistent", "rigid", "slow to change"]
-                    },
-                    {
-                        word: "abate",
-                        phonetic: "/əˈbeɪt/",
-                        pos: "v.",
-                        meaning: "减弱，平息，减少",
-                        example: "...wage pressures refuse to fully abate...",
-                        synonyms: ["subside", "decrease", "wane"]
-                    }
-                ],
-                syntax: [
-                    {
-                        sentence: "Despite aggressive interest-rate hikes implemented over previous cycles, wage pressures refuse to fully abate...",
-                        structure: "介词短语作让步状语 (Despite...) + 主语 (wage pressures) + 谓语 (refuse to fully abate).",
-                        analysis: "'implemented over previous cycles' 是过去分词短语作后置定语，修饰 hikes。这种结构精炼地表达了过去的政策动作，是外刊中高频出现的长句压缩手段。"
-                    }
-                ],
-                background: "当前全球经济正经历后疫情时代的薪资-价格螺旋式上升尾声，能源转型带来的绿色通胀（Greenflation）也对传统货币政策框架提出了前所未有的严峻考验。"
-            },
-            {
-                id: 3,
-                titleEn: "The Geopolitics of Critical Minerals: The New Energy Chessboard",
-                titleZh: "关键矿产的地缘政治：新能源时代的新棋局",
-                source: "Foreign Affairs",
-                date: "2026-05-28",
-                category: "politics",
-                difficulty: 4,
-                readTime: 7,
-                tags: ["国际政经", "长难句拆解", "背景拓展"],
-                summary: "锂、钴、稀土等关键矿产正成为大国博弈的焦点，全球绿色能源转型背后的地缘竞争日趋白热化。",
-                paragraphs: [
-                    {
-                        en: "As the world accelerates its transition toward renewable energy, control over critical mineral supply chains has eclipsed traditional fossil-fuel dominance as the preeminent geopolitical battleground.",
-                        zh: "随着世界加速向可再生能源转型，对关键矿产供应链的控制已经取代了传统的化石燃料主导地位，成为最显赫的地缘政治战场。"
-                    },
-                    {
-                        en: "Export restrictions and resource nationalism threaten to balkanize green technology markets, forcing nations to forge defensive alliances.",
-                        zh: "出口限制和资源民族主义有可能将绿色技术市场割裂开来，迫使各国结成防御性同盟。"
-                    }
-                ],
-                vocabularies: [
-                    {
-                        word: "eclipse",
-                        phonetic: "/ɪˈklɪps/",
-                        pos: "v.",
-                        meaning: "使失色，超越，遮蔽",
-                        example: "...control over critical minerals has eclipsed traditional fossil-fuel dominance...",
-                        synonyms: ["outshine", "surpass", "overshadow"]
-                    },
-                    {
-                        word: "balkanize",
-                        phonetic: "/ˈbɔːlkənaɪz/",
-                        pos: "v.",
-                        meaning: "使巴尔干化，割裂成互相敌对的小区域",
-                        example: "...threaten to balkanize green technology markets...",
-                        synonyms: ["fragment", "divide", "fracture"]
-                    }
-                ],
-                syntax: [
-                    {
-                        sentence: "As the world accelerates its transition toward renewable energy, control over critical mineral supply chains has eclipsed traditional fossil-fuel dominance...",
-                        structure: "As引导的时间状语从句 + 主句 (control over... has eclipsed...).",
-                        analysis: "主语 'control over critical mineral supply chains' 较长，核心词是 control。句式清晰展现了新旧能源地缘权力的交替。"
-                    }
-                ],
-                background: "能源转型不仅是技术问题，更是深刻的地缘政治重组。掌握开采与精炼技术的国家正在利用资源杠杆构建新的经济安全网。"
-            },
-            {
-                id: 4,
-                titleEn: "Reinventing Education in the Age of Synthetic Media",
-                titleZh: "在合成媒体时代重塑教育与深度思考",
-                source: "The Atlantic",
-                date: "2026-05-20",
-                category: "society",
-                difficulty: 3,
-                readTime: 5,
-                tags: ["社会文化", "高级词汇", "人工智能"],
-                summary: "当生成式AI能够瞬间产生成千上万篇论文与视频，学校和高等教育必须从知识灌输转向批判性思维训练。",
-                paragraphs: [
-                    {
-                        en: "The proliferation of synthetic media has forced educators to rethink not merely how students are assessed, but what it means to acquire genuine knowledge.",
-                        zh: "合成媒体的泛滥迫使教育工作者重新思考的不仅是学生的考核方式，还有获得真正的知识究竟意味着什么。"
-                    },
-                    {
-                        en: "Rather than testing rote memorization, future curricula must cultivate intellectual resilience and the rigorous art of asking the right questions.",
-                        zh: "未来的课程不应测试死记硬背，而必须培养思想的韧性以及提出正确问题的严谨艺术。"
-                    }
-                ],
-                vocabularies: [
-                    {
-                        word: "proliferation",
-                        phonetic: "/prəˌlɪfəˈreɪʃn/",
-                        pos: "n.",
-                        meaning: "激增，扩散",
-                        example: "The proliferation of synthetic media has forced educators to rethink...",
-                        synonyms: ["rapid increase", "expansion", "proliferation"]
-                    },
-                    {
-                        word: "resilience",
-                        phonetic: "/rɪˈzɪliəns/",
-                        pos: "n.",
-                        meaning: "韧性，恢复力，适应力",
-                        example: "...must cultivate intellectual resilience and rigorous inquiry.",
-                        synonyms: ["flexibility", "adaptability", "toughness"]
-                    }
-                ],
-                syntax: [
-                    {
-                        sentence: "The proliferation of synthetic media has forced educators to rethink not merely how students are assessed, but what it means to acquire genuine knowledge.",
-                        structure: "主语 + 谓语 (has forced) + 宾语 (educators) + 宾语补足语 (to rethink...) 并列结构 (not merely... but...).",
-                        analysis: "句中 'not merely A, but B' 连接两个宾语从句（how... 和 what...），条理清晰地阐述了教育变革的双重核心目标。"
-                    }
-                ],
-                background: "生成式AI的普及正在根本性解构传统的学校教育模式。未来的核心竞争力不再是输出标准答案，而是对信息的辨别力与人文洞察力。"
-            }
-        ];
-
-        // 应用程序状态管理
-        class AcademicApp {
-            constructor() {
-                this.currentView = 'list'; // 'list' or 'detail'
-                this.currentCategory = 'all';
-                this.searchQuery = '';
-                this.activeArticle = null;
-                this.activeTab = 'vocab';
-                this.fontSize = 'md';
-                this.darkMode = false;
-                this.savedVocab = JSON.parse(localStorage.getItem('lexiview_saved_vocab')) || [];
-                
-                this.init();
-            }
-
-            init() {
-                // 初始化主题检查
-                if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                    this.darkMode = true;
-                    document.documentElement.classList.add('dark');
-                    document.getElementById('themeIcon').className = 'fa-solid fa-sun';
-                }
-                this.renderArticles();
-                this.updateVocabCountBadge();
-            }
-
-            toggleDarkMode() {
-                this.darkMode = !this.darkMode;
-                document.documentElement.classList.toggle('dark', this.darkMode);
-                const icon = document.getElementById('themeIcon');
-                icon.className = this.darkMode ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-                this.showToast(this.darkMode ? '已切换至暗黑模式' : '已切换至护眼明亮模式');
-            }
-
-            filterCategory(cat) {
-                this.currentCategory = cat;
-                // 更新分类按钮样式
-                document.querySelectorAll('.category-btn').forEach(btn => {
-                    btn.className = "category-btn px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap bg-white dark:bg-[#222226] text-[#6B6865] dark:text-[#A1A1AA] border border-[#E8E5DF] dark:border-[#2E2E35] hover:border-[#1B3B36] transition-all";
-                });
-                const activeBtn = document.getElementById(`cat-${cat}`);
-                if (activeBtn) {
-                    activeBtn.className = "category-btn px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap bg-[#1B3B36] text-white transition-all shadow-sm";
-                }
-                this.renderArticles();
-            }
-
-            handleSearch(query) {
-                this.searchQuery = query.toLowerCase().trim();
-                this.renderArticles();
-            }
-
-            renderArticles() {
-                const container = document.getElementById('articlesGrid');
-                let filtered = articlesData.filter(art => {
-                    const matchCat = this.currentCategory === 'all' || art.category === this.currentCategory;
-                    const matchSearch = !this.searchQuery || 
-                        art.titleEn.toLowerCase().includes(this.searchQuery) ||
-                        art.titleZh.toLowerCase().includes(this.searchQuery) ||
-                        art.source.toLowerCase().includes(this.searchQuery) ||
-                        art.summary.toLowerCase().includes(this.searchQuery);
-                    return matchCat && matchSearch;
-                });
-
-                if (filtered.length === 0) {
-                    container.innerHTML = `
-                        <div class="col-span-full py-16 text-center text-[#6B6865] dark:text-[#A1A1AA]">
-                            <i class="fa-solid fa-folder-open text-4xl mb-3"></i>
-                            <p class="text-base font-medium">没有找到相关外刊文章</p>
-                            <p class="text-xs mt-1">请尝试更换关键词或切换分类标签</p>
-                        </div>
-                    `;
-                    return;
-                }
-
-                container.innerHTML = filtered.map(art => {
-                    let starsHtml = '';
-                    for (let i = 0; i < 5; i++) {
-                        starsHtml += `<i class="fa-solid fa-star text-xs ${i < art.difficulty ? 'text-amber-500' : 'text-[#E8E5DF] dark:text-[#2E2E35]'}"></i>`;
-                    }
-
-                    let tagsHtml = art.tags.map(t => `<span class="px-2 py-0.5 rounded text-[11px] bg-[#F3EFEA] dark:bg-[#27272A] text-[#1B3B36] dark:text-emerald-400 font-medium">${t}</span>`).join('');
-
-                    return `
-                        <div onclick="app.openDetail(${art.id})" class="bg-white dark:bg-[#222226] border border-[#E8E5DF] dark:border-[#2E2E35] rounded-2xl p-6 hover:shadow-lg transition-all duration-300 cursor-pointer flex flex-col justify-between group">
-                            <div>
-                                <div class="flex items-center justify-between text-xs mb-3">
-                                    <span class="font-semibold text-[#1B3B36] dark:text-emerald-400 uppercase tracking-wide bg-[#1B3B36]/5 dark:bg-emerald-500/10 px-2.5 py-1 rounded-md">${art.source}</span>
-                                    <span class="text-[#6B6865] dark:text-[#A1A1AA]">${art.date}</span>
-                                </div>
-                                <h3 class="font-serif font-bold text-lg text-[#2C2A29] dark:text-white group-hover:text-[#1B3B36] dark:group-hover:text-emerald-400 transition-colors leading-snug">${art.titleEn}</h3>
-                                <p class="text-sm font-medium text-[#6B6865] dark:text-[#A1A1AA] mt-1.5">${art.titleZh}</p>
-                                <p class="text-xs text-[#6B6865] dark:text-zinc-400 mt-3 line-clamp-2 leading-relaxed">${art.summary}</p>
-                            </div>
-                            <div class="mt-6 pt-4 border-t border-[#E8E5DF] dark:border-[#2E2E35] flex items-center justify-between">
-                                <div class="flex items-center space-x-1.5" title="难度评级: ${art.difficulty}星">
-                                    ${starsHtml}
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <div class="flex items-center space-x-1 text-xs text-[#6B6865] dark:text-[#A1A1AA]">
-                                        <i class="fa-regular fa-clock"></i>
-                                        <span>${art.readTime} 分钟</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex flex-wrap gap-1.5 mt-3 pt-2">
-                                ${tagsHtml}
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            }
-
-            openDetail(id) {
-                this.activeArticle = articlesData.find(a => a.id === id);
-                if (!this.activeArticle) return;
-
-                document.getElementById('listView').classList.add('hidden');
-                document.getElementById('detailView').classList.remove('hidden');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-
-                // 填充头部信息
-                document.getElementById('detailSourceBadge').innerText = this.activeArticle.source;
-                document.getElementById('detailDate').innerText = this.activeArticle.date;
-                document.getElementById('detailTitleEn').innerText = this.activeArticle.titleEn;
-                document.getElementById('detailTitleZh').innerText = this.activeArticle.titleZh;
-                document.getElementById('detailTime').innerText = this.activeArticle.readTime;
-
-                // 渲染正文内容（带精读高亮互动标记）
-                this.renderArticleContent();
-
-                // 渲染右侧面板
-                document.getElementById('vocabCount').innerText = this.activeArticle.vocabularies.length;
-                document.getElementById('syntaxCount').innerText = this.activeArticle.syntax.length;
-                this.renderVocabPanel();
-                this.renderSyntaxPanel();
-                this.renderBackgroundPanel();
-            }
-
-            goHome() {
-                document.getElementById('detailView').classList.add('hidden');
-                document.getElementById('listView').classList.remove('hidden');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                this.activeArticle = null;
-            }
-
-            renderArticleContent() {
-                const container = document.getElementById('articleContentContainer');
-                container.innerHTML = this.activeArticle.paragraphs.map((p, idx) => {
-                    return `
-                        <div class="p-4 rounded-xl hover:bg-[#F3EFEA]/40 dark:hover:bg-[#27272A]/50 transition-colors">
-                            <p class="text-base lg:text-lg mb-2 text-[#2C2A29] dark:text-[#E4E4E7]">${p.en}</p>
-                            <p class="text-sm font-sans text-[#6B6865] dark:text-[#A1A1AA] border-l-2 border-[#1B3B36] dark:border-emerald-500 pl-3 py-0.5">${p.zh}</p>
-                        </div>
-                    `;
-                }).join('');
-            }
-
-            switchTab(tabName) {
-                this.activeTab = tabName;
-                ['vocab', 'syntax', 'background'].forEach(t => {
-                    const btn = document.getElementById(`tab-${t}`);
-                    const panel = document.getElementById(`panel-${t}`);
-                    if (t === tabName) {
-                        btn.className = "flex-1 py-2 rounded-lg text-xs font-semibold bg-[#1B3B36] dark:bg-emerald-600 text-white transition-all shadow-sm";
-                        panel.classList.remove('hidden');
-                    } else {
-                        btn.className = "flex-1 py-2 rounded-lg text-xs font-semibold text-[#6B6865] dark:text-[#A1A1AA] transition-all";
-                        panel.classList.add('hidden');
-                    }
-                });
-            }
-
-            renderVocabPanel() {
-                const container = document.getElementById('vocabListContainer');
-                if (!this.activeArticle.vocabularies || this.activeArticle.vocabularies.length === 0) {
-                    container.innerHTML = `<p class="text-xs text-[#6B6865]">暂无核心词汇标注</p>`;
-                    return;
-                }
-
-                container.innerHTML = this.activeArticle.vocabularies.map((v, idx) => {
-                    const isSaved = this.savedVocab.some(item => item.word === v.word);
-                    return `
-                        <div class="bg-[#FAF9F5] dark:bg-[#18181B] p-4 rounded-xl border border-[#E8E5DF] dark:border-[#2E2E35] space-y-2">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-baseline space-x-2">
-                                    <span class="font-serif font-bold text-base text-[#1B3B36] dark:text-emerald-400">${v.word}</span>
-                                    <span class="text-xs text-[#6B6865] dark:text-[#A1A1AA]">${v.phonetic}</span>
-                                    <span class="text-[10px] px-1.5 py-0.5 rounded bg-[#1B3B36]/10 dark:bg-emerald-500/20 text-[#1B3B36] dark:text-emerald-400">${v.pos}</span>
-                                </div>
-                                <button onclick="app.toggleSaveVocab('${v.word}')" class="text-xs px-2.5 py-1 rounded-full border ${isSaved ? 'bg-[#1B3B36] text-white border-[#1B3B36] dark:bg-emerald-600 dark:border-emerald-600' : 'border-[#E8E5DF] dark:border-[#2E2E35] text-[#6B6865] hover:border-[#1B3B36]'} transition-all">
-                                    <i class="fa-solid fa-bookmark mr-1"></i>${isSaved ? '已收藏' : '收藏'}
-                                </button>
-                            </div>
-                            <p class="text-xs font-medium text-[#2C2A29] dark:text-[#E4E4E7]"><strong class="text-[#6B6865]">释义:</strong> ${v.meaning}</p>
-                            <p class="text-xs italic text-[#6B6865] dark:text-zinc-400">"${v.example}"</p>
-                            <div class="text-[11px] text-[#6B6865] dark:text-zinc-400 pt-1">
-                                <span class="font-semibold">同义替换:</span> ${v.synonyms.join(', ')}
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            }
-
-            renderSyntaxPanel() {
-                const container = document.getElementById('syntaxListContainer');
-                if (!this.activeArticle.syntax || this.activeArticle.syntax.length === 0) {
-                    container.innerHTML = `<p class="text-xs text-[#6B6865]">暂无长难句解析</p>`;
-                    return;
-                }
-
-                container.innerHTML = this.activeArticle.syntax.map((s, idx) => `
-                    <div class="bg-[#FAF9F5] dark:bg-[#18181B] p-4 rounded-xl border border-[#E8E5DF] dark:border-[#2E2E35] space-y-3">
-                        <div class="text-xs font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400">句子 #${idx + 1}</div>
-                        <p class="font-serif text-sm italic text-[#2C2A29] dark:text-[#E4E4E7] bg-white dark:bg-[#222226] p-3 rounded-lg border border-[#E8E5DF] dark:border-[#2E2E35]">"${s.sentence}"</p>
-                        <div class="text-xs space-y-1.5">
-                            <p><strong class="text-amber-700 dark:text-amber-400 font-medium">结构剖析:</strong> ${s.structure}</p>
-                            <p><strong class="text-[#1B3B36] dark:text-emerald-400 font-medium">翻译与考点:</strong> ${s.analysis}</p>
-                        </div>
-                    </div>
-                `).join('');
-            }
-
-            renderBackgroundPanel() {
-                const container = document.getElementById('backgroundContainer');
-                container.innerHTML = `
-                    <div class="p-4 rounded-xl bg-[#FAF9F5] dark:bg-[#18181B] border border-[#E8E5DF] dark:border-[#2E2E35] space-y-3">
-                        <div class="flex items-center space-x-2 text-[#1B3B36] dark:text-emerald-400 font-semibold text-xs uppercase tracking-wider">
-                            <i class="fa-solid fa-compass"></i>
-                            <span>外刊视野与深度点评</span>
-                        </div>
-                        <p class="leading-relaxed">${this.activeArticle.background}</p>
+        async function fetchArticles() {
+            try {
+                // 异步读取同级目录下的 articles.json
+                const response = await fetch('./articles.json');
+                if (!response.ok) throw new Error("无法加载文章数据文件");
+                const articles = await response.json();
+                renderArticles(articles);
+            } catch (error) {
+                document.getElementById('articles-container').innerHTML = `
+                    <div class="col-span-2 p-6 bg-red-50 border border-red-200 text-red-700 rounded text-sm">
+                        加载文章库失败: ${error.message}。请确保同级目录下存在 <code>articles.json</code> 文件。
                     </div>
                 `;
             }
-
-            toggleSaveVocab(wordStr) {
-                // 在当前文章或所有文章中查找词汇对象
-                let vocabObj = null;
-                for (let art of articlesData) {
-                    const found = art.vocabularies.find(v => v.word === wordStr);
-                    if (found) {
-                        vocabObj = found;
-                        break;
-                    }
-                }
-                if (!vocabObj) return;
-
-                const index = this.savedVocab.findIndex(v => v.word === wordStr);
-                if (index > -1) {
-                    this.savedVocab.splice(index, 1);
-                    this.showToast(`已从生词本移除: ${wordStr}`);
-                } else {
-                    this.savedVocab.push(vocabObj);
-                    this.showToast(`成功加入生词本: ${wordStr}`);
-                }
-
-                localStorage.setItem('lexiview_saved_vocab', JSON.stringify(this.savedVocab));
-                this.updateVocabCountBadge();
-                if (this.activeArticle) {
-                    this.renderVocabPanel();
-                }
-            }
-
-            updateVocabCountBadge() {
-                const count = this.savedVocab.length;
-                document.getElementById('vocabCountBadge').innerText = count;
-                document.getElementById('savedVocabTotal').innerText = count;
-                document.getElementById('modalVocabCount').innerText = count;
-            }
-
-            openVocabModal() {
-                const container = document.getElementById('savedVocabContainer');
-                if (this.savedVocab.length === 0) {
-                    container.innerHTML = `
-                        <div class="py-12 text-center text-[#6B6865] dark:text-[#A1A1AA]">
-                            <i class="fa-solid fa-bookmark text-3xl mb-2 opacity-50"></i>
-                            <p class="text-sm">生词本目前空空如也</p>
-                            <p class="text-xs mt-1">在文章精读详情页点击“收藏”即可添加生词</p>
-                        </div>
-                    `;
-                } else {
-                    container.innerHTML = this.savedVocab.map(v => `
-                        <div class="p-4 rounded-xl bg-[#FAF9F5] dark:bg-[#18181B] border border-[#E8E5DF] dark:border-[#2E2E35] flex items-center justify-between">
-                            <div>
-                                <div class="flex items-baseline space-x-2">
-                                    <span class="font-serif font-bold text-base text-[#1B3B36] dark:text-emerald-400">${v.word}</span>
-                                    <span class="text-xs text-[#6B6865]">${v.phonetic}</span>
-                                    <span class="text-[10px] px-1.5 py-0.5 rounded bg-[#1B3B36]/10 text-[#1B3B36] dark:bg-emerald-500/20 dark:text-emerald-400">${v.pos}</span>
-                                </div>
-                                <p class="text-xs text-[#2C2A29] dark:text-[#E4E4E7] mt-1">${v.meaning}</p>
-                            </div>
-                            <button onclick="app.toggleSaveVocab('${v.word}'); app.openVocabModal();" class="text-xs text-red-600 hover:underline px-2 py-1">删除</button>
-                        </div>
-                    `).join('');
-                }
-                document.getElementById('vocabModal').classList.remove('hidden');
-            }
-
-            closeVocabModal() {
-                document.getElementById('vocabModal').classList.add('hidden');
-            }
-
-            clearSavedVocab() {
-                if (confirm('确定要清空所有生词吗？')) {
-                    this.savedVocab = [];
-                    localStorage.removeItem('lexiview_saved_vocab');
-                    this.updateVocabCountBadge();
-                    this.openVocabModal();
-                    if (this.activeArticle) this.renderVocabPanel();
-                    this.showToast('生词本已清空');
-                }
-            }
-
-            adjustFontSize(size) {
-                this.fontSize = size;
-                const container = document.getElementById('articleContentContainer');
-                if (size === 'sm') {
-                    container.className = "space-y-6 font-serif text-base leading-relaxed text-[#2C2A29] dark:text-[#E4E4E7]";
-                } else if (size === 'md') {
-                    container.className = "space-y-8 font-serif text-lg leading-relaxed text-[#2C2A29] dark:text-[#E4E4E7]";
-                } else if (size === 'lg') {
-                    container.className = "space-y-10 font-serif text-xl leading-loose text-[#2C2A29] dark:text-[#E4E4E7]";
-                }
-                this.showToast(`已切换字号: ${size === 'sm' ? '小' : size === 'md' ? '中' : '大'}`);
-            }
-
-            showToast(msg) {
-                const toast = document.getElementById('toast');
-                document.getElementById('toastMsg').innerText = msg;
-                toast.classList.remove('translate-y-20', 'opacity-0');
-                setTimeout(() => {
-                    toast.classList.add('translate-y-20', 'opacity-0');
-                }, 2500);
-            }
         }
 
-        // 初始化应用
-        const app = new AcademicApp();
+        function renderArticles(articles) {
+            const container = document.getElementById('articles-container');
+            if (!articles || articles.length === 0) {
+                container.innerHTML = '<div class="text-sage">暂无文章，请在 articles.json 中添加。</div>';
+                return;
+            }
+
+            container.innerHTML = articles.map(item => `
+                <article class="bg-white border border-sand p-6 rounded-lg shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between text-xs text-sage mb-3 font-sans uppercase tracking-wider">
+                            <span class="bg-wheat px-2 py-0.5 rounded text-moss font-semibold">${item.category}</span>
+                            <span>${item.date}</span>
+                        </div>
+                        <h2 class="font-display text-xl font-bold text-ink mb-1 leading-snug">${item.title}</h2>
+                        <h3 class="text-sm text-sage font-serif mb-4">${item.chineseTitle}</h3>
+                        <p class="text-sm text-gray-600 line-clamp-3 mb-4 font-serif">${item.summary || "点击阅读完整段落与精读解析..."}</p>
+                    </div>
+                    <div class="pt-4 border-t border-sand/60 flex items-center justify-between text-xs text-moss font-sans font-semibold">
+                        <span>包含 ${item.paragraphs ? item.paragraphs.length : 0} 个精读段落</span>
+                        <span class="hover:underline cursor-pointer">阅读解析 &rarr;</span>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        // 页面加载完毕后执行加载
+        window.addEventListener('DOMContentLoaded', fetchArticles);
     </script>
 </body>
 </html>
