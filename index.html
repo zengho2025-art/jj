@@ -33,12 +33,13 @@
     </script>
     <style>
         body { background-color: #FAF9F5; color: #1B3B36; font-family: 'Source Sans 3', 'Noto Serif SC', serif; }
+        .category-btn.active { background-color: #2F5D54; color: #FAF9F5; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-moss selection:text-paper">
     <!-- 顶部导航栏 -->
     <header class="border-b border-sand bg-paper/80 backdrop-blur-md sticky top-0 z-30">
-        <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-3 cursor-pointer" onclick="goHome()">
                 <span class="font-display italic text-2xl font-bold tracking-tight text-ink">Academic Digest</span>
                 <span class="text-xs uppercase tracking-widest px-2 py-0.5 bg-wheat text-moss font-semibold rounded">外刊精读</span>
@@ -47,8 +48,8 @@
         </div>
     </header>
 
-    <!-- 主体内容区 -->
-    <main class="max-w-5xl mx-auto px-6 py-10 flex-grow w-full">
+    <!-- 主体两栏布局区 -->
+    <main class="max-w-6xl mx-auto px-6 py-10 flex-grow w-full">
         <div id="app-view">
             <div class="text-sage text-sm py-10">正在加载外刊文章库...</div>
         </div>
@@ -59,13 +60,13 @@
         &copy; 2026 Academic Digest · All Rights Reserved. Hosted on Vercel.
     </footer>
 
-    <!-- 核心加载与渲染逻辑 -->
+    <!-- 核心业务逻辑 -->
     <script>
         let allArticles = [];
+        let currentCategory = 'All';
 
         async function initApp() {
             try {
-                // 使用绝对或相对路径确保能正确加载同级目录的 json
                 const response = await fetch('./articles.json');
                 if (!response.ok) throw new Error(`HTTP 错误状态码: ${response.status}`);
                 allArticles = await response.json();
@@ -76,7 +77,6 @@
                     <div class="p-6 bg-red-50 border border-red-200 text-red-700 rounded text-sm space-y-2">
                         <p class="font-bold">文章库加载失败</p>
                         <p>错误原因: ${error.message}</p>
-                        <p class="text-xs text-gray-500">请检查 GitHub 根目录下是否存在名为 <code>articles.json</code> 的文件，且文件名和格式完全正确。</p>
                     </div>
                 `;
             }
@@ -92,12 +92,13 @@
                     return;
                 }
             }
-            renderListView(allArticles);
+            renderMainLayout(allArticles);
         }
 
         function goHome() {
             window.history.pushState({}, '', window.location.pathname);
-            renderListView(allArticles);
+            currentCategory = 'All';
+            renderMainLayout(allArticles);
         }
 
         function viewArticle(id) {
@@ -106,42 +107,83 @@
             if (article) renderDetailView(article);
         }
 
-        function renderListView(articles) {
+        // 切换分类筛选
+        function filterCategory(cat) {
+            currentCategory = cat;
+            renderMainLayout(allArticles);
+        }
+
+        // 渲染带侧边栏的主布局（列表页）
+        function renderMainLayout(articles) {
+            // 获取所有不重复的分类
+            const categories = ['All', ...new Set(articles.map(item => item.category))];
+            
+            // 根据当前选中的分类过滤文章
+            const filteredArticles = currentCategory === 'All' 
+                ? articles 
+                : articles.filter(item => item.category === currentCategory);
+
             const container = document.getElementById('app-view');
             container.innerHTML = `
-                <div class="mb-10 border-b border-sand pb-6">
+                <div class="mb-8 border-b border-sand pb-6">
                     <h1 class="font-display text-4xl font-bold tracking-tight text-ink mb-2">Curated Insights</h1>
                     <p class="text-sage text-sm font-sans">深度剖析全球顶级外刊，提炼核心词汇与长难句逻辑结构。</p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    ${articles.map(item => `
-                        <article onclick="viewArticle(${item.id})" class="bg-white border border-sand p-6 rounded-lg shadow-sm hover:shadow-md transition-all flex flex-col justify-between cursor-pointer group">
-                            <div>
-                                <div class="flex items-center justify-between text-xs text-sage mb-3 font-sans uppercase tracking-wider">
-                                    <span class="bg-wheat px-2 py-0.5 rounded text-moss font-semibold">${item.category}</span>
-                                    <span>${item.date}</span>
-                                </div>
-                                <h2 class="font-display text-xl font-bold text-ink mb-1 group-hover:text-moss transition-colors leading-snug">${item.title}</h2>
-                                <h3 class="text-sm text-sage font-serif mb-4">${item.chineseTitle}</h3>
-                                <p class="text-sm text-gray-600 line-clamp-3 mb-4 font-serif">${item.summary || ""}</p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                    <!-- 左侧边栏：分类导航 -->
+                    <aside class="lg:col-span-1 space-y-2">
+                        <h3 class="text-xs font-sans uppercase tracking-widest text-sage mb-3 px-3 font-semibold">文章分类</h3>
+                        <nav class="flex flex-row lg:flex-col gap-1.5 overflow-x-auto pb-2 lg:pb-0">
+                            ${categories.map(cat => `
+                                <button onclick="filterCategory('${cat}')" class="category-btn ${currentCategory === cat ? 'active' : 'bg-white text-ink hover:bg-sand/50'} text-left px-4 py-2.5 rounded-lg text-sm font-sans font-medium border border-sand transition-all whitespace-nowrap flex items-center justify-between">
+                                    <span>${cat === 'All' ? '全部文章' : cat}</span>
+                                    <span class="text-xs opacity-60">(${cat === 'All' ? articles.length : articles.filter(i => i.category === cat).length})</span>
+                                </button>
+                            `).join('')}
+                        </nav>
+                    </aside>
+
+                    <!-- 右侧：文章列表网格 -->
+                    <div class="lg:col-span-3">
+                        ${filteredArticles.length === 0 ? `
+                            <div class="bg-white border border-sand rounded-xl p-10 text-center text-sage">
+                                该分类下暂无文章。
                             </div>
-                            <div class="pt-4 border-t border-sand/60 flex items-center justify-between text-xs text-moss font-sans font-semibold">
-                                <span>精读文章</span>
-                                <span class="group-hover:translate-x-1 transition-transform">阅读解析 &rarr;</span>
+                        ` : `
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                ${filteredArticles.map(item => `
+                                    <article onclick="viewArticle(${item.id})" class="bg-white border border-sand p-6 rounded-lg shadow-sm hover:shadow-md transition-all flex flex-col justify-between cursor-pointer group">
+                                        <div>
+                                            <div class="flex items-center justify-between text-xs text-sage mb-3 font-sans uppercase tracking-wider">
+                                                <span class="bg-wheat px-2 py-0.5 rounded text-moss font-semibold">${item.category}</span>
+                                                <span>${item.date}</span>
+                                            </div>
+                                            <h2 class="font-display text-xl font-bold text-ink mb-1 group-hover:text-moss transition-colors leading-snug">${item.title}</h2>
+                                            <h3 class="text-sm text-sage font-serif mb-4">${item.chineseTitle}</h3>
+                                            <p class="text-sm text-gray-600 line-clamp-3 mb-4 font-serif">${item.summary || ""}</p>
+                                        </div>
+                                        <div class="pt-4 border-t border-sand/60 flex items-center justify-between text-xs text-moss font-sans font-semibold">
+                                            <span>精读文章</span>
+                                            <span class="group-hover:translate-x-1 transition-transform">阅读解析 &rarr;</span>
+                                        </div>
+                                    </article>
+                                `).join('')}
                             </div>
-                        </article>
-                    `).join('')}
+                        `}
+                    </div>
                 </div>
             `;
         }
 
+        // 渲染文章详情页
         function renderDetailView(article) {
             const container = document.getElementById('app-view');
             container.innerHTML = `
                 <button onclick="goHome()" class="mb-6 inline-flex items-center text-xs font-sans text-sage hover:text-ink font-semibold uppercase tracking-wider">
                     &larr; 返回文章列表
                 </button>
-                <div class="bg-white border border-sand rounded-xl p-8 md:p-12 shadow-sm">
+                <div class="bg-white border border-sand rounded-xl p-8 md:p-12 shadow-sm max-w-4xl mx-auto">
                     <div class="flex items-center space-x-3 text-xs text-sage mb-4 font-sans uppercase tracking-wider">
                         <span class="bg-wheat px-2.5 py-1 rounded text-moss font-semibold">${article.category}</span>
                         <span>${article.date}</span>
@@ -150,32 +192,3 @@
                     <h2 class="text-lg text-sage font-serif mb-8 pb-6 border-b border-sand">${article.chineseTitle}</h2>
 
                     <div class="space-y-8 font-serif text-lg leading-relaxed text-gray-800">
-                        ${article.paragraphs.map(p => `
-                            <div class="p-6 bg-paper/50 border border-sand/60 rounded-lg space-y-4">
-                                <p class="font-medium text-ink text-xl">${p.english}</p>
-                                <p class="text-gray-600 text-base">${p.chinese}</p>
-                                
-                                ${p.sentenceAnalysis ? `
-                                    <div class="mt-4 pt-4 border-t border-sand text-sm font-sans">
-                                        <details class="group">
-                                            <summary class="cursor-pointer text-moss font-semibold flex items-center space-x-2">
-                                                <span>🔍 长难句语法拆解</span>
-                                                <span class="text-xs text-sage font-normal">(点击展开)</span>
-                                            </summary>
-                                            <div class="mt-3 p-4 bg-wheat/60 rounded border border-sand text-gray-700 leading-normal">
-                                                ${p.sentenceAnalysis}
-                                            </div>
-                                        </details>
-                                    </div>
-                                ` : ''}
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-        }
-
-        window.addEventListener('DOMContentLoaded', initApp);
-    </script>
-</body>
-</html>
