@@ -101,4 +101,144 @@
             renderMainLayout(allArticles);
         }
 
-        function viewArticle(id)
+        function viewArticle(id) {
+            window.history.pushState({}, '', `?id=${id}`);
+            const article = allArticles.find(item => item.id == id);
+            if (article) renderDetailView(article);
+        }
+
+        function filterCategory(cat) {
+            currentCategory = cat;
+            renderMainLayout(allArticles);
+        }
+
+        // 渲染带侧边栏的主布局（列表页）
+        function renderMainLayout(articles) {
+            const categories = ['All', ...new Set(articles.map(item => item.category))];
+            const filteredArticles = currentCategory === 'All' 
+                ? articles 
+                : articles.filter(item => item.category === currentCategory);
+
+            const container = document.getElementById('app-view');
+            container.innerHTML = `
+                <div class="mb-8 border-b border-sand pb-6">
+                    <h1 class="font-display text-4xl font-bold tracking-tight text-ink mb-2">Curated Insights</h1>
+                    <p class="text-sage text-sm font-sans">深度剖析全球顶级外刊，提炼核心词汇与长难句逻辑结构。</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                    <!-- 左侧边栏：分类导航 -->
+                    <aside class="lg:col-span-1 space-y-2">
+                        <h3 class="text-xs font-sans uppercase tracking-widest text-sage mb-3 px-3 font-semibold">文章分类</h3>
+                        <nav class="flex flex-row lg:flex-col gap-1.5 overflow-x-auto pb-2 lg:pb-0">
+                            ${categories.map(cat => `
+                                <button onclick="filterCategory('${cat}')" class="category-btn ${currentCategory === cat ? 'active' : 'bg-white text-ink hover:bg-sand/50'} text-left px-4 py-2.5 rounded-lg text-sm font-sans font-medium border border-sand transition-all whitespace-nowrap flex items-center justify-between">
+                                    <span>${cat === 'All' ? '全部文章' : cat}</span>
+                                    <span class="text-xs opacity-60">(${cat === 'All' ? articles.length : articles.filter(i => i.category === cat).length})</span>
+                                </button>
+                            `).join('')}
+                        </nav>
+                    </aside>
+
+                    <!-- 右侧：文章列表网格 -->
+                    <div class="lg:col-span-3">
+                        ${filteredArticles.length === 0 ? `
+                            <div class="bg-white border border-sand rounded-xl p-10 text-center text-sage">
+                                该分类下暂无文章。
+                            </div>
+                        ` : `
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                ${filteredArticles.map(item => `
+                                    <article onclick="viewArticle(${item.id})" class="bg-white border border-sand p-6 rounded-lg shadow-sm hover:shadow-md transition-all flex flex-col justify-between cursor-pointer group">
+                                        <div>
+                                            <div class="flex items-center justify-between text-xs text-sage mb-3 font-sans uppercase tracking-wider">
+                                                <span class="bg-wheat px-2 py-0.5 rounded text-moss font-semibold">${item.category}</span>
+                                                <span>${item.date}</span>
+                                            </div>
+                                            <h2 class="font-display text-xl font-bold text-ink mb-1 group-hover:text-moss transition-colors leading-snug">${item.title}</h2>
+                                            <h3 class="text-sm text-sage font-serif mb-4">${item.chineseTitle}</h3>
+                                            <p class="text-sm text-gray-600 line-clamp-3 mb-4 font-serif">${item.summary || ""}</p>
+                                        </div>
+                                        <div class="pt-4 border-t border-sand/60 flex items-center justify-between text-xs text-moss font-sans font-semibold">
+                                            <span>精读文章</span>
+                                            <span class="group-hover:translate-x-1 transition-transform">阅读解析 &rarr;</span>
+                                        </div>
+                                    </article>
+                                `).join('')}
+                            </div>
+                        `}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 渲染深度精读文章详情页（支持段落立论、主干提取、词汇剖析卡片）
+        function renderDetailView(article) {
+            const container = document.getElementById('app-view');
+            container.innerHTML = `
+                <button onclick="goHome()" class="mb-6 inline-flex items-center text-xs font-sans text-sage hover:text-ink font-semibold uppercase tracking-wider">
+                    &larr; 返回文章列表
+                </button>
+                <div class="bg-white border border-sand rounded-xl p-8 md:p-12 shadow-sm max-w-4xl mx-auto">
+                    <div class="flex items-center space-x-3 text-xs text-sage mb-4 font-sans uppercase tracking-wider">
+                        <span class="bg-wheat px-2.5 py-1 rounded text-moss font-semibold">${article.category}</span>
+                        <span>${article.date}</span>
+                    </div>
+                    <h1 class="font-display text-3xl md:text-4xl font-bold text-ink mb-2 leading-tight">${article.title}</h1>
+                    <h2 class="text-lg text-sage font-serif mb-8 pb-6 border-b border-sand">${article.chineseTitle}</h2>
+                    <p class="text-base text-gray-700 mb-10 italic bg-wheat/40 p-5 rounded-lg border-l-4 border-moss font-serif">${article.summary}</p>
+
+                    <!-- 段落深度精读解析循环渲染 -->
+                    <div class="space-y-12">
+                        ${article.paragraphs.map((p, index) => `
+                            <div class="p-6 md:p-8 bg-paper/50 border border-sand rounded-xl space-y-6 shadow-xs">
+                                <!-- 段落标题与立论功能 -->
+                                <div>
+                                    <span class="text-xs font-sans font-bold uppercase tracking-widest text-moss bg-wheat px-2.5 py-1 rounded">Paragraph ${index + 1}</span>
+                                    <h3 class="font-display text-xl font-bold text-ink mt-3">${p.paragraphTitle}</h3>
+                                    <p class="text-sm text-sage mt-1 font-sans leading-relaxed"><strong>段落立论功能：</strong>${p.thesisAndContext}</p>
+                                </div>
+
+                                <!-- 原文与翻译 -->
+                                <div class="space-y-3 font-serif text-lg leading-relaxed text-gray-900 border-l-2 border-gold pl-4 py-1">
+                                    <p class="font-semibold text-ink">${p.englishText}</p>
+                                    <p class="text-gray-600 text-base">${p.chineseText}</p>
+                                </div>
+
+                                <!-- 句子结构与长难句主干提取 -->
+                                ${p.sentenceAnalysis ? `
+                                    <div class="bg-white p-5 rounded-lg border border-sand text-sm font-sans space-y-2">
+                                        <h4 class="font-bold text-ink flex items-center space-x-1.5">
+                                            <span>📊 核心句式与主干提取</span>
+                                        </h4>
+                                        <div class="text-gray-700 leading-relaxed">${p.sentenceAnalysis}</div>
+                                    </div>
+                                ` : ''}
+
+                                <!-- 重难点高阶词汇与短语剖析 -->
+                                ${p.vocabularyNotes && p.vocabularyNotes.length > 0 ? `
+                                    <div class="bg-wheat/30 p-5 rounded-lg border border-sand/60 text-sm font-sans space-y-3">
+                                        <h4 class="font-bold text-moss flex items-center space-x-1.5">
+                                            <span>💡 重难点高阶词汇与短语剖析</span>
+                                        </h4>
+                                        <ul class="grid grid-cols-1 gap-2.5">
+                                            ${p.vocabularyNotes.map(v => `
+                                                <li class="bg-white p-3 rounded border border-sand/40">
+                                                    <span class="font-bold text-ink">${v.term}:</span> 
+                                                    <span class="text-gray-700">${v.explanation}</span>
+                                                </li>
+                                            `).join('')}
+                                        </ul>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        window.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
