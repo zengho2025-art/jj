@@ -192,3 +192,32 @@
                     <h2 class="text-lg text-sage font-serif mb-8 pb-6 border-b border-sand">${article.chineseTitle}</h2>
 
                     <div class="space-y-8 font-serif text-lg leading-relaxed text-gray-800">
+                        ${article.paragraphs.map(p => `
+                            <div class="p-6 bg-paper/50 border border-sand/60 rounded-lg space-y-4">
+                                <p class="font-medium text-ink text-xl">${p.english}</p>
+                                <p class="text-gray-600 text-base">${p.chinese}</p>
+                                
+                                ${p.sentenceAnalysis ? `
+                                    <div class="mt-4 pt-4 border-t border-sand text-sm font-sans">
+                                        <details class="group">
+                                            <summary class="cursor-pointer text-moss font-semibold flex items-center space-x-2">
+                                                <span>🔍 长难句语法拆解</span>
+                                                <span class="text-xs text-sage font-normal">(点击展开)</span>
+                                            </summary>
+                                            <div class="mt-3 p-4 bg-wheat/60 rounded border border-sand text-gray-700 leading-normal">
+                                                ${p.sentenceAnalysis}
+                                            </div>
+                                        </details>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        window.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
