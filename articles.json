@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "title": "When the Cost of Money Stops Being the Story",
+    "chineseTitle": "当资金成本不再是头条新闻",
+    "category": "Economy",
+    "date": "2026-10-29",
+    "summary": "全球央行货币政策转变，通货膨胀降温带来的宏观经济新视角与深层产业影响分析。",
+    "paragraphs": [
+      {
+        "english": "Central banks are shifting their focus as global inflation cools down.",
+        "chinese": "随着全球通货膨胀降温，各大央行正在转变重心。",
+        "vocabulary": [
+          {
+            "word": "inflation",
+            "meaning": "n. 通货膨胀，物价上涨"
+          }
+        ],
+        "sentenceAnalysis": "as 引导时间状语从句，意为‘随着’；主句中 are shifting 为现在进行时。"
+      }
+    ]
+  }
+]
