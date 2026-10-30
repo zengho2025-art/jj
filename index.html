@@ -35,30 +35,30 @@
         body { background-color: #FAF9F5; color: #1B3B36; font-family: 'Source Sans 3', 'Noto Serif SC', serif; }
         .category-btn.active { background-color: #2F5D54; color: #FAF9F5; }
 
-        /* 单词悬浮提示样式 (Tooltip) */
+        /* 单词/短语悬浮提示样式 (Tooltip) */
         .token-item {
             position: relative;
             display: inline-block;
             cursor: pointer;
-            border-bottom: 1px dashed #2F5D54;
+            border-bottom: 1.5px dashed #C4A35A;
             margin-right: 4px;
             margin-bottom: 4px;
             transition: background-color 0.2s;
         }
         .token-item:hover {
             background-color: #F3F0E7;
-            border-bottom: 2px solid #C4A35A;
+            border-bottom: 2px solid #2F5D54;
         }
         /* 悬浮弹出的气泡 */
         .token-item .tooltip-text {
             visibility: hidden;
             width: max-content;
-            max-width: 220px;
+            max-width: 280px;
             background-color: #1B3B36;
             color: #FAF9F5;
-            text-align: center;
+            text-align: left;
             border-radius: 6px;
-            padding: 5px 10px;
+            padding: 8px 12px;
             position: absolute;
             z-index: 50;
             bottom: 125%;
@@ -68,7 +68,8 @@
             transition: opacity 0.2s;
             font-size: 0.75rem;
             font-family: 'Source Sans 3', sans-serif;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15);
+            line-height: 1.4;
         }
         .token-item:hover .tooltip-text {
             visibility: visible;
@@ -102,14 +103,86 @@
 
     <!-- 核心业务逻辑 -->
     <script>
-        let allArticles = [];
+        // 内嵌文章数据库（包含详细的语法标记与悬浮提示数据）
+        const allArticles = [
+            {
+                "id": 1,
+                "title": "The Baby and the Bathtub: AI, Science, and the Crisis of Understanding",
+                "chineseTitle": "婴儿与洗澡水：人工智能、科学与理解危机",
+                "category": "Technology",
+                "date": "2026-10-30",
+                "summary": "文章以一篇前沿实验室宣称攻克数学世纪难题的新闻开篇，深入探讨了AI在推动科学狂飙突进的同时，给人类带来的理解危机、学术边界冲突与主体性丧失的深层忧虑。",
+                "paragraphs": [
+                    {
+                        "paragraphTitle": "第一段：引子与背景段（Lead-in & Background）",
+                        "thesisAndContext": "作者借由一个具体的历史里程碑节点开篇，以极具冲击力的新闻性叙事铺陈事件规模。",
+                        "englishText": "October 6th, 2026, may be hailed as the most significant turning point in mathematics. An American frontier lab unleashed a torrent of more than 700 papers, professing to have cracked or nudged forward 372 enigmas that had defied researchers for decades. Mathematicians are still trying to figure out what this means for their field.",
+                        "chineseText": "2026年10月6日，可能会被奉为数学史上最重要的转折点。一家美国前沿实验室抛出了多达700多篇论文的洪流，自称已经破解或向前推进了372个困扰了研究人员几十年的世纪难题。数学家们仍在极力弄清楚这对他们的领域意味着什么。",
+                        "wordTokens": [
+                            { "word": "October 6th, 2026,", "role": "时间状语", "meaning": "特定时间节点" },
+                            { "word": "may be hailed as", "role": "谓语 (情态动词+被动语态)", "meaning": "被称赞为 / 被誉为……" },
+                            { "word": "the most significant turning point in mathematics.", "role": "介词宾语", "meaning": "数学史上最重要的转折点" },
+                            { "word": "An American frontier lab", "role": "主语", "meaning": "一家美国前沿实验室" },
+                            { "word": "unleashed", "role": "谓语", "meaning": "释放出 / 爆发倾泻" },
+                            { "word": "a torrent of more than 700 papers,", "role": "核心宾语", "meaning": "如洪流般的 / 大批涌现的 700 多篇论文" },
+                            { "word": "professing to have cracked or nudged forward...", "role": "现在分词短语作伴随状语", "meaning": "自称已经破解或向前推进" },
+                            { "word": "what this means for their field.", "role": "宾语从句", "meaning": "这对他们的领域意味着什么" }
+                        ],
+                        "syntaxBreakdown": [
+                            { "part": "October 6th, 2026,", "role": "时间状语", "detail": "特定时间节点" },
+                            { "part": "may be hailed as", "role": "谓语 (情态动词+被动语态)", "detail": "be hailed as：固定短语搭配，“被称赞为……/ 被誉为……”" },
+                            { "part": "the most significant turning point in mathematics.", "role": "介词宾语", "detail": "turning point：转折点" },
+                            { "part": "An American frontier lab", "role": "主语", "detail": "frontier lab：前沿实验室" },
+                            { "part": "unleashed", "role": "谓语", "detail": "unleashed：及物动词，“释放出 / 爆发倾泻”" },
+                            { "part": "a torrent of more than 700 papers,", "role": "核心宾语", "detail": "a torrent of：修饰语，表示“如洪流般的 / 大批涌现的”" },
+                            { "part": "professing to have cracked or nudged forward...", "role": "现在分词短语作伴随状语", "detail": "profess to do：高阶动词，“自称拥有 / 声称已经做到……”" },
+                            { "part": "what this means for their field.", "role": "宾语从句", "detail": "figure out：核心短语动词，“费尽心思去琢磨并理解某事的本质”" }
+                        ],
+                        "sentenceAnalysis": "主句主干提取：An American frontier lab（主语）＋ unleashed（谓语）＋ a torrent of more than 700 papers（宾语）",
+                        "vocabularyNotes": [
+                            { "term": "be hailed as", "explanation": "【固定短语】“被称赞为……/ 被誉为……”" },
+                            { "term": "a torrent of", "explanation": "【隐喻搭配】“如洪流般的 / 大批涌现的”" },
+                            { "term": "defy researchers", "explanation": "【动宾搭配】“让……束手无策 / 经受住了所有破解尝试”" }
+                        ]
+                    },
+                    {
+                        "paragraphTitle": "第二段：基准参考段（Golden Sample）",
+                        "thesisAndContext": "作者把镜头从数学界拉开，宣布事件的真正意义在数学之外——它迫使整个科学界正视 AI 正在改写科学的根基。",
+                        "englishText": "The impact will reach far beyond mathematics. Science must now come to terms with how artificial intelligence is reshaping its entire foundation. These breakthroughs are a double-edged sword: they mark a great leap forward for humanity and prove the astonishing speed of AI, yet they also caution us against a future where machines decipher a universe that humans can no longer comprehend. The defining question is whether we can push boundaries forward without leaving our own understanding behind.",
+                        "chineseText": "这一影响将远远超越数学的范围。科学现在必须正视人工智能正在重塑其整个根基的现实。这些突破是一把双刃剑：它们标志着人类的一大跃进并证明了AI惊人的速度，然而它们也告诫我们要警惕这样一个未来：机器解出了人类再也无法理解的宇宙。决定性的问题在于，我们能否在不落下自身理解的前提下推进边界。",
+                        "wordTokens": [
+                            { "word": "The impact", "role": "主语", "meaning": "这一影响" },
+                            { "word": "will reach far beyond mathematics.", "role": "谓语 + 程度状语 + 宾语", "meaning": "将远远超越数学的范围" },
+                            { "word": "Science", "role": "主语", "meaning": "科学界" },
+                            { "word": "must now come to terms with", "role": "谓语动词短语", "meaning": "正视 / 学着接受现实" },
+                            { "word": "how artificial intelligence is reshaping its entire foundation.", "role": "宾语从句", "meaning": "人工智能正如何重塑其整个根基" },
+                            { "word": "These breakthroughs", "role": "主语", "meaning": "这些突破" },
+                            { "word": "are a double-edged sword:", "role": "系表结构", "meaning": "是一把双刃剑" }
+                        ],
+                        "syntaxBreakdown": [
+                            { "part": "The impact", "role": "主语", "detail": "这一影响" },
+                            { "part": "will reach far beyond mathematics.", "role": "谓语 + 程度状语 + 宾语", "detail": "reach far beyond：远远超越……的范围" },
+                            { "part": "Science", "role": "主语", "detail": "科学界" },
+                            { "part": "must now come to terms with", "role": "谓语动词短语", "detail": "come to terms with：动词短语，“正视、学着接受现实”" },
+                            { "part": "how artificial intelligence is reshaping its entire foundation.", "role": "宾语从句", "detail": "reshaping：重塑" },
+                            { "part": "These breakthroughs", "role": "主语", "detail": "这些突破" },
+                            { "part": "are a double-edged sword:", "role": "系表结构", "detail": "double-edged sword：隐喻搭配，“双刃剑”" },
+                            { "part": "where machines decipher a universe that humans can no longer comprehend.", "role": "定语从句嵌套", "detail": "decipher：破译、解开" }
+                        ],
+                        "sentenceAnalysis": "主句主干提取：These breakthroughs（主语）＋ are（系动词）＋ a double-edged sword（表语）",
+                        "vocabularyNotes": [
+                            { "term": "come to terms with", "explanation": "【动词短语】“正视、学着接受现实”" },
+                            { "term": "caution sb against sth", "explanation": "【固定搭配】“告诫某人提防某事”" }
+                        ]
+                    }
+                ]
+            }
+        ];
+
         let currentCategory = 'All';
 
-        async function initApp() {
+        function initApp() {
             try {
-                const response = await fetch('./articles.json');
-                if (!response.ok) throw new Error(`HTTP 错误状态码: ${response.status}`);
-                allArticles = await response.json();
                 checkRoute();
             } catch (error) {
                 console.error("加载失败:", error);
@@ -136,13 +209,21 @@
         }
 
         function goHome() {
-            window.history.pushState({}, '', window.location.pathname);
+            try {
+                window.history.pushState({}, '', window.location.pathname);
+            } catch (e) {
+                // Ignore SecurityError in blob/sandbox environments
+            }
             currentCategory = 'All';
             renderMainLayout(allArticles);
         }
 
         function viewArticle(id) {
-            window.history.pushState({}, '', `?id=${id}`);
+            try {
+                window.history.pushState({}, '', `?id=${id}`);
+            } catch (e) {
+                // Ignore SecurityError in blob/sandbox environments
+            }
             const article = allArticles.find(item => item.id == id);
             if (article) renderDetailView(article);
         }
@@ -212,7 +293,7 @@
             `;
         }
 
-        // 渲染深度精读文章详情页（支持鼠标悬浮显示单词/短语语法属性）
+        // 渲染深度精读文章详情页（支持原文悬浮显示语法与词义气泡 + 下方独立语法拆解行）
         function renderDetailView(article) {
             const container = document.getElementById('app-view');
             container.innerHTML = `
@@ -239,18 +320,45 @@
                                     <p class="text-sm text-sage mt-1 font-sans leading-relaxed"><strong>段落立论功能：</strong>${p.thesisAndContext}</p>
                                 </div>
 
-                                <!-- 原文（支持鼠标悬浮显示语法属性）与翻译 -->
+                                <!-- 原文（支持鼠标悬浮显示语法属性与词义气泡）与翻译 -->
                                 <div class="space-y-3 font-serif text-lg leading-relaxed text-gray-900 border-l-2 border-gold pl-4 py-1">
                                     <div class="font-semibold text-ink flex flex-wrap items-baseline">
                                         ${p.wordTokens ? p.wordTokens.map(token => `
                                             <span class="token-item">
                                                 ${token.word}
-                                                <span class="tooltip-text">${token.role}</span>
+                                                <span class="tooltip-text">
+                                                    <strong>成分：</strong>${token.role}<br>
+                                                    <strong>释义：</strong>${token.meaning}
+                                                </span>
                                             </span>
-                                        `).join(' ') : p.englishText}
+                                        `).join(' ') : `<p>${p.englishText}</p>`}
                                     </div>
-                                    <p class="text-gray-600 text-base">${p.chineseText}</p>
+                                    <p class="text-gray-600 text-base mt-2">${p.chineseText}</p>
                                 </div>
+
+                                <!-- 独立语法成分逐句拆解行（含词义短语深度精析） -->
+                                ${p.syntaxBreakdown && p.syntaxBreakdown.length > 0 ? `
+                                    <div class="bg-white p-5 rounded-lg border border-sand text-sm font-sans space-y-3">
+                                        <h4 class="font-bold text-moss flex items-center space-x-1.5">
+                                            <span>🔍 逐句语法成分与词义精准拆解</span>
+                                        </h4>
+                                        <div class="divide-y divide-sand/60">
+                                            ${p.syntaxBreakdown.map(sb => `
+                                                <div class="py-3 space-y-1">
+                                                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-1">
+                                                        <span class="font-serif text-ink font-medium">${sb.part}</span>
+                                                        <span class="text-xs px-2 py-0.5 bg-wheat text-moss rounded font-semibold whitespace-nowrap self-start md:self-auto">${sb.role}</span>
+                                                    </div>
+                                                    ${sb.detail ? `
+                                                        <div class="text-xs text-sage font-sans pl-2 border-l-2 border-gold/60 mt-1">
+                                                            💡 <strong>词义/用法剖析：</strong> ${sb.detail}
+                                                        </div>
+                                                    ` : ''}
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                ` : ''}
 
                                 <!-- 核心句式与主干提取 -->
                                 ${p.sentenceAnalysis ? `
@@ -266,7 +374,7 @@
                                 ${p.vocabularyNotes && p.vocabularyNotes.length > 0 ? `
                                     <div class="bg-wheat/30 p-5 rounded-lg border border-sand/60 text-sm font-sans space-y-3">
                                         <h4 class="font-bold text-moss flex items-center space-x-1.5">
-                                            <span>💡 重难点高阶词汇与短语剖析</span>
+                                            <span>💡 段落核心高阶词汇总结</span>
                                         </h4>
                                         <ul class="grid grid-cols-1 gap-2.5">
                                             ${p.vocabularyNotes.map(v => `
