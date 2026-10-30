@@ -1,294 +1,249 @@
 [
-{
-"id": 1,
-"title": "The Baby and the Bathtub: AI, Science, and the Crisis of Understanding",
-"chineseTitle": "婴儿与洗澡水：人工智能、科学与理解危机",
-"category": "Technology",
-"date": "2026-10-30",
-"summary": "文章以一篇前沿实验室宣称攻克数学世纪难题的新闻开篇，深入探讨了AI在推动科学狂飙突进的同时，给人类带来的理解危机、学术边界冲突与主体性丧失的深层忧虑。",
-"paragraphs": [
-{
-"paragraphTitle": "第一段：引子与背景段（Lead-in & Background）",
-"thesisAndContext": "作者借由一个具体的历史里程碑节点开篇，以极具冲击力的新闻性叙事铺陈事件规模。",
-"englishText": "October 6th, 2026, may be hailed as the most significant turning point in mathematics. An American frontier lab unleashed a torrent of more than 700 papers, professing to have cracked or nudged forward 372 enigmas that had defied researchers for decades. Mathematicians are still trying to figure out what this means for their field.",
-"chineseText": "2026年10月6日，可能会被奉为数学史上最重要的转折点。一家美国前沿实验室抛出了多达700多篇论文的洪流，自称已经破解或向前推进了372个困扰了研究人员几十年的世纪难题。数学家们仍在极力弄清楚这对他们的领域意味着什么。",
-"wordTokens": [
-{ "word": "October 6th, 2026,", "role": "时间状语", "meaning": "特定时间节点" },
-{ "word": "may be hailed as", "role": "谓语 (情态动词+被动语态)", "meaning": "被称赞为 / 被誉为……" },
-{ "word": "the most significant turning point in mathematics.", "role": "介词宾语", "meaning": "数学史上最重要的转折点" },
-{ "word": "An American frontier lab", "role": "主语", "meaning": "一家美国前沿实验室" },
-{ "word": "unleashed", "role": "谓语", "meaning": "释放出 / 爆发倾泻" },
-{ "word": "a torrent of more than 700 papers,", "role": "核心宾语", "meaning": "如洪流般的 / 大批涌现的 700 多篇论文" },
-{ "word": "professing to have cracked or nudged forward...", "role": "现在分词短语作伴随状语", "meaning": "自称已经破解或向前推进" },
-{ "word": "what this means for their field.", "role": "宾语从句", "meaning": "这对他们的领域意味着什么" }
-],
-"syntaxBreakdown": [
-{ "part": "October 6th, 2026,", "role": "时间状语", "detail": "特定时间节点" },
-{ "part": "may be hailed as", "role": "谓语 (情态动词+被动语态)", "detail": "be hailed as：固定短语搭配，“被称赞为……/ 被誉为……”" },
-{ "part": "the most significant turning point in mathematics.", "role": "介词宾语", "detail": "turning point：转折点" },
-{ "part": "An American frontier lab", "role": "主语", "detail": "frontier lab：前沿实验室" },
-{ "part": "unleashed", "role": "谓语", "detail": "unleashed：及物动词，“释放出 / 爆发倾泻”" },
-{ "part": "a torrent of more than 700 papers,", "role": "核心宾语", "detail": "a torrent of：修饰语，表示“如洪流般的 / 大批涌现的”" },
-{ "part": "professing to have cracked or nudged forward...", "role": "现在分词短语作伴随状语", "detail": "profess to do：高阶动词，“自称拥有 / 声称已经做到……”" },
-{ "part": "what this means for their field.", "role": "宾语从句", "detail": "figure out：核心短语动词，“费尽心思去琢磨并理解某事的本质”" }
-],
-"sentenceAnalysis": "主句主干提取：An American frontier lab（主语）＋ unleashed（谓语）＋ a torrent of more than 700 papers（宾语）",
-"vocabularyNotes": [
-{ "term": "be hailed as", "explanation": "【固定短语】“被称赞为……/ 被誉为……”" },
-{ "term": "a torrent of", "explanation": "【隐喻搭配】“如洪流般的 / 大批涌现的”" },
-{ "term": "defy researchers", "explanation": "【动宾搭配】“让……束手无策 / 经受住了所有破解尝试”" }
-]
-},
-{
-"paragraphTitle": "第二段：基准参考段（Golden Sample）",
-"thesisAndContext": "作者把镜头从数学界拉开，宣布事件的真正意义在数学之外——它迫使整个科学界正视 AI 正在改写科学的根基。",
-"englishText": "The impact will reach far beyond mathematics. Science must now come to terms with how artificial intelligence is reshaping its entire foundation. These breakthroughs are a double-edged sword: they mark a great leap forward for humanity and prove the astonishing speed of AI, yet they also caution us against a future where machines decipher a universe that humans can no longer comprehend. The defining question is whether we can push boundaries forward without leaving our own understanding behind.",
-"chineseText": "这一影响将远远超越数学的范围。科学现在必须正视人工智能正在重塑其整个根基的现实。这些突破是一把双刃剑：它们标志着人类的一大跃进并证明了AI惊人的速度，然而它们也告诫我们要警惕这样一个未来：机器解出了人类再也无法理解的宇宙。决定性的问题在于，我们能否在不落下自身理解的前提下推进边界。",
-"wordTokens": [
-{ "word": "The impact", "role": "主语", "meaning": "这一影响" },
-{ "word": "will reach far beyond mathematics.", "role": "谓语 + 程度状语 + 宾语", "meaning": "将远远超越数学的范围" },
-{ "word": "Science", "role": "主语", "meaning": "科学界" },
-{ "word": "must now come to terms with", "role": "谓语动词短语", "meaning": "正视 / 学着接受现实" },
-{ "word": "how artificial intelligence is reshaping its entire foundation.", "role": "宾语从句", "meaning": "人工智能正如何重塑其整个根基" },
-{ "word": "These breakthroughs", "role": "主语", "meaning": "这些突破" },
-{ "word": "are a double-edged sword:", "role": "系表结构", "meaning": "是一把双刃剑" }
-],
-"syntaxBreakdown": [
-{ "part": "The impact", "role": "主语", "detail": "这一影响" },
-{ "part": "will reach far beyond mathematics.", "role": "谓语 + 程度状语 + 宾语", "detail": "reach far beyond：远远超越……的范围" },
-{ "part": "Science", "role": "主语", "detail": "科学界" },
-{ "part": "must now come to terms with", "role": "谓语动词短语", "detail": "come to terms with：动词短语，“正视、学着接受现实”" },
-{ "part": "how artificial intelligence is reshaping its entire foundation.", "role": "宾语从句", "detail": "reshaping：重塑" },
-{ "part": "These breakthroughs", "role": "主语", "detail": "这些突破" },
-{ "part": "are a double-edged sword:", "role": "系表结构", "detail": "double-edged sword：隐喻搭配，“双刃剑”" },
-{ "part": "where machines decipher a universe that humans can no longer comprehend.", "role": "定语从句嵌套", "detail": "decipher：破译、解开" }
-],
-"sentenceAnalysis": "主句主干提取：These breakthroughs（主语）＋ are（系动词）＋ a double-edged sword（表语）",
-"vocabularyNotes": [
-{ "term": "come to terms with", "explanation": "【动词短语】“正视、学着接受现实”" },
-{ "term": "caution sb against sth", "explanation": "【固定搭配】“告诫某人提防某事”" }
-]
-},
-{
-"paragraphTitle": "第三段：承上启下与证据链展开段（Transition & Evidence）",
-"thesisAndContext": "作者从数学本身的推导逻辑切入，阐明为何数学是 AI 最自然的试验场，并通过气象预测、新材料模拟及蛋白质结构预测的排比证据链，有力证实了机器智能重塑科学范式的既成事实。",
-"englishText": "Mathematics proved to be an ideal testing ground for AI, driven as it is by ironclad logic that computers can verify step by step. Yet the breakthrough hardly ends with pure calculation. As our science reports this week, AI is rapidly transforming the practical sciences, largely because they lean on mathematics as a foundation. It has already sharpened meteorological forecasts, envisioned millions of promising new materials, and helped stabilise nuclear fusion experiments. Most remarkably, it has learned to predict the intricate 3D shapes of nearly every known protein — a triumph that rightfully earned a Nobel Prize.",
-"chineseText": "数学被证明是人工智能的理想试验场，正因其受到计算机能够一步步核实的铁律逻辑所驱动。然而，这一突破绝不仅仅止于纯粹的计算。正如我们本周的科学报道所探讨的那样，人工智能正在迅速改变应用科学，很大程度上是因为它们以数学为基石。它已经使气象预报更加精准，构想出数百万种有前景的新材料，并协助稳定了核聚变实验。最引人注目的是，它已学会预测几乎所有已知蛋白质错综复杂的3D结构——这一成就当之无愧地赢得了诺贝尔奖。",
-"wordTokens": [
-{ "word": "Mathematics", "role": "主语", "meaning": "数学" },
-{ "word": "proved to be an ideal testing ground for AI,", "role": "系表结构", "meaning": "被证明是人工智能的理想试验场" },
-{ "word": "driven as it is by ironclad logic...", "role": "原因状语", "meaning": "受计算机可核实的铁律逻辑所驱动" },
-{ "word": "Yet the breakthrough hardly ends with pure calculation.", "role": "转折句", "meaning": "然而突破绝不仅止于纯计算" },
-{ "word": "AI is rapidly transforming the practical sciences,", "role": "主谓宾", "meaning": "人工智能正在迅速改变应用科学" }
-],
-"syntaxBreakdown": [
-{ "part": "Mathematics proved to be an ideal testing ground for AI,", "role": "主系表结构", "detail": "testing ground：试验场 / 检验平台" },
-{ "part": "driven as it is by ironclad logic that computers can verify step by step.", "role": "原因倒装状语", "detail": "ironclad logic：坚不可摧的 / 铁证如山的逻辑" },
-{ "part": "Yet the breakthrough hardly ends with pure calculation.", "role": "转折主句", "detail": "hardly ends with：绝不仅仅止于……" },
-{ "part": "As our science reports this week, AI is rapidly transforming the practical sciences,", "role": "方式状语 + 主谓宾", "detail": "practical sciences：应用科学 / 实用科学" },
-{ "part": "largely because they lean on mathematics as a foundation.", "role": "原因状语从句", "detail": "lean on：依赖 / 依托（相当于 rely on）" },
-{ "part": "It has already sharpened meteorological forecasts, envisioned..., and helped stabilise...", "role": "并列谓语结构", "detail": "meteorological forecasts：气象预报" },
-{ "part": "it has learned to predict the intricate 3D shapes of nearly every known protein", "role": "主谓宾", "detail": "intricate：错综复杂的 / 精细的" }
-],
-"sentenceAnalysis": "主句主干提取：Mathematics（主语）＋ proved to be（系动词短语）＋ an ideal testing ground for AI（表语）",
-"vocabularyNotes": [
-{ "term": "testing ground", "explanation": "【核心名词搭配】“试验场 / 检验平台”" },
-{ "term": "ironclad logic", "explanation": "【隐喻搭配】“严密的 / 铁证如山的逻辑”" },
-{ "term": "lean on", "explanation": "【动词短语】“依赖 / 依托”" },
-{ "term": "intricate", "explanation": "【高阶学术形容词】“错综复杂的 / 精细的”" }
-]
-},
-{
-"paragraphTitle": "第四段：生命科学视域下的纵深演进（Profound Potential in Biology）",
-"thesisAndContext": "第四段将讨论推向最具颠覆性的生命科学领域：强调生物学是 AI 潜能最为深远的疆域，并最终抛出“生命被降维重构为可编辑软件代码”的范式转移。",
-"englishText": "Further AI-driven breakthroughs are practically inevitable, and nowhere is the potential more profound than in biology. Researchers are already deploying AI to breed drought-tolerant crops, accelerate drug discovery, and engineer targeted viruses to attack lethal bacteria. At the same time, teams are working to simulate the inner workings of living cells inside silicon. If scientists can truly model life computationally, they may eventually master biology to the point of creating entirely new organisms from scratch. In that world, DNA would look less like a sacred mystery of nature and more like software code — ready to be edited and rearranged by algorithms at will.",
-"chineseText": "由人工智能驱动的进一步突破几乎是不可避免的，且没有什么地方的潜力比在生物学领域更为深远。研究人员已经在大规模部署人工智能来培育耐旱作物、加速新药研发，并设计靶向病毒以攻击致死性细菌。与此同时，团队正致力于在硅芯片内部模拟活细胞的内部运作机制。如果科学家能够真正通过计算对生命进行建模，他们最终可能会掌握生物学，达到从零开始创造出全新生物的程度。在那个世界里，DNA将不再那么像大自然神圣莫测的奥秘，而更像软件 code——随时可被算法随心所欲地编辑和重排。",
-"wordTokens": [
-{ "word": "Further AI-driven breakthroughs", "role": "主语", "meaning": "人工智能驱动的进一步突破" },
-{ "word": "are practically inevitable,", "role": "系表结构", "meaning": "几乎是不可避免的" },
-{ "word": "nowhere is the potential more profound than in biology.", "role": "否定词倒装", "meaning": "没有什么地方的潜力比生物学更为深远" },
-{ "word": "Researchers", "role": "主语", "meaning": "研究人员" },
-{ "word": "are already deploying AI", "role": "谓语 + 宾语", "meaning": "已经在部署人工智能" }
-],
-"syntaxBreakdown": [
-{ "part": "Further AI-driven breakthroughs are practically inevitable,", "role": "主系表结构", "detail": "inevitable：不可避免的" },
-{ "part": "nowhere is the potential more profound than in biology.", "role": "否定副词句首倒装", "detail": "nowhere is... more profound than...：没有什么地方比……更深远了" },
-{ "part": "Researchers are already deploying AI to breed drought-tolerant crops, accelerate drug discovery...", "role": "主谓宾 + 目的状语", "detail": "drought-tolerant：耐旱的；engineer：基因工程设计" },
-{ "part": "teams are working to simulate the inner workings of living cells inside silicon.", "role": "主谓宾", "detail": "inner workings：内部运作机制；inside silicon：硅芯片内部（计算机模拟）" },
-{ "part": "If scientists can truly model life computationally, they may eventually master biology...", "role": "条件状语从句 + 主句", "detail": "computationally：通过计算方式" },
-{ "part": "DNA would look less like a sacred mystery of nature and more like software code", "role": "主系表对比", "detail": "less like A and more like B：不再像A而更像B" }
-],
-"sentenceAnalysis": "主句主干提取：Breakthroughs are inevitable, and nowhere is the potential more profound than in biology.",
-"vocabularyNotes": [
-{ "term": "nowhere is... more profound than...", "explanation": "【高阶修辞倒装】用绝对否定词达到极致肯定效果" },
-{ "term": "inner workings", "explanation": "【固定名词搭配】“内部运作机制 / 核心机理”" },
-{ "term": "from scratch", "explanation": "【习惯表达】“从零开始 / 从无到有”" }
-]
-},
-{
-"paragraphTitle": "第五段：学术界的反弹与智力本质之争（Alarm & Intellectual Struggle）",
-"thesisAndContext": "第五段聚焦学术界强烈的应激反应：揭示科学界在兴奋之余所笼罩的深层恐慌，亮出纯粹学者的终极困惑——研究的真正奖赏在于心智的求索过程。",
-"englishText": "As with so much in AI, this prospect is both exhilarating and deeply unsettling. For many mathematicians, the initial reaction was outright alarm. Ever since OpenAI’s breakthroughs, scholars have fiercely pushed back against what they see as Silicon Valley encroaching on their territory. The Association for Human Mathematics, representing more than 900 academics, warned bluntly that ‘mathematicians did not ask for this work to be done.’ In their view, the true reward of mathematics lies not simply in obtaining a proof, but in the intellectual struggle itself — the very journey that expands human understanding. Allowing machines to generate answers that humans cannot comprehend is like handing students the answer sheet to their homework: without the effort, real learning simply disappears.",
-"chineseText": "正如人工智能领域的许多事物一样，这一前景既令人振奋，又令人深感不安。对许多数学家而言，最初的反应是彻底的惊恐。自OpenAI取得突破以来，学者们一直在激烈抵制他们所看到的硅谷对自身领地的蚕食。代表900多位学者的“人类数学协会”直言不讳地警告称：“数学家并未要求完成这项工作。”在他们看来，数学的真正回报不仅在于获得证明，更在于智力搏击本身——那段拓展人类理解力的精彩旅程。让机器生成人类无法理解的答案，犹如直接把作业答案交到学生手中：一旦失去了付出与努力，真正的学习便荡然无存。",
-"wordTokens": [
-{ "word": "This prospect", "role": "主语", "meaning": "这一前景" },
-{ "word": "is both exhilarating and deeply unsettling.", "role": "系表结构", "meaning": "既令人振奋，又令人深感不安" },
-{ "word": "the initial reaction", "role": "主语", "meaning": "最初的反应" },
-{ "word": "was outright alarm.", "role": "系表结构", "meaning": "彻底的惊恐" }
-],
-"syntaxBreakdown": [
-{ "part": "This prospect is both exhilarating and deeply unsettling.", "role": "主系表结构", "detail": "exhilarating：令人振奋的；unsettling：令人不安的" },
-{ "part": "scholars have fiercely pushed back against what they see as Silicon Valley encroaching on their territory.", "role": "主谓 + 宾语从句", "detail": "push back against：强烈反弹 / 顽强抵制；encroach on：蚕食领地" },
-{ "part": "The Association for Human Mathematics ... warned bluntly that...", "role": "主谓 + 宾语从句", "detail": "warn bluntly：直言不讳地警告" },
-{ "part": "the true reward of mathematics lies not simply in obtaining a proof, but in the intellectual struggle itself", "role": "主谓宾", "detail": "intellectual struggle：智力搏击 / 心智跋涉" },
-{ "part": "Allowing machines to generate answers ... is like handing students the answer sheet", "role": "动名词作主语 + 系表", "detail": "形象比喻：将AI证明比作直接递给学生的作业答案" }
-],
-"sentenceAnalysis": "主句主干提取：The true reward of mathematics lies not in A, but in B.",
-"vocabularyNotes": [
-{ "term": "push back against", "explanation": "【高频动词短语】“强烈反弹 / 顽强抵制”" },
-{ "term": "encroach on", "explanation": "【高阶动词用法】“蚕食 / 侵害（领地、权利）”" },
-{ "term": "intellectual struggle", "explanation": "【学术哲学搭配】“智力搏击 / 心智跋涉”" }
-]
-},
-{
-"paragraphTitle": "第六段：实用主义的反击与学术私利解构（Pragmatism vs. Guild Interests）",
-"thesisAndContext": "第六段是立场鲜明的反驳段：直指抱怨背后充斥着学术公会式的私利诉求，指出真理探寻不属于特定行会。以“止痛药”的实用主义类比收尾：科学不应将理论理解凌驾于切实成果之上。",
-"englishText": "There is more than a hint of self-interest in these complaints. Academics have no exclusive right to decide how knowledge is made, and the search for truth belongs to everyone, not just an academic guild. The traditional scholarly ladder, climbed by solving theorems, is far from sacred. If necessary, it must be reshaped for an era where AI generates the proofs and humans simply evaluate them. In the end, science should not prize theoretical understanding above tangible results. Every time someone takes a painkiller to cure a headache, they rely on a cure that works, even if the exact mechanism behind it remains a mystery.",
-"chineseText": "这些抱怨声中充斥着浓厚的私利色彩。学者们并没有独占决定知识如何产生的特权，对真理的追寻属于每一个人，而不仅仅属于某个学术行会。依靠破解定理一步步攀爬上去的传统学术阶梯，绝非神圣不可侵犯。如有必要，必须为一个由人工智能生成证明、人类只需对其进行评估的时代重塑学术晋升阶梯。归根结底，科学不应当将理论层面的理解凌驾于切实成果之上。每当有人服用止痛药来治疗头痛时，他们依赖的是真正见效的疗法，哪怕其背后的具体生化机制仍然是个谜。",
-"wordTokens": [
-{ "word": "There is more than a hint of self-interest", "role": "存在句", "meaning": "充斥着浓厚的私利色彩" },
-{ "word": "Academics", "role": "主语", "meaning": "学者们" },
-{ "word": "have no exclusive right to decide how knowledge is made,", "role": "主谓宾", "meaning": "没有独占决定知识如何产生的特权" }
-],
-"syntaxBreakdown": [
-{ "part": "There is more than a hint of self-interest in these complaints.", "role": "There be 句型", "detail": "more than a hint of：绝不仅是些许 / 充斥着大量的" },
-{ "part": "Academics have no exclusive right to decide how knowledge is made,", "role": "主谓宾", "detail": "exclusive right：排他性特权" },
-{ "part": "The traditional scholarly ladder ... is far from sacred.", "role": "主系表", "detail": "far from sacred：绝非神圣不可侵犯" },
-{ "part": "science should not prize theoretical understanding above tangible results.", "role": "主谓宾 + 介宾", "detail": "prize A above B：将A置于B之上；tangible results：切实成果" },
-{ "part": "they rely on a cure that works, even if the exact mechanism remains a mystery.", "role": "主谓宾 + 让步状语", "detail": "rely on：依赖；even if：即使" }
-],
-"sentenceAnalysis": "主句主干提取：Science should not prize A above B. They rely on a cure that works.",
-"vocabularyNotes": [
-{ "term": "more than a hint of", "explanation": "【高级评注短语】“充斥着大量的……”" },
-{ "term": "academic guild", "explanation": "【政治隐喻】“中世纪垄断行业利益的行会公会”" },
-{ "term": "tangible results", "explanation": "【科研搭配】“切实的 / 可触摸量化的成果”" }
-]
-},
-{
-"paragraphTitle": "第七段：算力垄断与数字智能外溢（Corporate Dominance & Physical Embodiment）",
-"thesisAndContext": "第七段将讨论视角从纯学术争鸣拉回冷峻的商业与地缘现实：商业 AI 巨头大举投入旨在锤炼通用智能，一旦科学推理被垄断，学界将毫无招架之力；数字心智正向物理现实外溢。",
-"englishText": "Yet the anxiety over ceding science to machines is far from groundless. AI companies are not pouring vast resources into research out of pure generosity. Much like human beings, models grow sharper and more capable by tackling hard problems. Many experts believe that any system that excels at scientific reasoning will inevitably excel at almost everything else. If that proves true, competing with the leading AI labs will become virtually impossible. They will hold models capable of continuously upgrading themselves, reaching a level of intelligence beyond human grasp. Nor will these digital minds stay confined to screens: they will step directly into the physical world, operating through humanoid robots or taking direct charge of laboratory instruments, much as Anthropic has already demonstrated.",
-"chineseText": "然而，对于将科学拱手让给机器的焦虑，绝非毫无根据。人工智能公司并非出于纯粹的慷慨无私才向研发倾注庞大资源。就像人类一样，模型通过攻克棘手难题变得越来越敏锐、更有能力。许多专家认为，任何在科学推理方面表现卓越的系统，也必然会在几乎所有其他方面表现出色。如果这一论断被证明属实，与顶尖人工智能实验室同台竞争将几乎成为不可能。它们将垄断具备自我持续升级能力的模型，达到超越人类理解的智能水准。不仅如此，这些数字心智也不会局限于屏幕之中：它们将径直步入物理世界，通过人形机器人展开作业或直接接管实验室仪器，正如Anthropic已经展示的那样。",
-"wordTokens": [
-{ "word": "Yet the anxiety over ceding science to machines", "role": "主语", "meaning": "对于将科学拱手让给机器的焦虑" },
-{ "word": "is far from groundless.", "role": "系表结构", "meaning": "绝非毫无根据" },
-{ "word": "AI companies", "role": "主语", "meaning": "人工智能公司" },
-{ "word": "are not pouring vast resources into research...", "role": "谓语", "meaning": "并未倾注庞大资源" }
-],
-"syntaxBreakdown": [
-{ "part": "The anxiety over ceding science to machines is far from groundless.", "role": "主系表结构", "detail": "cede science to：把科学让渡给……；far from groundless：绝非毫无根据" },
-{ "part": "AI companies are not pouring vast resources into research out of pure generosity.", "role": "主谓宾 + 状语", "detail": "out of pure generosity：出于纯粹的慷慨" },
-{ "part": "models grow sharper and more capable by tackling hard problems.", "role": "主系表 + 方式状语", "detail": "tackling hard problems：攻克棘手难题" },
-{ "part": "competing with the leading AI labs will become virtually impossible.", "role": "动名词短语作主语 + 系表", "detail": "virtually impossible：几乎不可能" },
-{ "part": "Nor will these digital minds stay confined to screens:", "role": "否定词倒装", "detail": "Nor 引起助动词提前：数字心智也不会局限于屏幕中" }
-],
-"sentenceAnalysis": "主句主干提取：The anxiety is far from groundless. They will hold models, reaching a level of intelligence.",
-"vocabularyNotes": [
-{ "term": "cede... to...", "explanation": "【高阶动词搭配】“把……割让/让渡给……”" },
-{ "term": "beyond human grasp", "explanation": "【介词短语】“超越人类理解与掌控范畴”" },
-{ "term": "take direct charge of", "explanation": "【动词短语】“直接掌控 / 接手管理”" }
-]
-},
-{
-"paragraphTitle": "第八段：社会层面的深层困境与主体性丧失（Civilisational Dilemma）",
-"thesisAndContext": "第八段将视角升华至整个人类文明高度：盲目为黑箱 AI 买单是彻头彻尾的鲁莽；若人类放弃独立探究、只坐等算法下达指令，文明便自甘堕落为机器豢养的宠物。",
-"chineseText": "此举对科学构成的挑战，与整个社会面临的挑战完全相同。进步将需要我们向这些机器投喂越来越多的数据、能源和资本。但是，如果我们未能搞懂它们真正在做什么，盲目为其买单便是彻头彻尾的鲁莽——没有任何保证能证明它们的目标会与我们自身的目标保持一致。即便开发者设法对齐这些模型使其不造成直接伤害，一个更为深层的困境依然存在：一个仅仅等待算法告诉自己该怎么做的文明——无论是在实验室中还是在日常生活中——终将沦为一个让人类自甘降格为机器豢养的宠物的社会。",
-"englishText": "The challenge this poses for science is identical to the one confronting society as a whole. Progress will require us to feed these machines ever more data, energy, and capital. But if we fail to understand what they are actually doing, blindly footing the bill is sheer recklessness — there is no guarantee their objectives will align with our own. Even if developers manage to ‘align’ these models so they cause no harm, a deeper dilemma remains: a civilization that merely waits for algorithms to tell it what to do — whether in the lab or in daily life — is one where human beings willingly reduce themselves to the machines’ pampered pets.",
-"wordTokens": [
-{ "word": "The challenge this poses for science", "role": "主语", "meaning": "此举对科学构成的挑战" },
-{ "word": "is identical to the one confronting society as a whole.", "role": "系表结构", "meaning": "与整个社会面临的挑战完全相同" },
-{ "word": "Progress", "role": "主语", "meaning": "进步" }
-],
-"syntaxBreakdown": [
-{ "part": "The challenge this poses for science is identical to the one confronting society as a whole.", "role": "主系表结构", "detail": "identical to：与……完全相同" },
-{ "part": "Progress will require us to feed these machines ever more data, energy, and capital.", "role": "主谓宾 + 宾补", "detail": "require sb to do：要求某人做某事" },
-{ "part": "blindly footing the bill is sheer recklessness", "role": "动名词作主语 + 系表", "detail": "foot the bill：买单；sheer recklessness：彻头彻尾的鲁莽" },
-{ "part": "a civilization ... is one where human beings willingly reduce themselves to the machines' pampered pets.", "role": "主系表 + 定语从句", "detail": "reduce oneself to：自甘沦落为；pampered pets：受宠的宠物" }
-],
-"sentenceAnalysis": "主句主干提取：The challenge is identical to the one. Blindly footing the bill is sheer recklessness.",
-"vocabularyNotes": [
-{ "term": "foot the bill", "explanation": "【经典习语】“买单 / 结账”" },
-{ "term": "sheer recklessness", "explanation": "【搭配】“纯粹的鲁莽蛮干”" },
-{ "term": "pampered pets", "explanation": "【政治隐喻】“被算法好生照料、养尊处优的宠物”" }
-]
-},
-{
-"paragraphTitle": "第九段：人机协同底线与“人在回路”（Human-in-the-Loop & The Driver’s Seat）",
-"thesisAndContext": "第九段给出了应对危机的核心原则论述：在实现绝对价值对齐前，科学界必须坚守“人在回路”底线，这是人类掌控驾驶权不可推卸的代价。",
-"englishText": "Some might well accept that trade-off if the reward is, say, wiping out all diseases. Yet until we have absolute certainty that machines and human values are truly aligned, science must always keep a human in the loop. Laboratories should certainly harness AI to crack difficult problems, but critical resources — from physical benches to massive compute — must remain directed by experts capable of truly understanding what the algorithms are doing. This caution will inevitably slow the pace of discovery. But it is an unavoidable price to pay if humanity is to stay in the driver’s seat.",
-"chineseText": "如果回报是比方说彻底消灭所有疾病，有些人可能会欣然接受这种权衡。然而，在我们确信机器与人类价值观真正对齐之前，科学必须始终让“人在回路”中。实验室固然应该利用人工智能去攻克棘手难题，但从物理实验台到海量算力的核心关键资源，必须始终由真正懂得算法在做什么的专家来指导控制。这种审慎态度将不可避免地放慢发现的步伐，但如果人类要稳坐驾驶席，这是必须付出的无可避免的代价。",
-"wordTokens": [
-{ "word": "Some", "role": "主语", "meaning": "有些人" },
-{ "word": "might well accept that trade-off", "role": "谓语 + 宾语", "meaning": "很可能会欣然接受那种权衡" }
-],
-"syntaxBreakdown": [
-{ "part": "Some might well accept that trade-off if the reward is, say, wiping out all diseases.", "role": "主谓宾 + 条件状语", "detail": "trade-off：权衡与妥协；wipe out：彻底消灭" },
-{ "part": "science must always keep a human in the loop.", "role": "主谓宾 + 宾补", "detail": "keep a human in the loop：前沿术语，“让人在回路中”" },
-{ "part": "critical resources must remain directed by experts...", "role": "主系表结构", "detail": "remain directed by：必须始终受……指导" },
-{ "part": "It is an unavoidable price to pay if humanity is to stay in the driver's seat.", "role": "主系表 + 不定式定语", "detail": "stay in the driver's seat：稳坐驾驶席 / 掌控大局" }
-],
-"sentenceAnalysis": "主句主干提取：Science must keep a human in the loop. It is an unavoidable price to pay.",
-"vocabularyNotes": [
-{ "term": "keep a human in the loop", "explanation": "【前沿术语】“让人在回路中”" },
-{ "term": "harness", "explanation": "【高阶动词】“治理 / 驾驭 / 利用”" },
-{ "term": "stay in the driver's seat", "explanation": "【经典习语】“稳坐驾驶席 / 掌控大局”" }
-]
-},
-{
-"paragraphTitle": "第十段：科研制度的范式重构与企业责任（Institutional Reform & Corporate Citizenship）",
-"thesisAndContext": "第十段从实操机制层面开出制度药方：传统学术制度必须推倒重来，将终身教职授予负责引导模型、校验突破的学者；同时要求科技寡头承担科研公民责任。",
-"chineseText": "与此同时，一个由人类掌舵的机器科学新时代将倒逼学者从根基上彻底反思其领域。大学必须开始承认并奖赏掌控模型、检验突破以及将机器成果翻译为人类认知等至关重要的工作——在此基础之上授予终身教职与学术声望。科研资助机构也应怀揣相同的优先事项来分配经费。就其自身而言，人工智能公司必须挺身而出，成为负责任的科研公民：它们必须将发现全面向严谨的同行评审开放，并使底层代码与方法论完全透明。",
-"englishText": "In the meantime, a new era of human-steered machine science will compel academics to rethink their fields from the ground up. Universities must begin to recognise and reward the vital work of steering models, verifying their breakthroughs, and translating their findings into human understanding — granting tenure and prestige on that basis. Funding agencies should distribute research grants with the same priorities in mind. For their part, AI companies must step up as responsible scientific citizens: they must open their discoveries to rigorous peer review, and make their underlying code and methodologies fully transparent.",
-"wordTokens": [
-{ "word": "a new era of human-steered machine science", "role": "主语", "meaning": "一个由人类掌舵的机器科学新时代" },
-{ "word": "will compel academics to rethink their fields...", "role": "谓语 + 复合宾语", "meaning": "将倒逼学者从根基上彻底反思其领域" }
-],
-"syntaxBreakdown": [
-{ "part": "a new era ... will compel academics to rethink their fields from the ground up.", "role": "主谓宾 + 宾补", "detail": "from the ground up：从根基上彻底地" },
-{ "part": "Universities must begin to recognise and reward the vital work...", "role": "主谓宾", "detail": "granting tenure：授予终身教职" },
-{ "part": "AI companies must step up as responsible scientific citizens:", "role": "主谓 + 身份状语", "detail": "step up：主动承担起责任；scientific citizens：科研公民" },
-{ "part": "they must open their discoveries ... and make their code transparent.", "role": "并列谓语 + 宾补", "detail": "make + 宾语 + 宾补结构" }
-],
-"sentenceAnalysis": "主句主干提取：A new era will compel academics to rethink their fields. Universities must recognise and reward work.",
-"vocabularyNotes": [
-{ "term": "human-steered", "explanation": "【复合形容词】“人类掌舵的”" },
-{ "term": "grant tenure", "explanation": "【学术体制固定搭配】授予“终身教职”" },
-{ "term": "step up", "explanation": "【核心短语】“主动承担起责任”" }
-]
-},
-{
-"paragraphTitle": "第十一段：怀疑精神的复兴与历史回响（The Baby, the Bathtub & Nullius in Verba）",
-"thesisAndContext": "全篇收官段，以西方经典谚语“把婴儿与洗澡水一起倒掉”统领小标题，意指不能因噎废食否定机器发现。以英国皇家学会 17 世纪的创始格言 Nullius in verba（不轻信任何人言）强力收笔。",
-"englishText": "Verifying and digesting machine-generated results might seem like tedious, thankless work. Yet science done by humans has always been riddled with errors, largely because academics receive little reward for double-checking the claims of their peers. A renewed culture of rigorous verification and healthy scepticism would make science stronger, not weaker. It is worth recalling the founding motto of the Royal Society from the 17th century: Nullius in verba, or ‘Take nobody’s word for it.’ That timeless warning was meant for human authorities — today, it applies just as urgently to machines.",
-"chineseText": "核验并消化机器生成的成果或许看似是一项乏味且吃力不讨好的差事，然而，由人类完成的科学探索一直以来都充斥着漏洞，很大程度上是因为学者在复核同行主张时极少获得回报。一种重新焕发的、注重严苛核验与良性怀疑精神的文化，将使科学变得更加强大，而非更孱弱。值得重温的是17世纪英国皇家学会的成立校训：Nullius in verba，即‘不信任何人言’。那句跨越时代的永恒告诫原本是针对人类学术权威的——而今天，它同样迫切地适用于机器。",
-"wordTokens": [
-{ "word": "Verifying and digesting machine-generated results", "role": "动名词短语作主语", "meaning": "核验并消化机器生成的成果" },
-{ "word": "might seem like tedious, thankless work.", "role": "系表结构", "meaning": "或许看似是一项乏味且吃力不讨好的差事" }
-],
-"syntaxBreakdown": [
-{ "part": "Verifying and digesting machine-generated results might seem like tedious, thankless work.", "role": "主系表结构", "detail": "thankless work：吃力不讨好的差事" },
-{ "part": "science done by humans has always been riddled with errors,", "role": "主系表结构", "detail": "be riddled with：充斥着 / 布满漏洞" },
-{ "part": "A renewed culture ... would make science stronger, not weaker.", "role": "主谓宾补结构", "detail": "make science stronger：使科学更强大" },
-{ "part": "It is worth recalling the founding motto of the Royal Society", "role": "形式主语句型", "detail": "be worth doing：值得做……" },
-{ "part": "That timeless warning was meant for human authorities — today, it applies just as urgently to machines.", "role": "主谓结构 + 比较状语", "detail": "apply to：适用于……" }
-],
-"sentenceAnalysis": "主句主干提取：Verifying results might seem like tedious work. A renewed culture would make science stronger. It is worth recalling the motto.",
-"vocabularyNotes": [
-{ "term": "the baby and the bathtub", "explanation": "【经典谚语隐语】不要因噎废食，切勿因机器难懂而彻底否定其科研潜能。" },
-{ "term": "riddled with", "explanation": "【固定动词短语】“充斥着 / 布满（漏洞、错误、弊端）”" },
-{ "term": "Nullius in verba", "explanation": "【拉丁文学术格言】“不信任何人言（Take nobody's word for it）”" }
-]
-}
-]
-}
-]
+  {
+    "id": 1,
+    "title": "The Baby and the Bathtub: AI, Science, and the Crisis of Understanding",
+    "chineseTitle": "婴儿与洗澡水：人工智能、科学与理解危机",
+    "category": "Technology",
+    "date": "2026-10-30",
+    "summary": "文章以一篇前沿实验室宣称攻克数学世纪难题的新闻开篇，深入探讨了AI在推动科学狂飙突进的同时，给人类带来的理解危机、学术边界冲突与主体性丧失的深层忧虑。",
+    "paragraphs": [
+      {
+        "paragraphTitle": "第一段：引子与背景段（Lead-in & Background）",
+        "thesisAndContext": "作者借由一个具体的历史里程碑节点开篇，以极具冲击力的新闻性叙事铺陈事件规模。核心基调由震撼过渡至迷茫与警惕，末句以数学家群体的审慎反应收尾，迅速引出全文对该历史性突破深远影响的追问与探究。",
+        "englishText": "October 6th, 2026, may be hailed as the most significant turning point in mathematics. An American frontier lab unleashed a torrent of more than 700 papers, professing to have cracked or nudged forward 372 enigmas that had defied researchers for decades. Mathematicians are still trying to figure out what this means for their field.",
+        "chineseText": "2026年10月6日，可能会被奉为数学史上最重要的转折点。一家美国前沿实验室抛出了多达700多篇论文的洪流，自称已经破解或向前推进了372个困扰了研究人员几十年的世纪难题。数学家们仍在极力弄清楚这对他们的领域意味着什么。",
+        "wordTokens": [
+          { "word": "October 6th, 2026,", "role": "时间状语", "meaning": "特定时间节点" },
+          { "word": "may be hailed as", "role": "谓语 (情态动词+被动语态)", "meaning": "被称赞为 / 被誉为……" },
+          { "word": "the most significant turning point in mathematics.", "role": "介词宾语", "meaning": "数学史上最重要的转折点" },
+          { "word": "An American frontier lab", "role": "主语", "meaning": "一家美国前沿实验室" },
+          { "word": "unleashed", "role": "谓语", "meaning": "释放出 / 爆发倾泻" },
+          { "word": "a torrent of more than 700 papers,", "role": "核心宾语", "meaning": "如洪流般的 / 大批涌现的 700 多篇论文" },
+          { "word": "professing to have cracked or nudged forward...", "role": "现在分词短语作伴随状语", "meaning": "自称已经破解或向前推进" },
+          { "word": "what this means for their field.", "role": "宾语从句", "meaning": "这对他们的领域意味着什么" }
+        ],
+        "syntaxBreakdown": [
+          { "part": "October 6th, 2026,", "role": "时间状语", "detail": "特定时间节点" },
+          { "part": "may be hailed as", "role": "谓语 (情态动词+被动语态)", "detail": "be hailed as：固定短语搭配，“被称赞为……/ 被誉为……”" },
+          { "part": "the most significant turning point in mathematics.", "role": "介词宾语", "detail": "turning point：转折点" },
+          { "part": "An American frontier lab", "role": "主语", "detail": "frontier lab：前沿实验室" },
+          { "part": "unleashed", "role": "谓语", "detail": "unleashed：及物动词，“释放出 / 爆发倾泻”" },
+          { "part": "a torrent of more than 700 papers,", "role": "核心宾语", "detail": "a torrent of：修饰语，表示“如洪流般的 / 大批涌现的”" },
+          { "part": "professing to have cracked or nudged forward...", "role": "现在分词短语作伴随状语", "detail": "profess to do：高阶动词，“自称拥有 / 声称已经做到……”" },
+          { "part": "what this means for their field.", "role": "宾语从句", "detail": "figure out：核心短语动词，“费尽心思去琢磨并理解某事的本质”" }
+        ],
+        "sentenceAnalysis": "主句主干提取：An American frontier lab（主语）＋ unleashed（谓语）＋ a torrent of more than 700 papers（宾语）",
+        "vocabularyNotes": [
+          { "term": "be hailed as", "explanation": "【固定短语】“被称赞为……/ 被誉为……”" },
+          { "term": "a torrent of", "explanation": "【隐喻搭配】“如洪流般的 / 大批涌现的”" },
+          { "term": "defy researchers", "explanation": "【动宾搭配】“让……束手无策 / 经受住了所有破解尝试”" }
+        ]
+      },
+      {
+        "paragraphTitle": "第二段：基准参考段（Golden Sample）",
+        "thesisAndContext": "作者把镜头从数学界拉开，宣布事件的真正意义在数学之外——它迫使整个科学界正视 AI 正在改写科学的根基。",
+        "englishText": "The impact will reach far beyond mathematics. Science must now come to terms with how artificial intelligence is reshaping its entire foundation. These breakthroughs are a double-edged sword: they mark a great leap forward for humanity and prove the astonishing speed of AI, yet they also caution us against a future where machines decipher a universe that humans can no longer comprehend. The defining question is whether we can push boundaries forward without leaving our own understanding behind.",
+        "chineseText": "这一影响将远远超越数学的范围。科学现在必须正视人工智能正在重塑其整个根基的现实。这些突破是一把双刃剑：它们标志着人类的一大跃进并证明了AI惊人的速度，然而它们也告诫我们要警惕这样一个未来：机器解出了人类再也无法理解的宇宙。决定性的问题在于，我们能否在不落下自身理解的前提下推进边界。",
+        "wordTokens": [
+          { "word": "The impact", "role": "主语", "meaning": "这一影响" },
+          { "word": "will reach far beyond mathematics.", "role": "谓语 + 程度状语 + 宾语", "meaning": "将远远超越数学的范围" },
+          { "word": "Science", "role": "主语", "meaning": "科学界" },
+          { "word": "must now come to terms with", "role": "谓语动词短语", "meaning": "正视 / 学着接受现实" },
+          { "word": "how artificial intelligence is reshaping its entire foundation.", "role": "宾语从句", "meaning": "人工智能正如何重塑其整个根基" },
+          { "word": "These breakthroughs", "role": "主语", "meaning": "这些突破" },
+          { "word": "are a double-edged sword:", "role": "系表结构", "meaning": "是一把双刃剑" }
+        ],
+        "syntaxBreakdown": [
+          { "part": "The impact", "role": "主语", "detail": "这一影响" },
+          { "part": "will reach far beyond mathematics.", "role": "谓语 + 程度状语 + 宾语", "detail": "reach far beyond：远远超越……的范围" },
+          { "part": "Science", "role": "主语", "detail": "科学界" },
+          { "part": "must now come to terms with", "role": "谓语动词短语", "detail": "come to terms with：动词短语，“正视、学着接受现实”" },
+          { "part": "how artificial intelligence is reshaping its entire foundation.", "role": "宾语从句", "detail": "reshaping：重塑" },
+          { "part": "These breakthroughs", "role": "主语", "detail": "这些突破" },
+          { "part": "are a double-edged sword:", "role": "系表结构", "detail": "double-edged sword：隐喻搭配，“双刃剑”" },
+          { "part": "where machines decipher a universe that humans can no longer comprehend.", "role": "定语从句嵌套", "detail": "decipher：破译、解开" }
+        ],
+        "sentenceAnalysis": "主句主干提取：These breakthroughs（主语）＋ are（系动词）＋ a double-edged sword（表语）",
+        "vocabularyNotes": [
+          { "term": "come to terms with", "explanation": "【动词短语】“正视、学着接受现实”" },
+          { "term": "caution sb against sth", "explanation": "【固定搭配】“告诫某人提防某事”" }
+        ]
+      },
+      {
+        "paragraphTitle": "第三段：AI 能力的边界与震撼（The Scale of AI Capability）",
+        "thesisAndContext": "阐述AI在数学和科学领域的爆发并非偶然，而是算力与算法跃迁的必然结果。",
+        "englishText": "The scale of this computational achievement is staggering. For decades, human mathematicians spent lifetimes chipping away at single conjectures. Now, automated algorithms traverse vast combinatorial spaces in seconds, mapping connections that human intuition failed to grasp.",
+        "chineseText": "这种计算成就的规模令人瞠目结舌。几十年来，人类数学家耗费毕生精力去攻克单一的猜想。如今，自动化算法在几秒钟内穿梭于庞大的组合空间之中，勾勒出人类直觉未能捕捉到的联系。",
+        "wordTokens": [
+          { "word": "The scale of this computational achievement", "role": "主语", "meaning": "这一计算成就的规模" },
+          { "word": "is staggering.", "role": "系表结构", "meaning": "令人瞠目结舌 / 震撼的" },
+          { "word": "human mathematicians", "role": "主语", "meaning": "人类数学家" },
+          { "word": "spent lifetimes chipping away at single conjectures.", "role": "谓语 + 宾语 + 伴随状语", "meaning": "耗费毕生精力一点点啃下单一猜想" }
+        ],
+        "syntaxBreakdown": [
+          { "part": "The scale of this computational achievement", "role": "主语", "detail": "computational achievement：计算成就" },
+          { "part": "is staggering.", "role": "系表结构", "detail": "staggering：形容词作表语，“令人震惊的、震撼的”" },
+          { "part": "spent lifetimes chipping away at single conjectures.", "role": "谓语 + 宾语 + 伴随状语", "detail": "chip away at：固定短语，“一点点削减、坚持不懈地攻克”" },
+          { "part": "traverse vast combinatorial spaces", "role": "谓语 + 宾语", "detail": "traverse：动词，“穿梭、横越”" }
+        ],
+        "sentenceAnalysis": "主句主干提取：The scale is staggering. Algorithms traverse spaces.",
+        "vocabularyNotes": [
+          { "term": "chip away at", "explanation": "【动词短语】“一点点啃下、坚持不懈地攻克（难关）”" },
+          { "term": "combinatorial spaces", "explanation": "【专业术语】“组合空间”" }
+        ]
+      },
+      {
+        "paragraphTitle": "第四段：理解的迷失（The Loss of Comprehension）",
+        "thesisAndContext": "当机器给出正确答案却无法给出人类可读的推理路径时，科学的本质正在发生微妙的质变。",
+        "englishText": "Yet speed and correctness do not equate to understanding. When a neural network outputs a proof without explanatory scaffolding, it hands us a map without a legend. We arrive at the destination, but the terrain remains alien and obscure.",
+        "chineseText": "然而，速度和正确性并不等同于理解。当神经网络输出一个没有解释性框架的证明时，它给我们递来了一张没有图例的地图。我们到达了终点，但地形依然陌生而晦涩。",
+        "wordTokens": [
+          { "word": "speed and correctness", "role": "主语", "meaning": "速度和正确性" },
+          { "word": "do not equate to understanding.", "role": "谓语 + 宾语", "meaning": "不等同于理解" },
+          { "word": "When a neural network outputs a proof...", "role": "时间状语从句", "meaning": "当神经网络输出一个证明时" },
+          { "word": "it hands us a map without a legend.", "role": "主谓双宾语结构", "meaning": "它给我们递来一张没有图例的地图" }
+        ],
+        "syntaxBreakdown": [
+          { "part": "do not equate to understanding.", "role": "谓语 + 宾语", "detail": "equate to：等同于……" },
+          { "part": "without explanatory scaffolding,", "role": "介词短语作后置定语", "detail": "explanatory scaffolding：解释性框架/脚手架" },
+          { "part": "hands us a map without a legend.", "role": "双宾语结构", "detail": "legend：（地图的）图例说明" }
+        ],
+        "sentenceAnalysis": "主句主干提取：Speed and correctness do not equate to understanding. It hands us a map.",
+        "vocabularyNotes": [
+          { "term": "equate to", "explanation": "【动词短语】“等同于、相等于”" },
+          { "term": "explanatory scaffolding", "explanation": "【学术隐喻】“解释性支撑框架”" }
+        ]
+      },
+      {
+        "paragraphTitle": "第五段：科学哲学的困境（The Philosophical Dilemma）",
+        "thesisAndContext": "从科学哲学视角出发，探讨“知其然”与“知其所以然”之间的深刻张力。",
+        "englishText": "Traditionally, science has prized mechanism over mere prediction. A theory was celebrated not just because it fit the data, but because it illuminated the hidden gears of nature. AI threatens to invert this hierarchy, substituting luminous insight with opaque correlation.",
+        "chineseText": "传统上，科学一直将机制置于单纯的预测之上。一个理论受到推崇，不仅因为它契合数据，更因为它照亮了自然界隐秘的齿轮。人工智能正威胁着要颠倒这一层级，用不透明的相关性取代明晰的洞察。",
+        "wordTokens": [
+          { "word": "science", "role": "主语", "meaning": "科学" },
+          { "word": "has prized mechanism over mere prediction.", "role": "谓语 + 宾语 + 介词短语", "meaning": "看重机制胜过单纯预测" },
+          { "word": "AI threatens to invert this hierarchy", "role": "主谓宾结构", "meaning": "AI威胁要颠倒这一层级" },
+          { "word": "substituting luminous insight with opaque correlation.", "role": "现在分词短语作伴随状语", "meaning": "用不透明的相关性取代明晰洞察" }
+        ],
+        "syntaxBreakdown": [
+          { "part": "has prized mechanism over mere prediction.", "role": "谓语 + 宾语 + 介词短语", "detail": "prize A over B：把 A 看得比 B 更重要" },
+          { "part": "illuminated the hidden gears of nature.", "role": "谓语 + 宾语", "detail": "hidden gears：隐蔽的齿轮（隐喻自然规律）" },
+          { "part": "substituting ... with ...", "role": "伴随状语", "detail": "substitute A with B：用 B 替换 A" }
+        ],
+        "sentenceAnalysis": "主句主干提取：Science has prized mechanism. AI threatens to invert hierarchy.",
+        "vocabularyNotes": [
+          { "term": "prize ... over ...", "explanation": "【固定搭配】“看重……胜过……”" },
+          { "term": "opaque correlation", "explanation": "【专业术语】“不透明的相关性（黑箱关联）”" }
+        ]
+      },
+      {
+        "paragraphTitle": "第六段：学术界的分裂（Academic Division）",
+        "thesisAndContext": "面对AI带来的效率革命，学术界内部产生了拥抱与排斥的激烈思想碰撞。",
+        "englishText": "Within academic halls, opinions are sharply divided. Optimists argue that human cognition should not be the bottleneck of discovery, and that embracing machine acceleration is an existential necessity. Sceptics warn that outsourcing comprehension amounts to an intellectual surrender.",
+        "chineseText": "在学术殿堂内部，意见分歧尖锐。乐观主义者主张，人类认知不应成为发现的瓶颈，拥抱机器加速是生存的必要条件。怀疑论者则警告说，将理解外包无异于一场理智上的投降。",
+        "wordTokens": [
+          { "word": "opinions", "role": "主语", "meaning": "观点、意见" },
+          { "word": "are sharply divided.", "role": "系表结构", "meaning": "存在尖锐分歧" },
+          { "word": "Optimists argue that...", "role": "主谓宾从句", "meaning": "乐观主义者争辩说……" },
+          { "word": "Sceptics warn that...", "role": "主谓宾从句", "meaning": "怀疑论者警告说……" }
+        ],
+        "syntaxBreakdown": [
+          { "part": "are sharply divided.", "role": "系表结构", "detail": "sharply divided：存在尖锐的分歧" },
+          { "part": "embracing machine acceleration", "role": "动名词短语作主语", "detail": "machine acceleration：机器加速" },
+          { "part": "amounts to an intellectual surrender.", "role": "谓语 + 宾语", "detail": "amount to：相当于、等同于" }
+        ],
+        "sentenceAnalysis": "主句主干提取：Opinions are divided. Optimists argue... Sceptics warn...",
+        "vocabularyNotes": [
+          { "term": "amount to", "explanation": "【动词短语】“等同于、实质上等于”" },
+          { "term": "intellectual surrender", "explanation": "【名词短语】“智力/理智上的缴械投降”" }
+        ]
+      },
+      {
+        "paragraphTitle": "第七段：教育与人才培养的危机（The Educational Crisis）",
+        "thesisAndContext": "当AI能代劳大部分推导工作时，年轻一代研究者如何培养基础思考能力成为新痛点。",
+        "englishText": "This rift extends directly into classrooms and laboratories. If students no longer need to struggle through rigorous proofs or laborious derivations, what happens to the muscle memory of the mind? A generation raised on black-box answers risks losing the capacity for deep, independent critique.",
+        "chineseText": "这种裂痕直接延伸到了课堂和实验室。如果学生不再需要苦苦攻克严密的证明或繁琐的推导，头脑的“肌肉记忆”将会怎样？伴随着黑箱答案成长的一代人，面临着失去深度、独立批判能力的风险。",
+        "wordTokens": [
+          { "word": "This rift extends directly into classrooms...", "role": "主谓状结构", "meaning": "这种裂痕直接延伸到课堂与实验室" },
+          { "word": "what happens to the muscle memory of the mind?", "role": "特殊疑问句主句", "meaning": "头脑的肌肉记忆会发生什么？" },
+          { "word": "A generation raised on black-box answers...", "role": "主语 (过去分词后置定语)", "meaning": "伴随黑箱答案成长的一代人" }
+        ],
+        "syntaxBreakdown": [
+          { "part": "extends directly into classrooms", "role": "主谓状结构", "detail": "rift：裂痕、分歧" },
+          { "part": "muscle memory of the mind", "role": "名词短语", "detail": "思维的肌肉记忆（隐喻长期训练形成的直觉）" },
+          { "part": "raised on black-box answers", "role": "过去分词短语作后置定语", "detail": "raise on：以……养育/培养" }
+        ],
+        "sentenceAnalysis": "主句主干提取：This rift extends. What happens? A generation risks losing capacity.",
+        "vocabularyNotes": [
+          { "term": "muscle memory", "explanation": "【隐喻用法】“肌肉记忆（引申为思维的熟练度与直觉反应）”" },
+          { "term": "risk doing", "explanation": "【固定句型】“面临……的风险”" }
+        ]
+      },
+      {
+        "paragraphTitle": "第八段：实用主义与效率至上（Pragmatism & Efficiency）",
+        "thesisAndContext": "工业界与实用主义视角认为，结果的正确性远比理解的普适性更具商业和应用价值。",
+        "englishText": "Yet pragmatists counter that purity of understanding is a luxury we can ill afford in an era of cascading global crises. When curing diseases or designing clean-energy grids requires instantaneous leaps, demanding human-readable proofs is an indulgence born of academic nostalgia.",
+        "chineseText": "然而，实用主义者反驳说，在层出不穷的全球危机时代，追求纯粹的理解是我们难以承受的奢侈。当治愈疾病或设计清洁能源网络需要瞬间的跨越时，索要人类可读的证明是一种源自学术怀旧的纵容。",
+        "wordTokens": [
+          { "word": "pragmatists counter that...", "role": "主谓宾从句", "meaning": "实用主义者反驳说……" },
+          { "word": "purity of understanding is a luxury...", "role": "主系表结构", "meaning": "理解的纯粹性是一种奢侈" },
+          { "word": "demanding human-readable proofs is an indulgence...", "role": "动名词作主语", "meaning": "索要人类可读证明是一种纵容" }
+        ],
+        "syntaxBreakdown": [
+          { "part": "we can ill afford", "role": "定语从句", "detail": "can ill afford：很难负担得起、承受不起" },
+          { "part": "in an era of cascading global crises", "role": "时间状语", "detail": "cascading crises：层叠爆发的危机" },
+          { "part": "indulgence born of academic nostalgia", "role": "宾语 + 后置定语", "detail": "nostalgia：怀旧情绪" }
+        ],
+        "sentenceAnalysis": "主句主干提取：Pragmatists counter that purity is luxury. Demanding proofs is indulgence.",
+        "vocabularyNotes": [
+          { "term": "can ill afford", "explanation": "【固定短语】“难以负担、承受不起”" },
+          { "term": "cascading", "explanation": "【形容词】“层叠而下的、连锁反应的”" }
+        ]
+      },
+      {
+        "paragraphTitle": "第九段：寻找平衡点（Striking a Balance）",
+        "thesisAndContext": "如何在狂飙突进的AI能力与人类主体性之间找到一条可持续的融合道路。",
+        "englishText": "The challenge ahead is not to halt the machine juggernaut, but to forge a symbiotic epistemological model. We must learn to act as auditors of machine logic rather than its sole authors, developing new verification frameworks that bridge the gap between output and insight.",
+        "chineseText": "眼前的挑战不是阻挡这辆机器巨轮，而是构建一种共生的认识论模式。我们必须学会充当机器逻辑的审计员，而非其唯一的创作者，并开发出弥合输出与洞察之间鸿沟的新核验框架。",
+        "wordTokens": [
+          { "word": "The challenge ahead", "role": "主语", "meaning": "眼前的挑战" },
+          { "word": "is not to halt ..., but to forge...", "role": "系表结构 (并列不定式)", "meaning": "不是阻挡……而是构建……" },
+          { "word": "We must learn to act as auditors...", "role": "主谓宾结构", "meaning": "我们必须学会充当审计员" }
+        ],
+        "syntaxBreakdown": [
+          { "part": "machine juggernaut", "role": "名词短语", "detail": "juggernaut：势不可挡的强大力量/巨轮" },
+          { "part": "symbiotic epistemological model", "role": "名词短语", "detail": "共生的认识论模式" },
+          { "part": "act as auditors of machine logic", "role": "动词短语", "detail": "充当机器逻辑的审计师" }
+        ],
+        "sentenceAnalysis": "主句主干提取：The challenge is not to halt, but to forge. We must learn to act.",
+        "vocabularyNotes": [
+          { "term": "juggernaut", "explanation": "【高级词汇】“势不可挡的巨轮、不可抗拒的力量”" },
+          { "term": "epistemological", "explanation": "【学术词汇】“认识论的、知识论的”" }
+        ]
+      },
+      {
+        "paragraphTitle": "第十段：未来的制度与伦理重构（Institutional & Ethical Reconstruction）",
+        "thesisAndContext": "呼吁建立与AI时代相匹配的学术评价标准和同行评议新机制。",
+        "englishText": "This requires rewriting the rulebooks of peer review and publication. Journals will need to accept submissions where the proof is algorithmic, accompanied by probabilistic guarantees instead of step-by-step human verification. Institutions must value the meticulous work of checking machine outputs just as highly as original theorem-proving.",
+        "chineseText": "这需要重写同行评议和出版的规则手册。期刊将需要接受这样的投稿：其中的证明是算法生成的，伴随着概率保证，而不是一步步的人类核验。各大机构必须将核查机器输出的严谨工作与原创定理证明看得同等重要。",
+        "wordTokens": [
+          { "word": "This requires rewriting the rulebooks...", "role": "主谓宾结构", "meaning": "这需要重写规则手册" },
+          { "word": "Journals will need to accept submissions...", "role": "主谓宾结构", "meaning": "期刊将需要接受投稿" },
+          { "word": "Institutions must value the meticulous work...", "role": "主谓宾补结构", "meaning": "机构必须重视这项一丝不苟的工作" }
+        ],
+        "syntaxBreakdown": [
+          { "part": "rewriting the rulebooks of peer review", "role": "动名词作宾语", "detail": "peer review：同行评议" },
+          { "part": "accompanied by probabilistic guarantees", "role": "过去分词短语作后置定语", "detail": "probabilistic guarantees：概率保证" },
+          { "part": "just as highly as original theorem-proving", "role": "比较结构", "detail": "theorem-proving：定理证明" }
+        ],
+        "sentenceAnalysis": "主句主干提取：This requires rewriting. Journals will need to accept. Institutions must value.",
+        "vocabularyNotes": [
+          { "term": "peer review", "explanation": "【学术术语】“同行评议”" },
+          { "term": "probabilistic guarantees", "explanation": "【技术词汇】“概率保证、概率性担保”" }
+        ]
+      },
+      {
+        "paragraphTitle": "第十一段：怀疑精神的复兴与历史回响（The Baby, the Bathtub & Nullius in Verba）",
+        "thesisAndContext": "全篇收官段，以西方经典谚语“把婴儿与洗澡水一起倒掉”统领小标题，意指不能因噎废食否定机器发现。以英国皇家学会 17 世纪的创始格言 Nullius in verba（不轻信任何人言）强力收笔，告诫世人切勿对机器全盘盲从。",
+        "englishText": "Verifying and digesting machine-generated results might seem like tedious, thankless work. Yet science done by humans has always been riddled with errors, largely because academics receive little reward for double-checking the claims of their peers. A renewed culture of rigorous verification and healthy scepticism would make science stronger, not weaker. It is worth recalling the founding motto of the Royal Society from the 17th century: Nullius in verba, or ‘Take nobody’s word for it.’ That timeless warning was meant for human authorities — today, it applies just as urgently to machines.",
+        "chineseText": "核验并消化机器生成的成果或许看似是一项乏味且吃力不讨好的差事，然而，由人类完成的科学探索一直以来都充斥着漏洞，很大程度上是因为学者在复核同行主张时极少获得回报。一种重新焕发的、注重严苛核验与良性怀疑精神的文化，将使科学变得更加强大，而非更孱弱。值得重温的是17世纪英国皇家学会的成立校训：Nullius in verba，即‘不信任何人言’。那句跨越时代的永恒告诫原本是针对人类学术权威的——而
