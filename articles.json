@@ -10,13 +10,7 @@
       {
         "english": "Central banks are shifting their focus as global inflation cools down.",
         "chinese": "随着全球通货膨胀降温，各大央行正在转变重心。",
-        "vocabulary": [
-          {
-            "word": "inflation",
-            "meaning": "n. 通货膨胀，物价上涨"
-          }
-        ],
-        "sentenceAnalysis": "as 引导时间状语从句，意为‘随着’；主句中 are shifting 为现在进行时。"
+        "sentenceAnalysis": "<strong>as</strong> 引导时间状语从句，意为‘随着’；主句中 <strong>are shifting</strong> 为现在进行时，指当前正在发生的政策转向。"
       }
     ]
   }
