@@ -288,4 +288,109 @@
 }
 ]
 }
+{
+    "paragraphTitle": "第三段：承上启下与证据链展开段（Transition & Evidence）",
+    "thesisAndContext": "作者从数学本身的推导逻辑切入，阐明为何数学是 AI 最自然的试验场，并通过气象预测、新材料模拟、可控核聚变及蛋白质结构预测的排比证据链，有力证实了机器智能重塑科学范式的既成事实。",
+    "englishText": "Mathematics proved to be an ideal testing ground for AI, driven as it is by ironclad logic that computers can verify step by step. Yet the breakthrough hardly ends with pure calculation. As our science reports this week, AI is rapidly transforming the practical sciences, largely because they lean on mathematics as a foundation. It has already sharpened meteorological forecasts, envisioned millions of promising new materials, and helped stabilise nuclear fusion experiments. Most remarkably, it has learned to predict the intricate 3D shapes of nearly every known protein — a triumph that rightfully earned a Nobel Prize.",
+    "chineseText": "数学被证明是人工智能的理想试验场，正因其受到计算机能够一步步核实的铁律逻辑所驱动。然而，这一突破绝不仅仅止于纯粹的计算。正如我们本周的科学报道所探讨的那样，人工智能正在迅速改变应用科学，很大程度上是因为它们以数学为基石。它已经使气象预报更加精准，构想出数百万种有前景的新材料，并协助稳定了核聚变实验。最引人注目的是，它已学会预测几乎所有已知蛋白质错综复杂的3D结构——这一成就当之无愧地赢得了诺贝尔奖。",
+    "wordTokens": [
+        { "word": "Mathematics", "role": "主语", "meaning": "数学" },
+        { "word": "proved to be an ideal testing ground for AI,", "role": "系表结构", "meaning": "被证明是人工智能的理想试验场" },
+        { "word": "driven as it is by ironclad logic...", "role": "原因状语", "meaning": "受计算机可核实的铁律逻辑所驱动" },
+        { "word": "Yet the breakthrough hardly ends with pure calculation.", "role": "转折句", "meaning": "然而突破绝不仅止于纯计算" },
+        { "word": "AI is rapidly transforming the practical sciences,", "role": "主谓宾", "meaning": "人工智能正在迅速改变应用科学" }
+    ],
+    "syntaxBreakdown": [
+        { "part": "Mathematics proved to be an ideal testing ground for AI,", "role": "主系表结构", "detail": "testing ground：试验场 / 检验平台" },
+        { "part": "driven as it is by ironclad logic that computers can verify step by step.", "role": "原因倒装状语", "detail": "ironclad logic：坚不可摧的 / 铁证如山的逻辑" },
+        { "part": "Yet the breakthrough hardly ends with pure calculation.", "role": "转折主句", "detail": "hardly ends with：绝不仅仅止于……" },
+        { "part": "As our science reports this week, AI is rapidly transforming the practical sciences,", "role": "方式状语 + 主谓宾", "detail": "practical sciences：应用科学 / 实用科学" },
+        { "part": "largely because they lean on mathematics as a foundation.", "role": "原因状语从句", "detail": "lean on：依赖 / 依托（相当于 rely on）" },
+        { "part": "It has already sharpened meteorological forecasts, envisioned..., and helped stabilise...", "role": "并列谓语结构", "detail": "meteorological forecasts：气象预报" },
+        { "part": "it has learned to predict the intricate 3D shapes of nearly every known protein", "role": "主谓宾", "detail": "intricate：错综复杂的 / 精细的" }
+    ],
+    "sentenceAnalysis": "主句主干提取：Mathematics（主语）＋ proved to be（系动词短语）＋ an ideal testing ground for AI（表语）",
+    "vocabularyNotes": [
+        { "term": "testing ground", "explanation": "【核心名词搭配】“试验场 / 检验平台”" },
+        { "term": "ironclad logic", "explanation": "【隐喻搭配】“严密的 / 铁证如山的逻辑”" },
+        { "term": "lean on", "explanation": "【动词短语】“依赖 / 依托”" },
+        { "term": "intricate", "explanation": "【高阶学术形容词】“错综复杂的 / 精细的”" }
+    ]
+},
+{
+    "paragraphTitle": "第四段：生命科学视域下的纵深演进（Profound Potential in Biology）",
+    "thesisAndContext": "第四段将讨论推向最具颠覆性的生命科学领域：强调生物学是 AI 潜能最为深远的疆域，并最终抛出“生命被降维重构为可编辑软件代码”的范式转移。",
+    "englishText": "Further AI-driven breakthroughs are practically inevitable, and nowhere is the potential more profound than in biology. Researchers are already deploying AI to breed drought-tolerant crops, accelerate drug discovery, and engineer targeted viruses to attack lethal bacteria. At the same time, teams are working to simulate the inner workings of living cells inside silicon. If scientists can truly model life computationally, they may eventually master biology to the point of creating entirely new organisms from scratch. In that world, DNA would look less like a sacred mystery of nature and more like software code — ready to be edited and rearranged by algorithms at will.",
+    "chineseText": "由人工智能驱动的进一步突破几乎是不可避免的，且没有什么地方的潜力比在生物学领域更为深远。研究人员已经在大规模部署人工智能来培育耐旱作物、加速新药研发，并设计靶向病毒以攻击致死性细菌。与此同时，团队正致力于在硅芯片内部模拟活细胞的内部运作机制。如果科学家能够真正通过计算对生命进行建模，他们最终可能会掌握生物学，达到从零开始创造出全新生物的程度。在那个世界里，DNA将不再那么像大自然神圣莫测的奥秘，而更像软件 code——随时可被算法随心所欲地编辑和重排。",
+    "wordTokens": [
+        { "word": "Further AI-driven breakthroughs", "role": "主语", "meaning": "人工智能驱动的进一步突破" },
+        { "word": "are practically inevitable,", "role": "系表结构", "meaning": "几乎是不可避免的" },
+        { "word": "nowhere is the potential more profound than in biology.", "role": "否定词倒装", "meaning": "没有什么地方的潜力比生物学更为深远" },
+        { "word": "Researchers", "role": "主语", "meaning": "研究人员" },
+        { "word": "are already deploying AI", "role": "谓语 + 宾语", "meaning": "已经在部署人工智能" }
+    ],
+    "syntaxBreakdown": [
+        { "part": "Further AI-driven breakthroughs are practically inevitable,", "role": "主系表结构", "detail": "inevitable：不可避免的" },
+        { "part": "nowhere is the potential more profound than in biology.", "role": "否定副词句首倒装", "detail": "nowhere is... more profound than...：没有什么地方比……更深远了" },
+        { "part": "Researchers are already deploying AI to breed drought-tolerant crops, accelerate drug discovery...", "role": "主谓宾 + 目的状语", "detail": "drought-tolerant：耐旱的；engineer：基因工程设计" },
+        { "part": "teams are working to simulate the inner workings of living cells inside silicon.", "role": "主谓宾", "detail": "inner workings：内部运作机制；inside silicon：硅芯片内部（计算机模拟）" },
+        { "part": "If scientists can truly model life computationally, they may eventually master biology...", "role": "条件状语从句 + 主句", "detail": "computationally：通过计算方式" },
+        { "part": "DNA would look less like a sacred mystery of nature and more like software code", "role": "主系表对比", "detail": "less like A and more like B：不再像A而更像B" }
+    ],
+    "sentenceAnalysis": "主句主干提取：Breakthroughs are inevitable, and nowhere is the potential more profound than in biology.",
+    "vocabularyNotes": [
+        { "term": "nowhere is... more profound than...", "explanation": "【高阶修辞倒装】用绝对否定词达到极致肯定效果" },
+        { "term": "inner workings", "explanation": "【固定名词搭配】“内部运作机制 / 核心机理”" },
+        { "term": "from scratch", "explanation": "【习惯表达】“从零开始 / 从无到有”" }
+    ]
+},
+{
+    "paragraphTitle": "第五段：学术界的反弹与智力本质之争（Alarm & Intellectual Struggle）",
+    "thesisAndContext": "第五段聚焦学术界强烈的应激反应：揭示科学界在兴奋之余所笼罩的深层恐慌，亮出纯粹学者的终极困惑——研究的真正奖赏在于心智的求索过程。",
+    "englishText": "As with so much in AI, this prospect is both exhilarating and deeply unsettling. For many mathematicians, the initial reaction was outright alarm. Ever since OpenAI’s breakthroughs, scholars have fiercely pushed back against what they see as Silicon Valley encroaching on their territory. The Association for Human Mathematics, representing more than 900 academics, warned bluntly that ‘mathematicians did not ask for this work to be done.’ In their view, the true reward of mathematics lies not simply in obtaining a proof, but in the intellectual struggle itself — the very journey that expands human understanding. Allowing machines to generate answers that humans cannot comprehend is like handing students the answer sheet to their homework: without the effort, real learning simply disappears.",
+    "chineseText": "正如人工智能领域的许多事物一样，这一前景既令人振奋，又令人深感不安。对许多数学家而言，最初的反应是彻底的惊恐。自OpenAI取得突破以来，学者们一直在激烈抵制他们所看到的硅谷对自身领地的蚕食。代表900多位学者的“人类数学协会”直言不讳地警告称：“数学家并未要求完成这项工作。”在他们看来，数学的真正回报不仅在于获得证明，更在于智力搏击本身——那段拓展人类理解力的精彩旅程。让机器生成人类无法理解的答案，犹如直接把作业答案交到学生手中：一旦失去了付出与努力，真正的学习便荡然无存。",
+    "wordTokens": [
+        { "word": "This prospect", "role": "主语", "meaning": "这一前景" },
+        { "word": "is both exhilarating and deeply unsettling.", "role": "系表结构", "meaning": "既令人振奋，又令人深感不安" },
+        { "word": "the initial reaction", "role": "主语", "meaning": "最初的反应" },
+        { "word": "was outright alarm.", "role": "系表结构", "meaning": "彻底的惊恐" }
+    ],
+    "syntaxBreakdown": [
+        { "part": "This prospect is both exhilarating and deeply unsettling.", "role": "主系表结构", "detail": "exhilarating：令人振奋的；unsettling：令人不安的" },
+        { "part": "scholars have fiercely pushed back against what they see as Silicon Valley encroaching on their territory.", "role": "主谓 + 宾语从句", "detail": "push back against：强烈反弹 / 顽强抵制；encroach on：蚕食领地" },
+        { "part": "The Association for Human Mathematics ... warned bluntly that...", "role": "主谓 + 宾语从句", "detail": "warn bluntly：直言不讳地警告" },
+        { "part": "the true reward of mathematics lies not simply in obtaining a proof, but in the intellectual struggle itself", "role": "主谓宾", "detail": "intellectual struggle：智力搏击 / 心智跋涉" },
+        { "part": "Allowing machines to generate answers ... is like handing students the answer sheet", "role": "动名词作主语 + 系表", "detail": "形象比喻：将AI证明比作直接递给学生的作业答案" }
+    ],
+    "sentenceAnalysis": "主句主干提取：The true reward of mathematics lies not in A, but in B.",
+    "vocabularyNotes": [
+        { "term": "push back against", "explanation": "【高频动词短语】“强烈反弹 / 顽强抵制”" },
+        { "term": "encroach on", "explanation": "【高阶动词用法】“蚕食 / 侵害（领地、权利）”" },
+        { "term": "intellectual struggle", "explanation": "【学术哲学搭配】“智力搏击 / 心智跋涉”" }
+    ]
+},
+{
+    "paragraphTitle": "第六段：实用主义的反击与学术私利解构（Pragmatism vs. Guild Interests）",
+    "thesisAndContext": "第六段是立场鲜明的反驳段：直指抱怨背后充斥着学术公会式的私利诉求，指出真理探寻不属于特定行会。以“止痛药”的实用主义类比收尾：科学不应将理论理解凌驾于切实成果之上。",
+    "englishText": "There is more than a hint of self-interest in these complaints. Academics have no exclusive right to decide how knowledge is made, and the search for truth belongs to everyone, not just an academic guild. The traditional scholarly ladder, climbed by solving theorems, is far from sacred. If necessary, it must be reshaped for an era where AI generates the proofs and humans simply evaluate them. In the end, science should not prize theoretical understanding above tangible results. Every time someone takes a painkiller to cure a headache, they rely on a cure that works, even if the exact mechanism behind it remains a mystery.",
+    "chineseText": "这些抱怨声中充斥着浓厚的私利色彩。学者们并没有独占决定知识如何产生的特权，对真理的追寻属于每一个人，而不仅仅属于某个学术行会。依靠破解定理一步步攀爬上去的传统学术阶梯，绝非神圣不可侵犯。如有必要，必须为一个由人工智能生成证明、人类只需对其进行评估的时代重塑学术晋升阶梯。归根结底，科学不应当将理论层面的理解凌驾于切实成果之上。每当有人服用止痛药来治疗头痛时，他们依赖的是真正见效的疗法，哪怕其背后的具体生化机制仍然是个谜。",
+    "wordTokens": [
+        { "word": "There is more than a hint of self-interest", "role": "存在句", "meaning": "充斥着浓厚的私利色彩" },
+        { "word": "Academics", "role": "主语", "meaning": "学者们" },
+        { "word": "have no exclusive right to decide how knowledge is made,", "role": "主谓宾", "meaning": "没有独占决定知识如何产生的特权" }
+    ],
+    "syntaxBreakdown": [
+        { "part": "There is more than a hint of self-interest in these complaints.", "role": "There be 句型", "detail": "more than a hint of：绝不仅是些许 / 充斥着大量的" },
+        { "part": "Academics have no exclusive right to decide how knowledge is made,", "role": "主谓宾", "detail": "exclusive right：排他性特权" },
+        { "part": "The traditional scholarly ladder ... is far from sacred.", "role": "主系表", "detail": "far from sacred：绝非神圣不可侵犯" },
+        { "part": "science should not prize theoretical understanding above tangible results.", "role": "主谓宾 + 介宾", "detail": "prize A above B：将A置于B之上；tangible results：切实成果" },
+        { "part": "they rely on a cure that works, even if the exact mechanism remains a mystery.", "role": "主谓宾 + 让步状语", "detail": "rely on：依赖；even if：即使" }
+    ],
+    "sentenceAnalysis": "主句主干提取：Science should not prize A above B. They rely on a cure that works.",
+    "vocabularyNotes": [
+        { "term": "more than a hint of", "explanation": "【高级评注短语】“充斥着大量的……”" },
+        { "term": "academic guild", "explanation": "【政治隐喻】“中世纪垄断行业利益的行会公会”" },
+        { "term": "tangible results", "explanation": "【科研搭配】“切实的 / 可触摸量化的成果”" }
+    ]
+}
 ]
