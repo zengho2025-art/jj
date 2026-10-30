@@ -33,12 +33,6 @@
     </script>
     <style>
         body { background-color: #FAF9F5; color: #1B3B36; font-family: 'Source Sans 3', 'Noto Serif SC', serif; }
-        /* 单词点击样式 */
-        .vocab-word { border-bottom: 1.5px dashed #C4A35A; cursor: pointer; color: #2F5D54; font-weight: 600; position: relative; }
-        .vocab-word:hover { background-color: #F3F0E7; }
-        /* 长难句高亮样式 */
-        .difficult-sentence { border-left: 3px solid #C4A35A; padding-left: 12px; background: rgba(196, 163, 90, 0.05); cursor: pointer; transition: all 0.2s; }
-        .difficult-sentence:hover { background: rgba(196, 163, 90, 0.12); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-moss selection:text-paper">
@@ -55,49 +49,39 @@
 
     <!-- 主体内容区 -->
     <main class="max-w-5xl mx-auto px-6 py-10 flex-grow w-full">
-        <!-- 动态视图容器：文章列表或文章详情 -->
         <div id="app-view">
             <div class="text-sage text-sm py-10">正在加载外刊文章库...</div>
         </div>
     </main>
-
-    <!-- 单词释义弹窗 Modal / 气泡 -->
-    <div id="vocab-modal" class="hidden fixed inset-0 bg-black/20 backdrop-blur-xs flex items-center justify-center z-50 p-4">
-        <div class="bg-white border border-sand rounded-xl p-6 max-w-md w-full shadow-xl relative animate-in fade-in zoom-in duration-150">
-            <button onclick="closeVocabModal()" class="absolute top-4 right-4 text-sage hover:text-ink text-lg font-bold">&times;</button>
-            <div id="modal-word" class="font-display text-2xl font-bold text-ink mb-1"></div>
-            <div id="modal-meaning" class="text-moss font-medium text-base mb-4"></div>
-            <p class="text-xs text-sage font-sans uppercase tracking-wider">核心词汇精解</p>
-        </div>
-    </div>
 
     <!-- 页脚 -->
     <footer class="border-t border-sand py-6 text-center text-xs text-sage font-sans">
         &copy; 2026 Academic Digest · All Rights Reserved. Hosted on Vercel.
     </footer>
 
-    <!-- 核心前端逻辑 -->
+    <!-- 核心加载与渲染逻辑 -->
     <script>
         let allArticles = [];
 
         async function initApp() {
             try {
+                // 使用绝对或相对路径确保能正确加载同级目录的 json
                 const response = await fetch('./articles.json');
-                if (!response.ok) throw new Error("无法加载文章数据");
+                if (!response.ok) throw new Error(`HTTP 错误状态码: ${response.status}`);
                 allArticles = await response.json();
-                
-                // 检查网址后面是否有带参数（如 ?id=1），决定显示列表还是详情页
                 checkRoute();
             } catch (error) {
+                console.error("加载失败:", error);
                 document.getElementById('app-view').innerHTML = `
-                    <div class="p-6 bg-red-50 border border-red-200 text-red-700 rounded text-sm">
-                        加载文章库失败: ${error.message}。请确保 `articles.json` 存在且格式正确。
+                    <div class="p-6 bg-red-50 border border-red-200 text-red-700 rounded text-sm space-y-2">
+                        <p class="font-bold">文章库加载失败</p>
+                        <p>错误原因: ${error.message}</p>
+                        <p class="text-xs text-gray-500">请检查 GitHub 根目录下是否存在名为 <code>articles.json</code> 的文件，且文件名和格式完全正确。</p>
                     </div>
                 `;
             }
         }
 
-        // 路由控制：根据文章 ID 显示列表或详情
         function checkRoute() {
             const params = new URLSearchParams(window.location.search);
             const articleId = params.get('id');
@@ -122,7 +106,6 @@
             if (article) renderDetailView(article);
         }
 
-        // 1. 渲染文章列表视图
         function renderListView(articles) {
             const container = document.getElementById('app-view');
             container.innerHTML = `
@@ -152,7 +135,6 @@
             `;
         }
 
-        // 2. 渲染文章详情及精读互动视图
         function renderDetailView(article) {
             const container = document.getElementById('app-view');
             container.innerHTML = `
@@ -167,14 +149,12 @@
                     <h1 class="font-display text-3xl md:text-4xl font-bold text-ink mb-2 leading-tight">${article.title}</h1>
                     <h2 class="text-lg text-sage font-serif mb-8 pb-6 border-b border-sand">${article.chineseTitle}</h2>
 
-                    <!-- 正文段落及互动解析 -->
                     <div class="space-y-8 font-serif text-lg leading-relaxed text-gray-800">
-                        ${article.paragraphs.map((p, idx) => `
+                        ${article.paragraphs.map(p => `
                             <div class="p-6 bg-paper/50 border border-sand/60 rounded-lg space-y-4">
                                 <p class="font-medium text-ink text-xl">${p.english}</p>
                                 <p class="text-gray-600 text-base">${p.chinese}</p>
                                 
-                                <!-- 长难句解析区域 -->
                                 ${p.sentenceAnalysis ? `
                                     <div class="mt-4 pt-4 border-t border-sand text-sm font-sans">
                                         <details class="group">
