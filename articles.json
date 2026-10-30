@@ -3,35 +3,18 @@
     "id": 1,
     "title": "When the Cost of Money Stops Being the Story",
     "chineseTitle": "当资金成本不再是头条新闻",
-    "category": "Economy",
+    "category": "Economy", 
     "date": "2026-10-29",
-    "summary": "全球央行货币政策转变，通货膨胀降温带来的宏观经济新视角与深层产业影响分析。",
-    "paragraphs": [
-      {
-        "english": "Central banks are shifting their focus as global inflation cools down.",
-        "chinese": "随着全球通货膨胀降温，各大央行正在转变重心。",
-        "sentenceAnalysis": "<strong>as</strong> 引导时间状语从句，意为‘随着’；主句中 <strong>are shifting</strong> 为现在进行时，指当前正在发生的政策转向。"
-      },
-      {
-        "english": "Financial markets have begun to price in a more stable macroeconomic environment.",
-        "chinese": "金融市场已经开始消化更为稳定的宏观经济环境。",
-        "sentenceAnalysis": "<strong>price in</strong> 是财经英语中的常用短语，意为‘把……计入价格（或预期中）’。"
-      }
-    ]
+    "summary": "全球央行货币政策转变...",
+    "paragraphs": [...]
   },
   {
     "id": 2,
-    "title": "The Quiet Rewriting of Global Commerce",
-    "chineseTitle": "全球贸易的无声重构",
-    "category": "Technology",
+    "title": "The Art of Slow Living in Modern Cities",
+    "chineseTitle": "现代都市中的慢生活艺术",
+    "category": "Culture", 
     "date": "2026-10-28",
-    "summary": "探讨数字化供应链和区域化贸易协定如何悄然改变现代商业的底层逻辑。",
-    "paragraphs": [
-      {
-        "english": "Supply chains are no longer optimized purely for cost efficiency, but for resilience.",
-        "chinese": "供应链不再仅仅追求成本效率的极致优化，而是转向韧性。",
-        "sentenceAnalysis": "本句使用了 <strong>not purely for... but for...</strong>（不仅为了……而是为了……）的并列对比结构，突出了核心观点。"
-      }
-    ]
+    "summary": "探讨当代城市人群如何通过文化与生活方式重构寻找内心的平静...",
+    "paragraphs": [...]
   }
 ]
