@@ -91,6 +91,44 @@
           { "term": "double-edged sword", "explanation": "【经典隐喻】双刃剑（有利有弊）" },
           { "term": "decipher", "explanation": "【动词】破译、解读（复杂深奥之物）" }
         ]
+      },
+      {
+        "paragraphTitle": "第三段：承上启下与证据链展开段（Transition & Evidence）",
+        "thesisAndContext": "作者从数学本身的推导逻辑切入，阐明为何数学是 AI 最自然的试验场，并通过气象预测、新材料模拟及蛋白质结构预测的排比证据链，有力证实了机器智能重塑科学范式的既成事实。",
+        "englishText": "Mathematics proved to be an ideal testing ground for AI, driven as it is by ironclad logic that computers can verify step by step. Yet the breakthrough hardly ends with pure calculation. As our science reports explore this week, AI is rapidly transforming the practical sciences, largely because they lean on mathematics as a foundation. It has already sharpened meteorological forecasts, envisioned millions of promising new materials, and helped stabilise nuclear fusion experiments. Most remarkably, it has learned to predict the intricate 3D shapes of nearly every known protein from simple amino acids—a triumph that rightfully earned a Nobel Prize.",
+        "chineseText": "事实证明，数学是人工智能的理想试验场，因为它由计算机可以一步步验证的铁律逻辑驱动。然而，这一突破远不止于纯粹的计算。正如我们本周的科学报道所探讨的那样，人工智能正在迅速改变实用科学，主要是因为它们以数学为基础。它已经使气象预报更加精准，构想出数百万种极具前景的新材料，并帮助稳定了核聚变实验。最引人注目的是，它学会了从简单的氨基酸预测几乎所有已知蛋白质复杂的3D结构——这一成就实至名归地赢得了诺贝尔奖。",
+        "wordTokens": [
+          { "word": "Mathematics", "role": "主语", "meaning": "数学" },
+          { "word": "proved to be an ideal testing ground for AI,", "role": "系表结构", "meaning": "被证明是AI的理想试验场" },
+          { "word": "driven as it is by ironclad logic", "role": "原因倒装状语", "meaning": "受铁律逻辑驱动" },
+          { "word": "that computers can verify step by step.", "role": "定语从句", "meaning": "计算机能够一步步验证的" },
+          { "word": "Yet the breakthrough hardly ends with pure calculation.", "role": "转折主句", "meaning": "然而突破绝不仅止于纯计算" },
+          { "word": "As our science reports explore this week,", "role": "方式状语从句", "meaning": "正如我们本周科学报道所探讨的那样" },
+          { "word": "AI is rapidly transforming the practical sciences,", "role": "主谓宾", "meaning": "人工智能正在迅速变革应用科学" },
+          { "word": "largely because they lean on mathematics as a foundation.", "role": "原因状语从句", "meaning": "主要是因为它们依托数学为根基" },
+          { "word": "It has already sharpened meteorological forecasts,", "role": "并列主谓宾", "meaning": "它已经使气象预报更加精准" },
+          { "word": "envisioned millions of promising new materials,", "role": "并列谓宾", "meaning": "构想出数百万种极具前景的新材料" },
+          { "word": "and helped stabilise nuclear fusion experiments.", "role": "并列谓宾", "meaning": "并协助稳定了核聚变实验" },
+          { "word": "Most remarkably, it has learned to predict", "role": "插入语 + 主谓", "meaning": "最引人注目的是，它已学会预测" },
+          { "word": "the intricate 3D shapes of nearly every known protein", "role": "宾语中心词", "meaning": "几乎所有已知蛋白质错综复杂的3D构型" },
+          { "word": "from simple amino acids—", "role": "介词短语状语", "meaning": "从简单的氨基酸分子" },
+          { "word": "a triumph that rightfully earned a Nobel Prize.", "role": "同位语 + 定语从句", "meaning": "一项实至名归赢得诺贝尔奖的巨大胜利" }
+        ],
+        "syntaxBreakdown": [
+          { "part": "Mathematics proved to be an ideal testing ground for AI,", "role": "主系表结构", "detail": "testing ground：试验场 / 检验平台" },
+          { "part": "driven as it is by ironclad logic that computers can verify step by step.", "role": "原因状语倒装", "detail": "ironclad logic：无可辩驳的铁律逻辑" },
+          { "part": "Yet the breakthrough hardly ends with pure calculation.", "role": "转折句", "detail": "hardly ends with：绝不仅仅止于……" },
+          { "part": "AI is rapidly transforming the practical sciences,", "role": "主谓宾", "detail": "practical sciences：实用科学 / 应用科学" },
+          { "part": "largely because they lean on mathematics as a foundation.", "role": "原因状语从句", "detail": "lean on：依托、依赖" },
+          { "part": "intricate 3D shapes of nearly every known protein", "role": "名词短语宾语", "detail": "intricate：错综复杂的" }
+        ],
+        "sentenceAnalysis": "【句子一主干】Mathematics（主语）+ proved to be（系动词）+ testing ground（表语）。【句子二主干】Breakthrough（主语）+ hardly ends with（谓语）+ calculation（宾语）。【句子三主干】AI（主语）+ is transforming（谓语）+ practical sciences（宾语）。",
+        "vocabularyNotes": [
+          { "term": "ironclad logic", "explanation": "【专业搭配】坚不可摧的逻辑 / 铁律逻辑" },
+          { "term": "testing ground", "explanation": "【名词】试验场、检验平台" },
+          { "term": "lean on", "explanation": "【动词短语】依赖、依托" },
+          { "term": "intricate", "explanation": "【高阶形容词】错综复杂的、精细的" }
+        ]
       }
     ]
   }
