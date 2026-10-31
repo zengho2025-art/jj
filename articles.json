@@ -31,3 +31,26 @@
           { "word": "what this means", "role": "宾语从句主谓", "meaning": "这意味着什么" },
           { "word": "for their field.", "role": "状语", "meaning": "对他们的领域而言" }
         ],
+        "syntaxBreakdown": [
+          { "part": "October 6th, 2026,", "role": "时间状语", "detail": "明确新闻事件发生的时间基准点" },
+          { "part": "may be hailed as", "role": "谓语动词", "detail": "be hailed as：固定短语搭配，被誉为/被奉为……" },
+          { "part": "the most significant turning point in mathematics.", "role": "介词宾语", "detail": "turning point：转折点；in mathematics 限定领域" },
+          { "part": "An American frontier lab", "role": "主语", "detail": "frontier lab：前沿实验室" },
+          { "part": "unleashed", "role": "谓语", "detail": "及物动词，释放出/爆发式倾泻" },
+          { "part": "a torrent of more than 700 papers,", "role": "核心宾语", "detail": "a torrent of：隐喻修饰，意为如洪流般的" },
+          { "part": "professing to have cracked or nudged forward 372 enigmas", "role": "现在分词伴随状语", "detail": "profess to have done：声称已经做成了某事；nudged forward：向前推进" },
+          { "part": "that had defied researchers for decades.", "role": "定语从句", "detail": "defy：使……束手无策/抵抗破解；修饰 enigmas" },
+          { "part": "Mathematicians are still trying to figure out", "role": "主谓结构", "detail": "figure out：短语动词，琢磨弄懂" },
+          { "part": "what this means for their field.", "role": "宾语从句", "detail": "what 引导宾语从句，作 figure out 的宾语" }
+        ],
+        "sentenceAnalysis": "【句子一主干】October 6th, 2026（时间状语）+ may be hailed as（谓语）+ turning point（宾语）。【句子二主干】Lab（主语）+ unleashed（谓语）+ torrent of papers（宾语）+ professing to...（分词伴随状语）。【句子三主干】Mathematicians（主语）+ are trying to figure out（谓语短语）+ what this means...（宾语从句）。",
+        "vocabularyNotes": [
+          { "term": "be hailed as", "explanation": "【固定短语】被称赞为……/ 被誉为……" },
+          { "term": "a torrent of", "explanation": "【隐喻搭配】如洪流般的 / 大批涌现的" },
+          { "term": "defy researchers", "explanation": "【动宾搭配】让研究人员束手无策 / 经受住了所有攻关破解" },
+          { "term": "nudge forward", "explanation": "【形象短语】微调推进 / 迈出关键一小步" }
+        ]
+      }
+    ]
+  }
+]
