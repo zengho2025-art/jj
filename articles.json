@@ -202,6 +202,44 @@
           { "term": "intellectual struggle", "explanation": "【学术名词搭配】智力搏击、心智求索跋涉" },
           { "term": "outright alarm", "explanation": "【名词短语】彻底的惊慌、警惕" }
         ]
+      },
+      {
+        "paragraphTitle": "第六段：实用主义的反击与学术私利解构（Pragmatism vs. Guild Interests）",
+        "thesisAndContext": "第六段是立场鲜明的反驳段：直指抱怨背后充斥着学术公会式的私利诉求，指出真理探寻不属于特定行会。以“止痛药”的实用主义类比收尾：科学不应将理论理解凌驾于切实成果之上。",
+        "englishText": "There is more than a hint of self-interest in these complaints. Academics have no exclusive right to decide how knowledge is made, and the search for truth belongs to everyone, not just an academic guild. The traditional scholarly ladder, climbed by solving theorems, is far from sacred. If necessary, it must be reshaped for an era where AI generates the proofs and humans simply evaluate them. In the end, science should not prize theoretical understanding above tangible results. Every time someone takes a painkiller to cure a headache, they rely on a cure that works, even if the exact mechanism behind it remains a mystery.",
+        "chineseText": "这些抱怨中不乏有一丝自私自利的意味。学者们并没有决定知识如何产生的独占权，对真理的探索属于每一个人，而不仅仅是一个学术行会。通过求解定理而一步步攀登的传统学术阶梯绝非神圣不可侵犯。如果有必要，必须为人工智能生成证明而人类只需进行评估的时代重塑这个阶梯。归根结底，科学不应将理论理解置于切实的成果之上。每当有人服用止痛药来治头痛时，他们依靠的是一个行之有效的治疗方法，哪怕其背后的确切机制仍然是个谜。",
+        "wordTokens": [
+          { "word": "There is more than a hint of self-interest", "role": "There be 句型", "meaning": "充斥着浓厚的私利意味" },
+          { "word": "in these complaints.", "role": "介词状语", "meaning": "在这些抱怨之中" },
+          { "word": "Academics have no exclusive right", "role": "主谓宾", "meaning": "学者并没有专属独占特权" },
+          { "word": "to decide how knowledge is made,", "role": "不定式定语", "meaning": "去决定知识是如何被生产的" },
+          { "word": "and the search for truth belongs to everyone,", "role": "并列主谓状", "meaning": "而对真理的追寻属于每一个人" },
+          { "word": "not just an academic guild.", "role": "并列状语", "meaning": "而不仅是一个学术行会公会" },
+          { "word": "The traditional scholarly ladder,", "role": "主语中心词", "meaning": "传统的学术晋升阶梯" },
+          { "word": "climbed by solving theorems,", "role": "过去分词后置定语", "meaning": "通过求解定理一步步攀爬的" },
+          { "word": "is far from sacred.", "role": "系表结构", "meaning": "绝非神圣不可侵犯" },
+          { "word": "If necessary, it must be reshaped", "role": "条件从句 + 主谓被动", "meaning": "如有必要它必须被重塑" },
+          { "word": "for an era where AI generates the proofs and humans simply evaluate them.", "role": "介宾 + 定语从句", "meaning": "去适应AI生成证明而人类仅负责评估的时代" },
+          { "word": "In the end, science should not prize theoretical understanding", "role": "主谓宾", "meaning": "归根结底科学不应将理论理解" },
+          { "word": "above tangible results.", "role": "介宾状语", "meaning": "凌驾于切实的成果之上" },
+          { "word": "Every time someone takes a painkiller to cure a headache,", "role": "时间状语从句", "meaning": "每当有人服用止痛药来缓解头痛时" },
+          { "word": "they rely on a cure that works,", "role": "主谓宾 + 定语从句", "meaning": "他们依赖的是行之有效的疗法" },
+          { "word": "even if the exact mechanism behind it remains a mystery.", "role": "让步状语从句", "meaning": "哪怕其背后的具体机制依然是个谜" }
+        ],
+        "syntaxBreakdown": [
+          { "part": "There is more than a hint of self-interest in these complaints.", "role": "There be 句型", "detail": "more than a hint of：充斥着大量的、绝不仅是一点点" },
+          { "part": "academic guild", "role": "名词短语", "detail": "学术行会（带有中世纪行会垄断意味的贬义用法）" },
+          { "part": "The traditional scholarly ladder ... is far from sacred.", "role": "主系表结构", "detail": "far from sacred：绝非不可侵犯" },
+          { "part": "science should not prize theoretical understanding above tangible results.", "role": "主谓宾 + 介宾", "detail": "prize A above B：将A置于B之上；tangible results：切实的成果" },
+          { "part": "even if the exact mechanism behind it remains a mystery.", "role": "让步状语从句", "detail": "remains a mystery：依然是个未解之谜" }
+        ],
+        "sentenceAnalysis": "【句子一主干】There is（存在句）+ self-interest（主语）。【句子二主干】Academics（主语）+ have（谓语）+ no right（宾语）。【句子三主干】Ladder（主语）+ is（系动词）+ far from sacred（表语）。【句子四主干】Science（主语）+ should not prize（谓语）+ understanding（宾语）+ above results（状语）。",
+        "vocabularyNotes": [
+          { "term": "more than a hint of", "explanation": "【评注短语】带有浓厚的 / 充斥着大量的……" },
+          { "term": "academic guild", "explanation": "【学术隐喻】学术行会（带有排他垄断利益色彩）" },
+          { "term": "tangible results", "explanation": "【商务科研搭配】切实可见的成果、硬核指标" },
+          { "term": "far from sacred", "explanation": "【固定表达】绝非神圣不可触碰" }
+        ]
       }
     ]
   }
