@@ -50,8 +50,48 @@
           { "term": "defy researchers", "explanation": "【动宾搭配】让研究人员束手无策 / 经受住了所有攻关破解" },
           { "term": "nudge forward", "explanation": "【形象短语】微调推进 / 迈出关键一小步" }
         ]
+      },
+      {
+        "paragraphTitle": "第二段：基准参考段（Golden Sample）",
+        "thesisAndContext": "作者把镜头从数学界拉开，宣布事件的真正意义在数学之外——它迫使整个科学界正视 AI 正在改写科学的根基。",
+        "englishText": "The impact will reach far beyond mathematics. Science must now come to terms with how artificial intelligence is reshaping its entire foundation. These breakthroughs are a double-edged sword: they mark a great leap forward for humanity and prove the astonishing speed of AI, yet they also caution us against a future where machines decipher a universe that humans can no longer comprehend. The defining question is whether we can push boundaries forward without leaving our own understanding behind.",
+        "chineseText": "这一影响将远远超越数学的范围。科学现在必须正视人工智能正在重塑其整个根基的现实。这些突破是一把双刃剑：它们标志着人类的一大跃进并证明了AI惊人的速度，然而它们也告诫我们要警惕这样一个未来：机器解出了人类再也无法理解的宇宙。决定性的问题在于，我们能否在不落下自身理解的前提下推进边界。",
+        "wordTokens": [
+          { "word": "The impact", "role": "主语", "meaning": "这一影响" },
+          { "word": "will reach", "role": "谓语", "meaning": "将延伸/触及" },
+          { "word": "far beyond mathematics.", "role": "程度状语 + 介宾", "meaning": "远远超越数学的范围" },
+          { "word": "Science", "role": "主语", "meaning": "科学界" },
+          { "word": "must now come to terms with", "role": "谓语动词短语", "meaning": "现在必须正视/学着接受" },
+          { "word": "how artificial intelligence", "role": "从句主语", "meaning": "人工智能如何" },
+          { "word": "is reshaping", "role": "从句谓语", "meaning": "正在重塑" },
+          { "word": "its entire foundation.", "role": "从句宾语", "meaning": "其整个根基" },
+          { "word": "These breakthroughs", "role": "主语", "meaning": "这些突破" },
+          { "word": "are a double-edged sword:", "role": "系表结构", "meaning": "是一把双刃剑" },
+          { "word": "they mark a great leap forward for humanity", "role": "分句主谓宾", "meaning": "它们标志着人类的一大飞跃" },
+          { "word": "and prove the astonishing speed of AI,", "role": "并列谓宾", "meaning": "并证明了AI惊人的速度" },
+          { "word": "yet they also caution us against a future", "role": "转折主谓宾", "meaning": "但它们也告诫我们要警惕这样一个未来" },
+          { "word": "where machines decipher a universe", "role": "定语从句主谓宾", "meaning": "机器解出了一个宇宙" },
+          { "word": "that humans can no longer comprehend.", "role": "定语从句", "meaning": "人类再也无法理解的" },
+          { "word": "The defining question is", "role": "主系表结构", "meaning": "决定性的问题在于" },
+          { "word": "whether we can push boundaries forward", "role": "表语从句", "meaning": "我们能否推进前沿边界" },
+          { "word": "without leaving our own understanding behind.", "role": "伴随状语", "meaning": "而在身后不落下我们自己的理解" }
+        ],
+        "syntaxBreakdown": [
+          { "part": "The impact will reach far beyond mathematics.", "role": "主谓 + 介词状语", "detail": "reach far beyond：远远超越……的范围" },
+          { "part": "Science must now come to terms with", "role": "主谓结构", "detail": "come to terms with：动词短语，正视、学着接受现实" },
+          { "part": "how artificial intelligence is reshaping its entire foundation.", "role": "宾语从句", "detail": "reshaping：重塑；foundation：根基" },
+          { "part": "These breakthroughs are a double-edged sword:", "role": "主系表结构", "detail": "double-edged sword：隐喻搭配，双刃剑" },
+          { "part": "where machines decipher a universe that humans can no longer comprehend.", "role": "定语从句嵌套", "detail": "decipher：破译、解开；comprehend：理解" },
+          { "part": "The defining question is whether we can push boundaries forward...", "role": "主系表从句", "detail": "defining question：决定性/核心问题；push boundaries：拓展边界" }
+        ],
+        "sentenceAnalysis": "【句子一主干】The impact（主语）+ will reach（谓语）+ far beyond mathematics（状语）。【句子二主干】Science（主语）+ must come to terms with（谓语短语）+ how AI is reshaping...（宾语从句）。【句子三主干】Breakthroughs（主语）+ are（系动词）+ sword（表语）。",
+        "vocabularyNotes": [
+          { "term": "come to terms with", "explanation": "【动词短语】正视、学着接受现实" },
+          { "term": "caution sb against sth", "explanation": "【固定搭配】告诫某人提防某事" },
+          { "term": "double-edged sword", "explanation": "【经典隐喻】双刃剑（有利有弊）" },
+          { "term": "decipher", "explanation": "【动词】破译、解读（复杂深奥之物）" }
+        ]
       }
     ]
   }
-[
 ]
