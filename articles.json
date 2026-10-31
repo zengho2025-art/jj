@@ -240,6 +240,47 @@
           { "term": "tangible results", "explanation": "【商务科研搭配】切实可见的成果、硬核指标" },
           { "term": "far from sacred", "explanation": "【固定表达】绝非神圣不可触碰" }
         ]
+      },
+      {
+        "paragraphTitle": "第七段：算力垄断与数字智能外溢（Corporate Dominance & Physical Embodiment）",
+        "thesisAndContext": "第七段将讨论视角从纯学术争鸣拉回冷峻的商业与地缘现实：商业 AI 巨头大举投入旨在锤炼通用智能，一旦科学推理被垄断，学界将毫无招架之力；数字心智正向物理现实外溢。",
+        "englishText": "Yet the anxiety over ceding science to machines is far from groundless. AI companies are not pouring vast resources into research out of pure generosity. Much like human beings, models grow sharper and more capable by tackling hard problems. Many experts believe that any system that excels at scientific reasoning will inevitably excel at almost everything else. If that proves true, competing with the leading AI labs will become virtually impossible. They will hold models capable of continuously upgrading themselves, reaching a level of intelligence beyond human grasp. Nor will these digital minds stay confined to screens: they will step directly into the physical world, operating through humanoid robots or taking direct charge of laboratory instruments, much as Anthropic has already demonstrated.",
+        "chineseText": "然而，对将科学拱手让给机器的焦虑并非毫无根据。人工智能公司并不是出于纯粹的慷慨才向研究中倾注大量资源的。就像人类一样，模型通过攻克难题变得更加敏锐和强大。许多专家认为，任何擅长科学推理的系统也必然擅长几乎所有其他事情。如果事实证明如此，与领先的人工智能实验室竞争将几乎成为不可能。他们将拥有能够不断自我升级的模型，达到超出人类理解范畴的智能水平。这些数字思维也不会局限于屏幕上：它们将直接步入物理世界，通过人形机器人进行操作或直接接管实验室仪器，正如Anthropic已经展示的那样。",
+        "wordTokens": [
+          { "word": "Yet the anxiety over ceding science to machines", "role": "主语", "meaning": "对于将科学拱手让给机器的焦虑" },
+          { "word": "is far from groundless.", "role": "系表结构", "meaning": "绝非毫无根据" },
+          { "word": "AI companies are not pouring vast resources into research", "role": "主谓宾状", "meaning": "AI公司并不是向研发倾注海量资源" },
+          { "word": "out of pure generosity.", "role": "原因状语", "meaning": "出于纯粹的慷慨" },
+          { "word": "Much like human beings,", "role": "比喻状语", "meaning": "就像人类一样" },
+          { "word": "models grow sharper and more capable", "role": "主系表结构", "meaning": "模型变得越来越敏锐且更有能力" },
+          { "word": "by tackling hard problems.", "role": "方式状语", "meaning": "通过攻克难题" },
+          { "word": "Many experts believe that", "role": "主谓从句", "meaning": "许多专家相信" },
+          { "word": "any system that excels at scientific reasoning", "role": "从句主语 + 定语从句", "meaning": "任何擅长科学推理的系统" },
+          { "word": "will inevitably excel at almost everything else.", "role": "从句谓宾", "meaning": "必然也会在几乎所有其他领域表现出色" },
+          { "word": "If that proves true,", "role": "条件状语从句", "meaning": "如果这被证明属实" },
+          { "word": "competing with the leading AI labs will become virtually impossible.", "role": "动名词主语 + 系表", "meaning": "与领军AI实验室竞争将几乎变成不可能" },
+          { "word": "They will hold models capable of continuously upgrading themselves,", "role": "主谓宾 + 形容词定语", "meaning": "他们将掌握能够持续自我升级的模型" },
+          { "word": "reaching a level of intelligence beyond human grasp.", "role": "分词结果状语", "meaning": "达到超越人类掌握水平的智能高度" },
+          { "word": "Nor will these digital minds stay confined to screens:", "role": "否定词倒装句", "meaning": "这些数字心智也不会仅仅局限于屏幕中：" },
+          { "word": "they will step directly into the physical world,", "role": "主谓状", "meaning": "它们将径直迈入物理世界" },
+          { "word": "operating through humanoid robots", "role": "并列分词伴随状语", "meaning": "通过人形机器人开展操作" },
+          { "word": "or taking direct charge of laboratory instruments,", "role": "并列分词伴随状语", "meaning": "或直接掌控接管实验室仪器" },
+          { "word": "much as Anthropic has already demonstrated.", "role": "方式状语从句", "meaning": "正如Anthropic已经展示的那样" }
+        ],
+        "syntaxBreakdown": [
+          { "part": "Yet the anxiety over ceding science to machines is far from groundless.", "role": "主系表结构", "detail": "cede to：把……割让/让渡给……；far from groundless：绝非毫无根据" },
+          { "part": "out of pure generosity.", "role": "介词短语状语", "detail": "out of：出于（某种动机/情感）" },
+          { "part": "reaching a level of intelligence beyond human grasp.", "role": "分词短语作状语", "detail": "beyond human grasp：超出人类理解与掌控范畴" },
+          { "part": "Nor will these digital minds stay confined to screens:", "role": "否定副词引起的倒装句", "detail": "Nor 置于句首，助动词 will 提前" },
+          { "part": "taking direct charge of laboratory instruments,", "role": "动名词/分词短语", "detail": "take direct charge of：直接接管、掌控" }
+        ],
+        "sentenceAnalysis": "【句子一主干】Anxiety（主语）+ is（系动词）+ far from groundless（表语）。【句子二主干】Companies（主语）+ are not pouring（谓语）+ resources（宾语）。【句子三主干】Competing...（动名词主语）+ will become（系动词）+ impossible（表语）。【句子四主干】Digital minds（主语）+ will not stay confined to screens（谓语系表倒装）。",
+        "vocabularyNotes": [
+          { "term": "cede ... to ...", "explanation": "【动词搭配】让出、割让、把……拱手让给" },
+          { "term": "beyond human grasp", "explanation": "【高阶搭配】超越人类掌控与理解范畴" },
+          { "term": "take direct charge of", "explanation": "【短语】直接负责、全面接管" },
+          { "term": "virtually impossible", "explanation": "【副词修饰】几乎不可能" }
+        ]
       }
     ]
   }
