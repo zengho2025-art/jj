@@ -35,7 +35,7 @@
         body { background-color: #FAF9F5; color: #1B3B36; font-family: 'Source Sans 3', 'Noto Serif SC', serif; }
         .category-btn.active { background-color: #2F5D54; color: #FAF9F5; }
 
-        /* 单词/短语悬浮提示样式 (Tooltip) */
+        /* 单词/短语基本样式 */
         .token-item {
             position: relative;
             display: inline-block;
@@ -47,14 +47,10 @@
             user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
-        .token-item:hover,
-        .token-item.active {
-            background-color: #F3F0E7;
-            border-bottom: 2px solid #2F5D54;
-        }
-        /* 气泡本体 */
+
+        /* 气泡本体：默认隐藏 */
         .token-item .tooltip-text {
-            visibility: hidden;
+            display: none;
             width: max-content;
             max-width: 280px;
             background-color: #1B3B36;
@@ -67,19 +63,50 @@
             bottom: 125%;
             left: 50%;
             transform: translateX(-50%);
-            opacity: 0;
-            transition: opacity 0.2s;
             font-size: 0.75rem;
             font-family: 'Source Sans 3', sans-serif;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             line-height: 1.5;
             pointer-events: auto;
         }
-        /* PC 端悬浮或移动端点击激活时均可见 */
-        .token-item:hover .tooltip-text,
-        .token-item.active .tooltip-text {
-            visibility: visible;
-            opacity: 1;
+
+        /* 仅在纯 PC 鼠标设备上支持悬浮展示 */
+        @media (hover: hover) and (pointer: fine) {
+            .token-item:hover {
+                background-color: #F3F0E7;
+                border-bottom: 2px solid #2F5D54;
+            }
+            .token-item:hover .tooltip-text {
+                display: block;
+            }
+        }
+
+        /* 手机端及统一的主动激活类：通过 JS 严格控制展示 */
+        .token-item.is-open {
+            background-color: #F3F0E7;
+            border-bottom: 2px solid #2F5D54;
+        }
+        .token-item.is-open .tooltip-text {
+            display: block !important;
+        }
+
+        /* 关闭按钮放大热区，确保手指一按即中 */
+        .token-close-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            margin: -6px -6px 0 0;
+            color: #E8E4D9;
+            font-size: 1.25rem;
+            line-height: 1;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .token-close-btn:active {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #FFFFFF;
         }
     </style>
 </head>
@@ -114,7 +141,6 @@
 
         async function initApp() {
             try {
-                // 动态拉取同目录下的 articles.json（加入时间戳避免浏览器缓存旧文件）
                 const response = await fetch('articles.json?t=' + new Date().getTime());
                 if (!response.ok) {
                     throw new Error(`无法读取 articles.json (状态码: ${response.status})`);
@@ -227,7 +253,7 @@
             `;
         }
 
-        // 渲染详情页（已加入冒泡阻断与移动端点击关闭）
+        // 渲染详情页
         function renderDetailView(article) {
             const container = document.getElementById('app-view');
             container.innerHTML = `
@@ -257,12 +283,14 @@
                                 <div class="space-y-3 font-serif text-lg leading-relaxed text-gray-900 border-l-2 border-gold pl-4 py-1">
                                     <div class="font-semibold text-ink flex flex-wrap items-baseline">
                                         ${p.wordTokens && p.wordTokens.length > 0 ? p.wordTokens.map(token => `
-                                            <span class="token-item" onclick="toggleToken(event, this)">
+                                            <span class="token-item" onclick="handleTokenClick(event, this)">
                                                 ${token.word}
                                                 <span class="tooltip-text" onclick="event.stopPropagation()">
                                                     <span class="flex justify-between items-center mb-1.5 pb-1 border-b border-sand/20">
                                                         <strong class="text-gold">成分分析</strong>
-                                                        <button type="button" onclick="closeCurrentToken(event, this)" class="text-base text-sand/70 hover:text-white px-2 py-0.5 -mr-1 leading-none font-bold select-none">&times;</button>
+                                                        <span class="token-close-btn" 
+                                                              onclick="handleCloseBtn(event, this)" 
+                                                              ontouchstart="handleCloseBtn(event, this)">&times;</span>
                                                     </span>
                                                     <div class="space-y-1">
                                                         <div><strong class="text-sand">成分：</strong>${token.role}</div>
@@ -332,41 +360,51 @@
             `;
         }
 
-        // 切换词元气泡激活状态
-        function toggleToken(event, element) {
-            if (event) event.stopPropagation();
-            const isActive = element.classList.contains('active');
-            closeAllTokens();
-            if (!isActive) {
-                element.classList.add('active');
+        // 点击词元：打开或收起
+        function handleTokenClick(event, element) {
+            event.stopPropagation();
+            const isOpen = element.classList.contains('is-open');
+            closeAllTooltips();
+            if (!isOpen) {
+                element.classList.add('is-open');
             }
         }
 
-        // 点击右上角 × 彻底阻断冒泡并关闭当前气泡
-        function closeCurrentToken(event, btn) {
+        // 点击 X 按钮（绑定 touchstart 与 click 强化触控拦截）
+        function handleCloseBtn(event, btn) {
             if (event) {
                 event.preventDefault();
                 event.stopPropagation();
+                if (event.stopImmediatePropagation) {
+                    event.stopImmediatePropagation();
+                }
             }
             const tokenItem = btn.closest('.token-item');
             if (tokenItem) {
-                tokenItem.classList.remove('active');
+                tokenItem.classList.remove('is-open');
             }
         }
 
         // 关闭所有已打开的气泡
-        function closeAllTokens() {
-            document.querySelectorAll('.token-item.active').forEach(item => {
-                item.classList.remove('active');
+        function closeAllTooltips() {
+            document.querySelectorAll('.token-item.is-open').forEach(item => {
+                item.classList.remove('is-open');
             });
         }
 
-        // 点击屏幕任意空白处自动收起已打开的气泡
+        // 点击屏幕任何空白处，自动收起气泡
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.token-item')) {
-                closeAllTokens();
+                closeAllTooltips();
             }
         });
+
+        // 针对触屏端同样绑定 touchstart 收起
+        document.addEventListener('touchstart', (e) => {
+            if (!e.target.closest('.token-item')) {
+                closeAllTooltips();
+            }
+        }, { passive: true });
 
         window.addEventListener('DOMContentLoaded', initApp);
     </script>
