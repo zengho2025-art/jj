@@ -383,6 +383,41 @@
           { "term": "step up", "explanation": "【短语动词】挺身而出、站出来承担责任" },
           { "term": "rigorous peer review", "explanation": "【学术出版核心术语】严谨的同行评审机制" }
         ]
+      },
+      {
+        "paragraphTitle": "第十一段：怀疑精神的复兴与历史回响（The Baby, the Bathtub & Nullius in Verba）",
+        "thesisAndContext": "全篇收官段，以西方经典谚语“把婴儿与洗澡水一起倒掉”统领小标题，意指不能因噎废食否定机器发现。以英国皇家学会 17 世纪的创始格言 Nullius in verba（不轻信任何人言）强力收笔，告诫世人切勿对机器全盘盲从。",
+        "englishText": "Verifying and digesting machine-generated results might seem like tedious, thankless work. Yet science done by humans has always been riddled with errors, largely because academics receive little reward for double-checking the claims of their peers. A renewed culture of rigorous verification and healthy scepticism would make science stronger, not weaker. It is worth recalling the founding motto of the Royal Society from the 17th century: Nullius in verba, or ‘Take nobody’s word for it.’ That timeless warning was meant for human authorities—today, it applies just as urgently to machines.",
+        "chineseText": "核验并消化机器生成的成果或许看似是一项乏味且吃力不讨好的差事，然而，由人类完成的科学探索一直以来都充斥着漏洞，很大程度上是因为学者在复核同行主张时极少获得回报。一种重新焕发的、注重严苛核验与良性怀疑精神的文化，将使科学变得更加强大，而非更孱弱。值得重温的是17世纪英国皇家学会的成立校训：Nullius in verba，即‘不信任何人言’。那句跨越时代的永恒告诫原本是针对人类学术权威的——而今天，它同样迫切地适用于机器。",
+        "wordTokens": [
+          { "word": "Verifying and digesting machine-generated results", "role": "动名词短语作主语", "meaning": "核验并消化机器生成的成果" },
+          { "word": "might seem like tedious, thankless work.", "role": "系表结构", "meaning": "或许看似是一项乏味且吃力不讨好的差事" },
+          { "word": "Yet science done by humans", "role": "主语 (带后置定语)", "meaning": "然而由人类完成的科学" },
+          { "word": "has always been riddled with errors,", "role": "系表结构", "meaning": "一直以来都充斥着漏洞与谬误" },
+          { "word": "largely because academics receive little reward", "role": "原因状语从句", "meaning": "很大程度上是因为学者极少得到回报" },
+          { "word": "for double-checking the claims of their peers.", "role": "介宾短语", "meaning": "为了复核同行的主张论断" },
+          { "word": "A renewed culture of rigorous verification and healthy scepticism", "role": "主语", "meaning": "重焕生机的严苛核验与良性怀疑精神文化" },
+          { "word": "would make science stronger, not weaker.", "role": "谓语 + 宾语 + 并列宾补", "meaning": "将使科学变得更强大而非更羸弱" },
+          { "word": "It is worth recalling the founding motto of the Royal Society", "role": "形式主语主干", "meaning": "值得重温皇家学会成立时的校训格言" },
+          { "word": "from the 17th century:", "role": "时间状语", "meaning": "源自17世纪的" },
+          { "word": "Nullius in verba, or ‘Take nobody’s word for it.’", "role": "同位语解释", "meaning": "Nullius in verba，即“不轻信任何人言”" },
+          { "word": "That timeless warning was meant for human authorities—", "role": "主系表结构", "meaning": "那句永恒的告诫当年是针对人类权威的——" },
+          { "word": "today, it applies just as urgently to machines.", "role": "转折主谓比较状语", "meaning": "而在今天它同样迫切地适用于机器" }
+        ],
+        "syntaxBreakdown": [
+          { "part": "Verifying and digesting machine-generated results might seem like tedious, thankless work.", "role": "动名词主语 + 系表", "detail": "thankless work：吃力不讨好的工作" },
+          { "part": "science done by humans has always been riddled with errors,", "role": "主系表结构", "detail": "be riddled with：充斥着、布满漏洞" },
+          { "part": "A renewed culture ... would make science stronger, not weaker.", "role": "make + 宾语 + 宾补", "detail": "healthy scepticism：良性的怀疑精神" },
+          { "part": "Nullius in verba, or ‘Take nobody’s word for it.’", "role": "拉丁语同位语", "detail": "拉丁文学术座右铭：不信任何人言" },
+          { "part": "it applies just as urgently to machines.", "role": "主谓结构", "detail": "apply to：适用于……" }
+        ],
+        "sentenceAnalysis": "【句子一主干】Verifying results（主语）+ might seem like（系动词）+ work（表语）。【句子二主干】Science（主语）+ has been riddled with（系表）+ errors（介宾）。【句子三主干】Culture（主语）+ would make（使役谓语）+ science（宾语）+ stronger（宾补）。【句子四主干】It is worth recalling motto. Warning applies to machines.",
+        "vocabularyNotes": [
+          { "term": "the baby and the bathtub", "explanation": "【典故成语】“把婴儿与洗澡水一起倒掉（意指因噎废食）”" },
+          { "term": "riddled with", "explanation": "【动词短语】“充斥着、布满（漏洞/弊端）”" },
+          { "term": "Nullius in verba", "explanation": "【拉丁文学术箴言】“不信任何人言（Take nobody's word for it）”" },
+          { "term": "healthy scepticism", "explanation": "【哲学学术概念】“良性的/健康的怀疑主义”" }
+        ]
       }
     ]
   }
