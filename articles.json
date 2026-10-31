@@ -281,6 +281,40 @@
           { "term": "take direct charge of", "explanation": "【短语】直接负责、全面接管" },
           { "term": "virtually impossible", "explanation": "【副词修饰】几乎不可能" }
         ]
+      },
+      {
+        "paragraphTitle": "第八段：社会层面的深层困境与主体性丧失（Civilisational Dilemma）",
+        "thesisAndContext": "第八段将视角升华至整个人类文明高度：盲目为黑箱 AI 买单是彻头彻尾的鲁莽；若人类放弃独立探究、只坐等算法下达指令，文明便自甘堕落为机器豢养的宠物。",
+        "englishText": "The challenge this poses for science is identical to the one confronting society as a whole. Progress will require us to feed these machines ever more data, energy, and capital. But if we fail to understand what they are actually doing, blindly footing the bill is sheer recklessness—there is no guarantee their objectives will align with our own. Even if developers manage to ‘align’ these models so they cause no harm, a deeper dilemma remains: a civilization that merely waits for algorithms to tell it what to do—whether in the lab or in daily life—is one where human beings willingly reduce themselves to the machines’ pampered pets.",
+        "chineseText": "这对科学构成的挑战与整个社会所面临的挑战如出一辙。进步将需要我们向这些机器喂养更多的数据、能源和资本。但是，如果我们不理解它们真正在做什么，盲目地买单就是彻头彻尾的鲁莽——没有任何保证表明它们的目标会与我们的一致。即便开发者设法“对齐”这些模型使之不造成伤害，一个更深层的困境依然存在：一个仅仅等待算法告诉它该做什么的文明——无论是在实验室还是在日常生活中——都是一个人类甘愿将自己贬为机器的宠物的文明。",
+        "wordTokens": [
+          { "word": "The challenge this poses for science", "role": "主语 (含定语从句)", "meaning": "这对科学所带来的挑战" },
+          { "word": "is identical to the one confronting society as a whole.", "role": "系表结构", "meaning": "与整个社会所面临的挑战完全相同" },
+          { "word": "Progress will require us to feed these machines", "role": "主谓宾补", "meaning": "进步将需要我们向机器投喂" },
+          { "word": "ever more data, energy, and capital.", "role": "直接宾语", "meaning": "越来越多的数据、能源与资本" },
+          { "word": "But if we fail to understand what they are actually doing,", "role": "转折 + 条件状语从句", "meaning": "但如果我们不能理解它们实际上在做什么" },
+          { "word": "blindly footing the bill is sheer recklessness—", "role": "动名词主语 + 系表", "meaning": "盲目买单就是彻头彻尾的鲁莽——" },
+          { "word": "there is no guarantee their objectives will align with our own.", "role": "同位语从句", "meaning": "没有任何保证表明它们的目标能与我们的一致" },
+          { "word": "Even if developers manage to ‘align’ these models so they cause no harm,", "role": "让步状语从句", "meaning": "即便开发者成功对齐这些模型使之不造成伤害" },
+          { "word": "a deeper dilemma remains:", "role": "主谓倒装/结构", "meaning": "一个更深层的困境依然存在：" },
+          { "word": "a civilization that merely waits for algorithms to tell it what to do—", "role": "主语 + 定语从句", "meaning": "一个仅仅坐等算法告知其该做什么的文明——" },
+          { "word": "whether in the lab or in daily life—", "role": "让步状语插入语", "meaning": "无论是在实验室还是日常生活中——" },
+          { "word": "is one where human beings willingly reduce themselves", "role": "系表 + 定语从句", "meaning": "是一个人类心甘情愿将自身贬低为" },
+          { "word": "to the machines’ pampered pets.", "role": "介宾补语", "meaning": "机器豢养的宠物的文明" }
+        ],
+        "syntaxBreakdown": [
+          { "part": "The challenge this poses for science is identical to the one confronting society as a whole.", "role": "主系表结构", "detail": "identical to：与……完全一致" },
+          { "part": "blindly footing the bill is sheer recklessness", "role": "动名词短语作主语 + 系表", "detail": "foot the bill：买单、承担巨额开销；sheer recklessness：彻头彻尾的鲁莽" },
+          { "part": "there is no guarantee their objectives will align with our own.", "role": "同位语从句", "detail": "align with：与……对齐/保持一致" },
+          { "part": "human beings willingly reduce themselves to the machines’ pampered pets.", "role": "主谓宾介补", "detail": "reduce oneself to：自甘堕落为……；pampered pets：养尊处优的宠物（政治哲学隐喻）" }
+        ],
+        "sentenceAnalysis": "【句子一主干】Challenge（主语）+ is identical to（系动词短语）+ the one（表语）。【句子二主干】Blindly footing the bill（动名词主语）+ is（系动词）+ recklessness（表语）。【句子三主干】Civilization（主语）+ is（系动词）+ one（表语）+ where humans reduce themselves to pets（定语从句）。",
+        "vocabularyNotes": [
+          { "term": "foot the bill", "explanation": "【习语】买单、承担全部花费" },
+          { "term": "sheer recklessness", "explanation": "【搭配】纯粹的蛮干、极端鲁莽" },
+          { "term": "pampered pets", "explanation": "【隐喻】被娇惯豢养的宠物（丧失主体性）" },
+          { "term": "reduce oneself to", "explanation": "【动词短语】沦落到……地步、自降身份为……" }
+        ]
       }
     ]
   }
