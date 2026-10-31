@@ -44,12 +44,15 @@
             margin-right: 4px;
             margin-bottom: 4px;
             transition: background-color 0.2s;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
-        .token-item:hover {
+        .token-item:hover,
+        .token-item.active {
             background-color: #F3F0E7;
             border-bottom: 2px solid #2F5D54;
         }
-        /* 悬浮弹出的气泡 */
+        /* 气泡本体 */
         .token-item .tooltip-text {
             visibility: hidden;
             width: max-content;
@@ -58,7 +61,7 @@
             color: #FAF9F5;
             text-align: left;
             border-radius: 6px;
-            padding: 8px 12px;
+            padding: 10px 14px;
             position: absolute;
             z-index: 50;
             bottom: 125%;
@@ -68,11 +71,13 @@
             transition: opacity 0.2s;
             font-size: 0.75rem;
             font-family: 'Source Sans 3', sans-serif;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15);
-            line-height: 1.4;
-            pointer-events: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+            line-height: 1.5;
+            pointer-events: auto; /* 允许在手机端点击气泡内的关闭按钮 */
         }
-        .token-item:hover .tooltip-text {
+        /* PC 端鼠标悬浮或移动端点击激活时均显示气泡 */
+        .token-item:hover .tooltip-text,
+        .token-item.active .tooltip-text {
             visibility: visible;
             opacity: 1;
         }
@@ -109,7 +114,7 @@
 
         async function initApp() {
             try {
-                // 动态拉取同目录下的 articles.json（加上时间戳防止浏览器强缓存）
+                // 动态读取同级目录下的 articles.json（加时间戳彻底解决浏览器缓存）
                 const response = await fetch('articles.json?t=' + new Date().getTime());
                 if (!response.ok) {
                     throw new Error(`无法读取 articles.json (状态码: ${response.status})`);
@@ -222,7 +227,7 @@
             `;
         }
 
-        // 渲染详情页（优先完整展示英文全文，有词元标注的则悬浮气泡）
+        // 渲染详情页（支持手机轻触开关、关闭按钮、以及点击空白处关闭）
         function renderDetailView(article) {
             const container = document.getElementById('app-view');
             container.innerHTML = `
@@ -252,11 +257,15 @@
                                 <div class="space-y-3 font-serif text-lg leading-relaxed text-gray-900 border-l-2 border-gold pl-4 py-1">
                                     <div class="font-semibold text-ink flex flex-wrap items-baseline">
                                         ${p.wordTokens && p.wordTokens.length > 0 ? p.wordTokens.map(token => `
-                                            <span class="token-item">
+                                            <span class="token-item" onclick="toggleToken(event, this)">
                                                 ${token.word}
                                                 <span class="tooltip-text">
-                                                    <strong>成分：</strong>${token.role}<br>
-                                                    <strong>释义：</strong>${token.meaning}
+                                                    <span class="flex justify-between items-center mb-1.5 pb-1 border-b border-sand/20">
+                                                        <strong class="text-gold">成分分析</strong>
+                                                        <button type="button" onclick="closeAllTokens(event)" class="text-xs text-sand/60 hover:text-white px-1 leading-none">&times;</button>
+                                                    </span>
+                                                    <div><strong>成分：</strong>${token.role}</div>
+                                                    <div><strong>释义：</strong>${token.meaning}</div>
                                                 </span>
                                             </span>
                                         `).join(' ') : `<p>${p.englishText}</p>`}
@@ -320,6 +329,29 @@
                 </div>
             `;
         }
+
+        // 手机端/点击触发气泡开关
+        function toggleToken(event, element) {
+            event.stopPropagation();
+            const isActive = element.classList.contains('active');
+            closeAllTokens();
+            if (!isActive) {
+                element.classList.add('active');
+            }
+        }
+
+        // 关闭所有激活的气泡
+        function closeAllTokens(event) {
+            if (event) event.stopPropagation();
+            document.querySelectorAll('.token-item.active').forEach(item => {
+                item.classList.remove('active');
+            });
+        }
+
+        // 点击屏幕空白区域自动收起气泡
+        document.addEventListener('click', () => {
+            closeAllTokens();
+        });
 
         window.addEventListener('DOMContentLoaded', initApp);
     </script>
