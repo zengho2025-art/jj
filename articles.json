@@ -348,6 +348,41 @@
           { "term": "stay in the driver's seat", "explanation": "【习语】掌控主导权、稳坐驾驶座" },
           { "term": "unavoidable price to pay", "explanation": "【常用搭配】无可回避的代价" }
         ]
+      },
+      {
+        "paragraphTitle": "第十段：科研制度的范式重构与企业责任（Institutional Reform & Corporate Citizenship）",
+        "thesisAndContext": "第十段从实操机制层面开出制度药方：传统学术制度必须推倒重来，将终身教职授予负责引导模型、校验突破的学者；同时要求科技寡头承担科研公民责任。",
+        "englishText": "In the meantime, a new era of human-steered machine science will compel academics to rethink their fields from the ground up. Universities must begin to recognise and reward the vital work of steering models, verifying their breakthroughs, and translating their findings into human understanding—granting tenure and prestige on that basis. Funding agencies should distribute research grants with the same priorities in mind. For their part, AI companies must step up as responsible scientific citizens: they must open their discoveries to rigorous peer review, and make their underlying code and methodologies fully transparent.",
+        "chineseText": "与此同时，人类主导的机器科学新时代将迫使学者们从头开始重新思考各自的领域。大学必须开始认可并奖励指导模型、验证其突破以及将研究结果转化为人类理解的重要工作——并在此基础上授予终身教职和声望。资助机构在分配研究经费时也应牢记相同的优先事项。就人工智能公司而言，它们必须挺身而出，成为负责任的科学公民：它们必须向严格的同行评议开放其发现，并使其底层代码和方法完全透明。",
+        "wordTokens": [
+          { "word": "In the meantime,", "role": "时间状语", "meaning": "与此同时" },
+          { "word": "a new era of human-steered machine science", "role": "主语", "meaning": "人类掌舵的机器科学新时代" },
+          { "word": "will compel academics to rethink their fields", "role": "谓语 + 复合宾语", "meaning": "将倒逼学者彻底反思其领域" },
+          { "word": "from the ground up.", "role": "方式状语", "meaning": "从根基上/从头开始" },
+          { "word": "Universities must begin to recognise and reward", "role": "主谓宾", "meaning": "大学必须开始认可与奖赏" },
+          { "word": "the vital work of steering models,", "role": "介宾短语", "meaning": "指导引导模型的关键工作" },
+          { "word": "verifying their breakthroughs,", "role": "并列动名词", "meaning": "核验验证机器突破" },
+          { "word": "and translating their findings into human understanding—", "role": "并列动名词", "meaning": "并将成果转化为人类理解——" },
+          { "word": "granting tenure and prestige on that basis.", "role": "现在分词伴随状语", "meaning": "并以此为基础授予终身教职与声望" },
+          { "word": "Funding agencies should distribute research grants", "role": "主谓宾", "meaning": "科研资助机构在分配经费时" },
+          { "word": "with the same priorities in mind.", "role": "介词伴随状语", "meaning": "也应当秉持相同的优先准则" },
+          { "word": "For their part, AI companies must step up as responsible scientific citizens:", "role": "主谓状", "meaning": "就AI企业而言必须主动承担负责任科研公民的角色：" },
+          { "word": "they must open their discoveries to rigorous peer review,", "role": "主谓宾介补", "meaning": "必须向严格的同行评审开放研究发现" },
+          { "word": "and make their underlying code and methodologies fully transparent.", "role": "使役动词复合宾语", "meaning": "并使其底层代码与方法论完全透明" }
+        ],
+        "syntaxBreakdown": [
+          { "part": "a new era ... will compel academics to rethink their fields from the ground up.", "role": "主谓宾补结构", "detail": "compel sb to do：迫使某人做某事；from the ground up：从根基上、彻底地" },
+          { "part": "granting tenure and prestige on that basis.", "role": "现在分词作结果/伴随状语", "detail": "grant tenure：授予终身教职；prestige：学术声望" },
+          { "part": "step up as responsible scientific citizens:", "role": "动词短语", "detail": "step up：挺身而出、主动承担责任" },
+          { "part": "make their underlying code and methodologies fully transparent.", "role": "make + 宾语 + 宾补", "detail": "transparent：透明的、公开可查的" }
+        ],
+        "sentenceAnalysis": "【句子一主干】Era（主语）+ will compel（谓语）+ academics to rethink（复合宾语）。【句子二主干】Universities（主语）+ must begin to recognise and reward（谓语）+ work（宾语）。【句子三主干】Funding agencies（主语）+ should distribute（谓语）+ grants（宾语）。【句子四主干】Companies（主语）+ must open discoveries and make code transparent（并列谓语结构）。",
+        "vocabularyNotes": [
+          { "term": "from the ground up", "explanation": "【习语】从零开始、全方位彻底地" },
+          { "term": "grant tenure", "explanation": "【学术体制术语】授予终身教职" },
+          { "term": "step up", "explanation": "【短语动词】挺身而出、站出来承担责任" },
+          { "term": "rigorous peer review", "explanation": "【学术出版核心术语】严谨的同行评审机制" }
+        ]
       }
     ]
   }
