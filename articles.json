@@ -129,6 +129,43 @@
           { "term": "lean on", "explanation": "【动词短语】依赖、依托" },
           { "term": "intricate", "explanation": "【高阶形容词】错综复杂的、精细的" }
         ]
+      },
+      {
+        "paragraphTitle": "第四段：生命科学视域下的纵深演进（Profound Potential in Biology）",
+        "thesisAndContext": "第四段将讨论推向最具颠覆性的生命科学领域：强调生物学是 AI 潜能最为深远的疆域，并最终抛出“生命被降维重构为可编辑软件代码”的范式转移。",
+        "englishText": "Further AI-driven breakthroughs are practically inevitable, and nowhere is the potential more profound than in biology. Researchers are already deploying AI to breed drought-tolerant crops, accelerate drug discovery, and engineer targeted viruses to attack lethal bacteria. At the same time, teams are working to simulate the inner workings of living cells inside silicon. If scientists can truly model life computationally, they may eventually master biology to the point of creating entirely new organisms from scratch. In that world, DNA would look less like a sacred mystery of nature and more like software code—ready to be edited and rearranged by algorithms at will.",
+        "chineseText": "由人工智能驱动的进一步突破几乎是不可避免的，而且在生物学领域，其潜力再怎么强调也不为过。研究人员已经在部署人工智能来培育耐旱作物、加速药物研发，并设计靶向病毒来攻击致死细菌。与此同时，各团队正致力于在硅片内部模拟活细胞的内部运作。如果科学家能够真正通过计算对生命进行建模，他们最终可能会掌握生物学，达到从零开始创造全新生物的程度。在那个世界里，DNA看起来将不再像是大自然的神秘圣物，而更像是一段软件代码——随时准备被算法随意编辑和重新排列。",
+        "wordTokens": [
+          { "word": "Further AI-driven breakthroughs", "role": "主语", "meaning": "人工智能驱动的进一步突破" },
+          { "word": "are practically inevitable,", "role": "系表结构", "meaning": "几乎是不可避免的" },
+          { "word": "and nowhere is the potential more profound than in biology.", "role": "否定词倒装并列句", "meaning": "在生物学领域的潜力最为深远" },
+          { "word": "Researchers are already deploying AI", "role": "主谓宾", "meaning": "研究人员已经在部署人工智能" },
+          { "word": "to breed drought-tolerant crops,", "role": "不定式目的状语", "meaning": "培育耐旱作物" },
+          { "word": "accelerate drug discovery,", "role": "并列目的状语", "meaning": "加速新药研发" },
+          { "word": "and engineer targeted viruses to attack lethal bacteria.", "role": "并列目的状语", "meaning": "设计靶向病毒以攻击致死细菌" },
+          { "word": "At the same time, teams are working", "role": "状语 + 主谓", "meaning": "与此同时各团队正致力于" },
+          { "word": "to simulate the inner workings of living cells inside silicon.", "role": "不定式宾语", "meaning": "在硅芯片内部模拟活细胞的内部运作" },
+          { "word": "If scientists can truly model life computationally,", "role": "条件状语从句", "meaning": "如果科学家能真正用计算对生命建模" },
+          { "word": "they may eventually master biology", "role": "主句主谓宾", "meaning": "他们最终可能掌握生物学" },
+          { "word": "to the point of creating entirely new organisms from scratch.", "role": "程度状语", "meaning": "达到从零开始创造出全新生物的程度" },
+          { "word": "In that world, DNA would look less like a sacred mystery of nature", "role": "状语 + 主系表对比", "meaning": "在那样的世界中DNA将不再像大自然的神秘圣物" },
+          { "word": "and more like software code—", "role": "并列表语", "meaning": "而更像软件代码——" },
+          { "word": "ready to be edited and rearranged by algorithms at will.", "role": "形容词短语作后置定语", "meaning": "随时可被算法随心所欲地编辑与重组" }
+        ],
+        "syntaxBreakdown": [
+          { "part": "Further AI-driven breakthroughs are practically inevitable,", "role": "主系表结构", "detail": "practically inevitable：几乎不可避免" },
+          { "part": "nowhere is the potential more profound than in biology.", "role": "否定副词句首倒装", "detail": "否定副词 nowhere 引起系动词 is 提前倒装" },
+          { "part": "simulate the inner workings of living cells inside silicon.", "role": "动宾短语", "detail": "inner workings：内部运作机制；inside silicon：硅基芯片模拟" },
+          { "part": "creating entirely new organisms from scratch.", "role": "动名词介宾短语", "detail": "from scratch：从零开始、从无到有" },
+          { "part": "ready to be edited and rearranged by algorithms at will.", "role": "形容词后置定语", "detail": "at will：随心所欲地、任意地" }
+        ],
+        "sentenceAnalysis": "【句子一主干】Breakthroughs（主语）+ are（系动词）+ inevitable（表语）。【句子二主干】Researchers（主语）+ are deploying（谓语）+ AI（宾语）+ to breed, accelerate and engineer（目的状语）。【句子三主干】DNA（主语）+ would look（系动词）+ less like mystery and more like code（表语）。",
+        "vocabularyNotes": [
+          { "term": "from scratch", "explanation": "【经典短语】从零开始、白手起家" },
+          { "term": "at will", "explanation": "【固定搭配】随心所欲地、任意" },
+          { "term": "inner workings", "explanation": "【名词搭配】内部运作机制、深层机理" },
+          { "term": "drought-tolerant", "explanation": "【复合形容词】耐旱的" }
+        ]
       }
     ]
   }
