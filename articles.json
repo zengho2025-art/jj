@@ -315,6 +315,39 @@
           { "term": "pampered pets", "explanation": "【隐喻】被娇惯豢养的宠物（丧失主体性）" },
           { "term": "reduce oneself to", "explanation": "【动词短语】沦落到……地步、自降身份为……" }
         ]
+      },
+      {
+        "paragraphTitle": "第九段：人机协同底线与“人在回路”（Human-in-the-Loop & The Driver’s Seat）",
+        "thesisAndContext": "第九段给出了应对危机的核心原则论述：在实现绝对价值对齐前，科学界必须坚守“人在回路”底线，这是人类掌控驾驶权不可推卸的代价。",
+        "englishText": "Some might well accept that trade-off if the reward is, say, wiping out all diseases. Yet until we have absolute certainty that machines and human values are truly aligned, science must always keep a human in the loop. Laboratories should certainly harness AI to crack difficult problems, but critical resources—from physical benches to massive compute—must remain directed by experts capable of truly understanding what the algorithms are doing. This caution will inevitably slow the pace of discovery. But it is an unavoidable price to pay if humanity is to stay in the driver’s seat.",
+        "chineseText": "如果回报是，比方说消灭所有疾病，有些人或许很愿意接受这种权衡。然而，在我们拥有绝对确信机器与人类价值观真正对齐之前，科学必须始终让人类保持在环路中。实验室当然应该利用人工智能来攻克疑难问题，但关键资源——从实体实验台到海量算力——必须继续由能够真正理解算法在做什么的专家来指导。这种审慎不可避免地会放慢发现的步伐。但如果人类要保持在驾驶座上，这是必须付出的不可避免的代价。",
+        "wordTokens": [
+          { "word": "Some might well accept that trade-off", "role": "主谓宾", "meaning": "有些人很可能会接受那种权衡" },
+          { "word": "if the reward is, say, wiping out all diseases.", "role": "条件状语从句", "meaning": "如果回报是比方说根除所有疾病" },
+          { "word": "Yet until we have absolute certainty", "role": "时间状语从句", "meaning": "然而直到我们拥有绝对把握" },
+          { "word": "that machines and human values are truly aligned,", "role": "同位语从句", "meaning": "机器与人类价值真正实现对齐" },
+          { "word": "science must always keep a human in the loop.", "role": "主谓宾补", "meaning": "科学必须始终让人留在回路中" },
+          { "word": "Laboratories should certainly harness AI to crack difficult problems,", "role": "主谓宾 + 目的状语", "meaning": "实验室当然应该驾驭AI去攻坚克难" },
+          { "word": "but critical resources—from physical benches to massive compute—", "role": "转折并列主语", "meaning": "但核心关键资源——从实体实验台到海量算力——" },
+          { "word": "must remain directed by experts", "role": "系表被动结构", "meaning": "必须继续由专家指导掌舵" },
+          { "word": "capable of truly understanding what the algorithms are doing.", "role": "形容词后置定语 + 宾从", "meaning": "能够真正理解算法所作所为的专家" },
+          { "word": "This caution will inevitably slow the pace of discovery.", "role": "主谓宾", "meaning": "这种审慎将不可避免地放缓发现步伐" },
+          { "word": "But it is an unavoidable price to pay", "role": "主系表 + 不定式定语", "meaning": "但这是必须付出的不可避免的代价" },
+          { "word": "if humanity is to stay in the driver’s seat.", "role": "条件状语从句", "meaning": "如果人类还想稳坐驾驶席的话" }
+        ],
+        "syntaxBreakdown": [
+          { "part": "science must always keep a human in the loop.", "role": "主谓宾补结构", "detail": "keep sb in the loop：技术监管术语，“使人在决策回路中”" },
+          { "part": "Laboratories should certainly harness AI to crack difficult problems,", "role": "主谓宾 + 目的状语", "detail": "harness：利用、治理、驾驭" },
+          { "part": "must remain directed by experts capable of truly understanding...", "role": "系表结构", "detail": "remain directed by：保持受……掌控指导" },
+          { "part": "if humanity is to stay in the driver’s seat.", "role": "条件状语从句", "detail": "stay in the driver's seat：掌握主导权/掌控大局" }
+        ],
+        "sentenceAnalysis": "【句子一主干】Some（主语）+ might accept（谓语）+ trade-off（宾语）。【句子二主干】Science（主语）+ must keep（谓语）+ human（宾语）+ in the loop（补足语）。【句子三主干】Caution（主语）+ will slow（谓语）+ pace of discovery（宾语）。【句子四主干】It（形式主语）+ is（系动词）+ price to pay（表语）。",
+        "vocabularyNotes": [
+          { "term": "keep a human in the loop", "explanation": "【AI监管术语】让人在回路中（确保人类最终裁决与干预权）" },
+          { "term": "harness", "explanation": "【动词】开发、治理、驾驭利用" },
+          { "term": "stay in the driver's seat", "explanation": "【习语】掌控主导权、稳坐驾驶座" },
+          { "term": "unavoidable price to pay", "explanation": "【常用搭配】无可回避的代价" }
+        ]
       }
     ]
   }
