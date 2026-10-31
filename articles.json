@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "title": "The Baby and the Bathtub: AI, Science, and the Crisis of Understanding",
+    "chineseTitle": "婴儿与洗澡水：人工智能、科学与理解危机",
+    "category": "Technology",
+    "date": "2026-10-30",
+    "summary": "文章以一篇前沿实验室宣称攻克数学世纪难题的新闻开篇，深入探讨了AI在推动科学狂飙突进的同时，给人类带来的理解危机、学术边界冲突与主体性丧失的深层忧虑。",
+    "paragraphs": [
+      {
+        "paragraphTitle": "第一段：引子与背景段（Lead-in & Background）",
+        "thesisAndContext": "作者借由一个具体的历史里程碑节点开篇，以极具冲击力的新闻性叙事铺陈事件规模。核心基调由震撼过渡至迷茫与警惕，末句以数学家群体的审慎反应收尾，迅速引出全文对该历史性突破深远影响的追问与探究。",
+        "englishText": "October 6th, 2026, may be hailed as the most significant turning point in mathematics. An American frontier lab unleashed a torrent of more than 700 papers, professing to have cracked or nudged forward 372 enigmas that had defied researchers for decades. Mathematicians are still trying to figure out what this means for their field.",
+        "chineseText": "2026年10月6日，可能会被奉为数学史上最重要的转折点。一家美国前沿实验室抛出了多达700多篇论文的洪流，自称已经破解或向前推进了372个困扰了研究人员几十年的世纪难题。数学家们仍在极力弄清楚这对他们的领域意味着什么。",
+        "wordTokens": [
+          { "word": "October 6th, 2026,", "role": "时间状语", "meaning": "特定时间节点" },
+          { "word": "may be hailed as", "role": "谓语 (情态动词+被动语态)", "meaning": "被称赞为 / 被誉为……" },
+          { "word": "the most significant turning point in mathematics.", "role": "介词宾语", "meaning": "数学史上最重要的转折点" },
+          { "word": "An American frontier lab", "role": "主语", "meaning": "一家美国前沿实验室" },
+          { "word": "unleashed", "role": "谓语", "meaning": "释放出 / 爆发倾泻" },
+          { "word": "a torrent of more than 700 papers,", "role": "核心宾语", "meaning": "如洪流般的 / 大批涌现的 700 多篇论文" },
+          { "word": "professing to have cracked or nudged forward...", "role": "现在分词短语作伴随状语", "meaning": "自称已经破解或向前推进" },
+          { "word": "what this means for their field.", "role": "宾语从句", "meaning": "这对他们的领域意味着什么" }
+        ],
+        "syntaxBreakdown": [
+          { "part": "October 6th, 2026,", "role": "时间状语", "detail": "特定时间节点" },
+          { "part": "may be hailed as", "role": "谓语 (情态动词+被动语态)", "detail": "be hailed as：固定短语搭配，“被称赞为……/ 被誉为……”" },
+          { "part": "the most significant turning point in mathematics.", "role": "介词宾语", "detail": "turning point：转折点" },
+          { "part": "An American frontier lab", "role": "主语", "detail": "frontier lab：前沿实验室" },
+          { "part": "unleashed", "role": "谓语", "detail": "unleashed：及物动词，“释放出 / 爆发倾泻”" },
+          { "part": "a torrent of more than 700 papers,", "role": "核心宾语", "detail": "a torrent of：修饰语，表示“如洪流般的 / 大批涌现的”" },
+          { "part": "professing to have cracked or nudged forward...", "role": "现在分词短语作伴随状语", "detail": "profess to do：高阶动词，“自称拥有 / 声称已经做到……”" },
+          { "part": "what this means for their field.", "role": "宾语从句", "detail": "figure out：核心短语动词，“费尽心思去琢磨并理解某事的本质”" }
+        ],
+        "sentenceAnalysis": "主句主干提取：An American frontier lab（主语）＋ unleashed（谓语）＋ a torrent of more than 700 papers（宾语）",
+        "vocabularyNotes": [
+          { "term": "be hailed as", "explanation": "【固定短语】“被称赞为……/ 被誉为……”" },
+          { "term": "a torrent of", "explanation": "【隐喻搭配】“如洪流般的 / 大批涌现的”" },
+          { "term": "defy researchers", "explanation": "【动宾搭配】“让……束手无策 / 经受住了所有破解尝试”" }
+        ]
+      }
+    ]
+  }
+]

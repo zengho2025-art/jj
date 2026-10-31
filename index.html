@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Academic Digest · 外刊精读</title>
+    <!-- Google Fonts & Tailwind CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        paper: "#FAF9F5",
+                        ink: "#1B3B36",
+                        moss: "#2F5D54",
+                        sage: "#5C7A74",
+                        sand: "#E8E4D9",
+                        wheat: "#F3F0E7",
+                        gold: "#C4A35A",
+                    },
+                    fontFamily: {
+                        display: ["Playfair Display", "Georgia", "serif"],
+                        serif: ["Source Serif 4", "Noto Serif SC", "Georgia", "serif"],
+                        sans: ["Source Sans 3", "system-ui", "sans-serif"],
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        body { background-color: #FAF9F5; color: #1B3B36; font-family: 'Source Sans 3', 'Noto Serif SC', serif; }
+        .category-btn.active { background-color: #2F5D54; color: #FAF9F5; }
+
+        /* 单词/短语悬浮提示样式 (Tooltip) */
+        .token-item {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            border-bottom: 1.5px dashed #C4A35A;
+            margin-right: 4px;
+            margin-bottom: 4px;
+            transition: background-color 0.2s;
+        }
+        .token-item:hover {
+            background-color: #F3F0E7;
+            border-bottom: 2px solid #2F5D54;
+        }
+        /* 悬浮弹出的气泡 */
+        .token-item .tooltip-text {
+            visibility: hidden;
+            width: max-content;
+            max-width: 280px;
+            background-color: #1B3B36;
+            color: #FAF9F5;
+            text-align: left;
+            border-radius: 6px;
+            padding: 8px 12px;
+            position: absolute;
+            z-index: 50;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.2s;
+            font-size: 0.75rem;
+            font-family: 'Source Sans 3', sans-serif;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15);
+            line-height: 1.4;
+        }
+        .token-item:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-moss selection:text-paper">
+    <!-- 顶部导航栏 -->
+    <header class="border-b border-sand bg-paper/80 backdrop-blur-md sticky top-0 z-30">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="goHome()">
+                <span class="font-display italic text-2xl font-bold tracking-tight text-ink">Academic Digest</span>
+                <span class="text-xs uppercase tracking-widest px-2 py-0.5 bg-wheat text-moss font-semibold rounded">外刊精读</span>
+            </div>
+            <div class="text-sm text-sage font-medium">www.scopix.cn</div>
+        </div>
+    </header>
+
+    <!-- 主体两栏布局区 -->
+    <main class="max-w-6xl mx-auto px-6 py-10 flex-grow w-full">
+        <div id="app-view">
+            <div class="text-sage text-sm py-10">正在加载外刊文章库...</div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="border-t border-sand py-6 text-center text-xs text-sage font-sans">
+        &copy; 2026 Academic Digest · All Rights Reserved. Hosted on Vercel.
+    </footer>
+
+    <!-- 核心业务逻辑 -->
+    <script>
+        // 完整包含全部 11 个段落的外刊数据库
+        const allArticles = [
+            {
+                "id": 1,
+                "title": "The Baby and the Bathtub: AI, Science, and the Crisis of Understanding",
+                "chineseTitle": "婴儿与洗澡水：人工智能、科学与理解危机",
+                "category": "Technology",
+                "date": "2026-10-30",
+                "summary": "文章以一篇前沿实验室宣称攻克数学世纪难题的新闻开篇，深入探讨了AI在推动科学狂飙突进的同时，给人类带来的理解危机、学术边界冲突与主体性丧失的深层忧虑。",
+                "paragraphs": [
+                    {
+                        "paragraphTitle": "第一段：引子与背景段（Lead-in & Background）",
+                        "thesisAndContext": "作者借由一个具体的历史里程碑节点开篇，以极具冲击力的新闻性叙事铺陈事件规模。",
+                        "englishText": "October 6th, 2026, may be hailed as the most significant turning point in mathematics. An American frontier lab unleashed a torrent of more than 700 papers, professing to have cracked or nudged forward 372 enigmas that had defied researchers for decades. Mathematicians are still trying to figure out what this means for their field.",
+                        "chineseText": "2026年10月6日，可能会被奉为数学史上最重要的转折点。一家美国前沿实验室抛出了多达700多篇论文的洪流，自称已经破解或向前推进了372个困扰了研究人员几十年的世纪难题。数学家们仍在极力弄清楚这对他们的领域意味着什么。",
+                        "wordTokens": [
+                            { "word": "October 6th, 2026,", "role": "时间状语", "meaning": "特定时间节点" },
+                            { "word": "may be hailed as", "role": "谓语 (情态动词+被动语态)", "meaning": "被称赞为 / 被誉为……" },
+                            { "word": "the most significant turning point in mathematics.", "role": "介词宾语", "meaning": "数学史上最重要的转折点" },
+                            { "word": "An American frontier lab", "role": "主语", "meaning": "一家美国前沿实验室" },
+                            { "word": "unleashed", "role": "谓语", "meaning": "释放出 / 爆发倾泻" },
+                            { "word": "a torrent of more than 700 papers,", "role": "核心宾语", "meaning": "如洪流般的 / 大批涌现的 700 多篇论文" },
+                            { "word": "professing to have cracked or nudged forward...", "role": "现在分词短语作伴随状语", "meaning": "自称已经破解或向前推进" },
+                            { "word": "what this means for their field.", "role": "宾语从句", "meaning": "这对他们的领域意味着什么" }
+                        ],
+                        "syntaxBreakdown": [
+                            { "part": "October 6th, 2026,", "role": "时间状语", "detail": "特定时间节点" },
+                            { "part": "may be hailed as", "role": "谓语 (情态动词+被动语态)", "detail": "be hailed as：固定短语搭配，“被称赞为……/ 被誉为……”" },
+                            { "part": "the most significant turning point in mathematics.", "role": "介词宾语", "detail": "turning point：转折点" },
+                            { "part": "An American frontier lab", "role": "主语", "detail": "frontier lab：前沿实验室" },
+                            { "part": "unleashed", "role": "谓语", "detail": "unleashed：及物动词，“释放出 / 爆发倾泻”" },
+                            { "part": "a torrent of more than 700 papers,", "role": "核心宾语", "detail": "a torrent of：修饰语，表示“如洪流般的 / 大批涌现的”" },
+                            { "part": "professing to have cracked or nudged forward...", "role": "现在分词短语作伴随状语", "detail": "profess to do：高阶动词，“自称拥有 / 声称已经做到……”" },
+                            { "part": "what this means for their field.", "role": "宾语从句", "detail": "figure out：核心短语动词，“费尽心思去琢磨并理解某事的本质”" }
+                        ],
+                        "sentenceAnalysis": "主句主干提取：An American frontier lab（主语）＋ unleashed（谓语）＋ a torrent of more than 700 papers（宾语）",
+                        "vocabularyNotes": [
+                            { "term": "be hailed as", "explanation": "【固定短语】“被称赞为……/ 被誉为……”" },
+                            { "term": "a torrent of", "explanation": "【隐喻搭配】“如洪流般的 / 大批涌现的”" },
+                            { "term": "defy researchers", "explanation": "【动宾搭配】“让……束手无策 / 经受住了所有破解尝试”" }
+                        ]
+                    },
+                    {
+                        "paragraphTitle": "第二段：基准参考段（Golden Sample）",
+                        "thesisAndContext": "作者把镜头从数学界拉开，宣布事件的真正意义在数学之外——它迫使整个科学界正视 AI 正在改写科学的根基。",
+                        "englishText": "The impact will reach far beyond mathematics. Science must now come to terms with how artificial intelligence is reshaping its entire foundation. These breakthroughs are a double-edged sword: they mark a great leap forward for humanity and prove the astonishing speed of AI, yet they also caution us against a future where machines decipher a universe that humans can no longer comprehend. The defining question is whether we can push boundaries forward without leaving our own understanding behind.",
+                        "chineseText": "这一影响将远远超越数学的范围。科学现在必须正视人工智能正在重塑其整个根基的现实。这些突破是一把双刃剑：它们标志着人类的一大跃进并证明了AI惊人的速度，然而它们也告诫我们要警惕这样一个未来：机器解出了人类再也无法理解的宇宙。决定性的问题在于，我们能否在不落下自身理解的前提下推进边界。",
+                        "wordTokens": [
+                            { "word": "The impact", "role": "主语", "meaning": "这一影响" },
+                            { "word": "will reach far beyond mathematics.", "role": "谓语 + 程度状语 + 宾语", "meaning": "将远远超越数学的范围" },
+                            { "word": "Science", "role": "主语", "meaning": "科学界" },
+                            { "word": "must now come to terms with", "role": "谓语动词短语", "meaning": "正视 / 学着接受现实" },
+                            { "word": "how artificial intelligence is reshaping its entire foundation.", "role": "宾语从句", "meaning": "人工智能正如何重塑其整个根基" },
+                            { "word": "These breakthroughs", "role": "主语", "meaning": "这些突破" },
+                            { "word": "are a double-edged sword:", "role": "系表结构", "meaning": "是一把双刃剑" }
+                        ],
+                        "syntaxBreakdown": [
+                            { "part": "The impact", "role": "主语", "detail": "这一影响" },
+                            { "part": "will reach far beyond mathematics.", "role": "谓语 + 程度状语 + 宾语", "detail": "reach far beyond：远远超越……的范围" },
+                            { "part": "Science", "role": "主语", "detail": "科学界" },
+                            { "part": "must now come to terms with", "role": "谓语动词短语", "detail": "come to terms with：动词短语，“正视、学着接受现实”" },
+                            { "part": "how artificial intelligence is reshaping its entire foundation.", "role": "宾语从句", "detail": "reshaping：重塑" },
+                            { "part": "These breakthroughs", "role": "主语", "detail": "这些突破" },
+                            { "part": "are a double-edged sword:", "role": "系表结构", "detail": "double-edged sword：隐喻搭配，“双刃剑”" },
+                            { "part": "where machines decipher a universe that humans can no longer comprehend.", "role": "定语从句嵌套", "detail": "decipher：破译、解开" }
+                        ],
+                        "sentenceAnalysis": "主句主干提取：These breakthroughs（主语）＋ are（系动词）＋ a double-edged sword（表语）",
+                        "vocabularyNotes": [
+                            { "term": "come to terms with", "explanation": "【动词短语】“正视、学着接受现实”" },
+                            { "term": "caution sb against sth", "explanation": "【固定搭配】“告诫某人提防某事”" }
+                        ]
+                    },
+                    {
+                        "paragraphTitle": "第三段：承上启下与证据链展开段（Transition & Evidence）",
+                        "thesisAndContext": "作者从数学本身的推导逻辑切入，阐明为何数学是 AI 最自然的试验场，并通过气象预测、新材料模拟及蛋白质结构预测的排比证据链，有力证实了机器智能重塑科学范式的既成事实。",
+                        "englishText": "Mathematics proved to be an ideal testing ground for AI, driven as it is by ironclad logic that computers can verify step by step. Yet the breakthrough hardly ends with pure calculation. As our science reports this week, AI is rapidly transforming the practical sciences, largely because they lean on mathematics as a foundation. It has already sharpened meteorological forecasts, envisioned millions of promising new materials, and helped stabilise nuclear fusion experiments. Most remarkably, it has learned to predict the intricate 3D shapes of nearly every known protein — a triumph that rightfully earned a Nobel Prize.",
+                        "chineseText": "数学被证明是人工智能的理想试验场，正因其受到计算机能够一步步核实的铁律逻辑所驱动。然而，这一突破绝不仅仅止于纯粹的计算。正如我们本周的科学报道所探讨的那样，人工智能正在迅速改变应用科学，很大程度上是因为它们以数学为基石。它已经使气象预报更加精准，构想出数百万种有前景的新材料，并协助稳定了核聚变实验。最引人注目的是，它已学会预测几乎所有已知蛋白质错综复杂的3D结构——这一成就当之无愧地赢得了诺贝尔奖。",
+                        "wordTokens": [
+                            { "word": "Mathematics", "role": "主语", "meaning": "数学" },
+                            { "word": "proved to be an ideal testing ground for AI,", "role": "系表结构", "meaning": "被证明是人工智能的理想试验场" },
+                            { "word": "driven as it is by ironclad logic...", "role": "原因状语", "meaning": "受计算机可核实的铁律逻辑所驱动" },
+                            { "word": "Yet the breakthrough hardly ends with pure calculation.", "role": "转折句", "meaning": "然而突破绝不仅止于纯计算" },
+                            { "word": "AI is rapidly transforming the practical sciences,", "role": "主谓宾", "meaning": "人工智能正在迅速改变应用科学" }
+                        ],
+                        "syntaxBreakdown": [
+                            { "part": "Mathematics proved to be an ideal testing ground for AI,", "role": "主系表结构", "detail": "testing ground：试验场 / 检验平台" },
+                            { "part": "driven as it is by ironclad logic that computers can verify step by step.", "role": "原因倒装状语", "detail": "ironclad logic：坚不可摧的 / 铁证如山的逻辑" },
+                            { "part": "Yet the breakthrough hardly ends with pure calculation.", "role": "转折主句", "detail": "hardly ends with：绝不仅仅止于……" },
+                            { "part": "As our science reports this week, AI is rapidly transforming the practical sciences,", "role": "方式状语 + 主谓宾", "detail": "practical sciences：应用科学 / 实用科学" },
+                            { "part": "largely because they lean on mathematics as a foundation.", "role": "原因状语从句", "detail": "lean on：依赖 / 依托（相当于 rely on）" },
+                            { "part": "It has already sharpened meteorological forecasts, envisioned..., and helped stabilise...", "role": "并列谓语结构", "detail": "meteorological forecasts：气象预报" },
+                            { "part": "it has learned to predict the intricate 3D shapes of nearly every known protein", "role": "主谓宾", "detail": "intricate：错综复杂的 / 精细的" }
+                        ],
+                        "sentenceAnalysis": "主句主干提取：Mathematics（主语）＋ proved to be（系动词短语）＋ an ideal testing ground for AI（表语）",
+                        "vocabularyNotes": [
+                            { "term": "testing ground", "explanation": "【核心名词搭配】“试验场 / 检验平台”" },
+                            { "term": "ironclad logic", "explanation": "【隐喻搭配】“严密的 / 铁证如山的逻辑”" },
+                            { "term": "lean on", "explanation": "【动词短语】“依赖 / 依托”" },
+                            { "term": "intricate", "explanation": "【高阶学术形容词】“错综复杂的 / 精细的”" }
+                        ]
+                    },
+                    {
+                        "paragraphTitle": "第四段：生命科学视域下的纵深演进（Profound Potential in Biology）",
+                        "thesisAndContext": "第四段将讨论推向最具颠覆性的生命科学领域：强调生物学是 AI 潜能最为深远的疆域，并最终抛出“生命被降维重构为可编辑软件代码”的范式转移。",
+                        "englishText": "Further AI-driven breakthroughs are practically inevitable, and nowhere is the potential more profound than in biology. Researchers are already deploying AI to breed drought-tolerant crops, accelerate drug discovery, and engineer targeted viruses to attack lethal bacteria. At the same time, teams are working to simulate the inner workings of living cells inside silicon. If scientists can truly model life computationally, they may eventually master biology to the point of creating entirely new organisms from scratch. In that world, DNA would look less like a sacred mystery of nature and more like software code — ready to be edited and rearranged by algorithms at will.",
+                        "chineseText": "由人工智能驱动的进一步突破几乎是不可避免的，且没有什么地方的潜力比在生物学领域更为深远。研究人员已经在大规模部署人工智能来培育耐旱作物、加速新药研发，并设计靶向病毒以攻击致死性细菌。与此同时，团队正致力于在硅芯片内部模拟活细胞的内部运作机制。如果科学家能够真正通过计算对生命进行建模，他们最终可能会掌握生物学，达到从零开始创造出全新生物的程度。在那个世界里，DNA将不再那么像大自然神圣莫测的奥秘，而更像软件 code——随时可被算法随心所欲地编辑和重排。",
+                        "wordTokens": [
+                            { "word": "Further AI-driven breakthroughs", "role": "主语", "meaning": "人工智能驱动的进一步突破" },
+                            { "word": "are practically inevitable,", "role": "系表结构", "meaning": "几乎是不可避免的" },
+                            { "word": "nowhere is the potential more profound than in biology.", "role": "否定词倒装", "meaning": "没有什么地方的潜力比生物学更为深远" },
+                            { "word": "Researchers", "role": "主语", "meaning": "研究人员" },
+                            { "word": "are already deploying AI", "role": "谓语 + 宾语", "meaning": "已经在部署人工智能" }
+                        ],
+                        "syntaxBreakdown": [
+                            { "part": "Further AI-driven breakthroughs are practically inevitable,", "role": "主系表结构", "detail": "inevitable：不可避免的" },
+                            { "part": "nowhere is the potential more profound than in biology.", "role": "否定副词句首倒装", "detail": "nowhere is... more profound than...：没有什么地方比……更深远了" },
+                            { "part": "Researchers are already deploying AI to breed drought-tolerant crops, accelerate drug discovery...", "role": "主谓宾 + 目的状语", "detail": "drought-tolerant：耐旱的；engineer：基因工程设计" },
+                            { "part": "teams are working to simulate the inner workings of living cells inside silicon.", "role": "主谓宾", "detail": "inner workings：内部运作机制；inside silicon：硅芯片内部（计算机模拟）" },
+                            { "part": "If scientists can truly model life computationally, they may eventually master biology...", "role": "条件状语从句 + 主句", "detail": "computationally：通过计算方式" },
+                            { "part": "DNA would look less like a sacred mystery of nature and more like software code", "role": "主系表对比", "detail": "less like A and more like B：不再像A而更像B" }
+                        ],
+                        "sentenceAnalysis": "主句主干提取：Breakthroughs are inevitable, and nowhere is the potential more profound than in biology.",
+                        "vocabularyNotes": [
+                            { "term": "nowhere is... more profound than...", "explanation": "【高阶修辞倒装】用绝对否定词达到极致肯定效果" },
+                            { "term": "inner workings", "explanation": "【固定名词搭配】“内部运作机制 / 核心机理”" },
+                            { "term": "from scratch", "explanation": "【习惯表达】“从零开始 / 从无到有”" }
+                        ]
+                    },
+                    {
+                        "paragraphTitle": "第五段：学术界的反弹与智力本质之争（Alarm & Intellectual Struggle）",
+                        "thesisAndContext": "第五段聚焦学术界强烈的应激反应：揭示科学界在兴奋之余所笼罩的深层恐慌，亮出纯粹学者的终极困惑——研究的真正奖赏在于心智的求索过程。",
+                        "englishText": "As with so much in AI, this prospect is both exhilarating and deeply unsettling. For many mathematicians, the initial reaction was outright alarm. Ever since OpenAI’s breakthroughs, scholars have fiercely pushed back against what they see as Silicon Valley encroaching on their territory. The Association for Human Mathematics, representing more than 900 academics, warned bluntly that ‘mathematicians did not ask for this work to be done.’ In their view, the true reward of mathematics lies not simply in obtaining a proof, but in the intellectual struggle itself — the very journey that expands human understanding. Allowing machines to generate answers that humans cannot comprehend is like handing students the answer sheet to their homework: without the effort, real learning simply disappears.",
+                        "chineseText": "正如人工智能领域的许多事物一样，这一前景既令人振奋，又令人深感不安。对许多数学家而言，最初的反应是彻底的惊恐。自OpenAI取得突破以来，学者们一直在激烈抵制他们所看到的硅谷对自身领地的蚕食。代表900多位学者的“人类数学协会”直言不讳地警告称：“数学家并未要求完成这项工作。”在他们看来，数学的真正回报不仅在于获得证明，更在于智力搏击本身——那段拓展人类理解力的精彩旅程。让机器生成人类无法理解的答案，犹如直接把作业答案交到学生手中：一旦失去了付出与努力，真正的学习便荡然无存。",
+                        "wordTokens": [
+                            { "word": "This prospect", "role": "主语", "meaning": "这一前景" },
+                            { "word": "is both exhilarating and deeply unsettling.", "role": "系表结构", "meaning": "既令人振奋，又令人深感不安" },
+                            { "word": "the initial reaction", "role": "主语", "meaning": "最初的反应" },
+                            { "word": "was outright alarm.", "role": "系表结构", "meaning": "彻底的惊恐" }
+                        ],
+                        "syntaxBreakdown": [
+                            { "part": "This prospect is both exhilarating and deeply unsettling.", "role": "主系表结构", "detail": "exhilarating：令人振奋的；unsettling：令人不安的" },
+                            { "part": "scholars have fiercely pushed back against what they see as Silicon Valley encroaching on their territory.", "role": "主谓 + 宾语从句", "detail": "push back against：强烈反弹 / 顽强抵制；encroach on：蚕食领地" },
+                            { "part": "The Association for Human Mathematics ... warned bluntly that...", "role": "主谓 + 宾语从句", "detail": "warn bluntly：直言不讳地警告" },
+                            { "part": "the true reward of mathematics lies not simply in obtaining a proof, but in the intellectual struggle itself", "role": "主谓宾", "detail": "intellectual struggle：智力搏击 / 心智跋涉" },
+                            { "part": "Allowing machines to generate answers ... is like handing students the answer sheet", "role": "动名词作主语 + 系表", "detail": "形象比喻：将AI证明比作直接递给学生的作业答案" }
+                        ],
+                        "sentenceAnalysis": "主句主干提取：The true reward of mathematics lies not in A, but in B.",
+                        "vocabularyNotes": [
+                            { "term": "push back against", "explanation": "【高频动词短语】“强烈反弹 / 顽强抵制”" },
+                            { "term": "encroach on", "explanation": "【高阶动词用法】“蚕食 / 侵害（领地、权利）”" },
+                            { "term": "intellectual struggle", "explanation": "【学术哲学搭配】“智力搏击 / 心智跋涉”" }
+                        ]
+                    },
+                    {
+                        "paragraphTitle": "第六段：实用主义的反击与学术私利解构（Pragmatism vs. Guild Interests）",
+                        "thesisAndContext": "第六段是立场鲜明的反驳段：直指抱怨背后充斥着学术公会式的私利诉求，指出真理探寻不属于特定行会。以“止痛药”的实用主义类比收尾：科学不应将理论理解凌驾于切实成果之上。",
+                        "englishText": "There is more than a hint of self-interest in these complaints. Academics have no exclusive right to decide how knowledge is made, and the search for truth belongs to everyone, not just an academic guild. The traditional scholarly ladder, climbed by solving theorems, is far from sacred. If necessary, it must be reshaped for an era where AI generates the proofs and humans simply evaluate them. In the end, science should not prize theoretical understanding above tangible results. Every time someone takes a painkiller to cure a headache, they rely on a cure that works, even if the exact mechanism behind it remains a mystery.",
+                        "chineseText": "这些抱怨声中充斥着浓厚的私利色彩。学者们并没有独占决定知识如何产生的特权，对真理的追寻属于每一个人，而不仅仅属于某个学术行会。依靠破解定理一步步攀爬上去的传统学术阶梯，绝非神圣不可侵犯。如有必要，必须为一个由人工智能生成证明、人类只需对其进行评估的时代重塑学术晋升阶梯。归根结底，科学不应当将理论层面的理解凌驾于切实成果之上。每当有人服用止痛药来治疗头痛时，他们依赖的是真正见效的疗法，哪怕其背后的具体生化机制仍然是个谜。",
+                        "wordTokens": [
+                            { "word": "There is more than a hint of self-interest", "role": "存在句", "meaning": "充斥着浓厚的私利色彩" },
+                            { "word": "Academics", "role": "主语", "meaning": "学者们" },
+                            { "word": "have no exclusive right to decide how knowledge is made,", "role": "主谓宾", "meaning": "没有独占决定知识如何产生的特权" }
+                        ],
+                        "syntaxBreakdown": [
+                            { "part": "There is more than a hint of self-interest in these complaints.", "role": "There be 句型", "detail": "more than a hint of：绝不仅是些许 / 充斥着大量的" },
+                            { "part": "Academics have no exclusive right to decide how knowledge is made,", "role": "主谓宾", "detail": "exclusive right：排他性特权" },
+                            { "part": "The traditional scholarly ladder ... is far from sacred.", "role": "主系表", "detail": "far from sacred：绝非神圣不可侵犯" },
+                            { "part": "science should not prize theoretical understanding above tangible results.", "role": "主谓宾 + 介宾", "detail": "prize A above B：将A置于B之上；tangible results：切实成果" },
+                            { "part": "they rely on a cure that works, even if the exact mechanism remains a mystery.", "role": "主谓宾 + 让步状语", "detail": "rely on：依赖；even if：即使" }
+                        ],
+                        "sentenceAnalysis": "主句主干提取：Science should not prize A above B. They rely on a cure that works.",
+                        "vocabularyNotes": [
+                            { "term": "more than a hint of", "explanation": "【高级评注短语】“充斥着大量的……”" },
+                            { "term": "academic guild", "explanation": "【政治隐喻】“中世纪垄断行业利益的行会公会”" },
+                            { "term": "tangible results", "explanation": "【科研搭配】“切实的 / 可触摸量化的成果”" }
+                        ]
+                    },
+                    {
+                        "paragraphTitle": "第七段：算力垄断与数字智能外溢（Corporate Dominance & Physical Embodiment）",
+                        "thesisAndContext": "第七段将讨论视角从纯学术争鸣拉回冷峻的商业与地缘现实：商业 AI 巨头大举投入旨在锤炼通用智能，一旦科学推理被垄断，学界将毫无招架之力；数字心智正向物理现实外溢。",
+                        "englishText": "Yet the anxiety over ceding science to machines is far from groundless. AI companies are not pouring vast resources into research out of pure generosity. Much like human beings, models grow sharper and more capable by tackling hard problems. Many experts believe that any system that excels at scientific reasoning will inevitably excel at almost everything else. If that proves true, competing with the leading AI labs will become virtually impossible. They will hold models capable of continuously upgrading themselves, reaching a level of intelligence beyond human grasp. Nor will these digital minds stay confined to screens: they will step directly into the physical world, operating through humanoid robots or taking direct charge of laboratory instruments, much as Anthropic has already demonstrated.",
+                        "chineseText": "然而，对于将科学拱手让给机器的焦虑，绝非毫无根据。人工智能公司并非出于纯粹的慷慨无私才向研发倾注庞大资源。就像人类一样，模型通过攻克棘手难题变得越来越敏锐、更有能力。许多专家认为，任何在科学推理方面表现卓越的系统，也必然会在几乎所有其他方面表现出色。如果这一论断被证明属实，与顶尖人工智能实验室同台竞争将几乎成为不可能。它们将垄断具备自我持续升级能力的模型，达到超越人类理解的智能水准。不仅如此，这些数字心智也不会局限于屏幕之中：它们将径直步入物理世界，通过人形机器人展开作业或直接接管实验室仪器，正如Anthropic已经展示的那样。",
+                        "wordTokens": [
+                            { "word": "Yet the anxiety over ceding science to machines", "role": "主语", "meaning": "对于将科学拱手让给机器的焦虑" },
+                            { "word": "is far from groundless.", "role": "系表结构", "meaning": "绝非毫无根据" },
+                            { "word": "AI companies", "role": "主语", "meaning": "人工智能公司" },
+                            { "word": "are not pouring vast resources into research...", "role": "谓语", "meaning": "并未倾注庞大资源" }
+                        ],
+                        "syntaxBreakdown": [
+                            { "part": "The anxiety over ceding science to machines is far from groundless.", "role": "主系表结构", "detail": "cede science to：把科学让渡给……；far from groundless：绝非毫无根据" },
+                            { "part": "AI companies are not pouring vast resources into research out of pure generosity.", "role": "主谓宾 + 状语", "detail": "out of pure generosity：出于纯粹的慷慨" },
+                            { "part": "models grow sharper and more capable by tackling hard problems.", "role": "主系表 + 方式状语", "detail": "tackling hard problems：攻克棘手难题" },
+                            { "part": "competing with the leading AI labs will become virtually impossible.", "role": "动名词短语作主语 + 系表", "detail": "virtually impossible：几乎不可能" },
+                            { "part": "Nor will these digital minds stay confined to screens:", "role": "否定词倒装", "detail": "Nor 引起助动词提前：数字心智也不会局限于屏幕中" }
+                        ],
+                        "sentenceAnalysis": "主句主干提取：The anxiety is far from groundless. They will hold models, reaching a level of intelligence.",
+                        "vocabularyNotes": [
+                            { "term": "cede... to...", "explanation": "【高阶动词搭配】“把……割让/让渡给……”" },
+                            { "term": "beyond human grasp", "explanation": "【介词短语】“超越人类理解与掌控范畴”" },
+                            { "term": "take direct charge of", "explanation": "【动词短语】“直接掌控 / 接手管理”" }
+                        ]
+                    },
+                    {
+                        "paragraphTitle": "第八段：社会层面的深层困境与主体性丧失（Civilisational Dilemma）",
+                        "thesisAndContext": "第八段将视角升华至整个人类文明高度：盲目为黑箱 AI 买单是彻头彻尾的鲁莽；若人类放弃独立探究、只坐等算法下达指令，文明便自甘堕落为机器豢养的宠物。",
+                        "englishText": "The challenge this poses for science is identical to the one confronting society as a whole. Progress will require us to feed these machines ever more data, energy, and capital. But if we fail to understand what they are actually doing, blindly footing the bill is sheer recklessness — there is no guarantee their objectives will align with our own. Even if developers manage to ‘align’ these models so they cause no harm, a deeper dilemma remains: a civilization that merely waits for algorithms to tell it what to do — whether in the lab or in daily life — is one where human beings willingly reduce themselves to the machines’ pampered pets.",
+                        "chineseText": "此举对科学构成的挑战，与整个社会面临的挑战完全相同。进步将需要我们向这些机器投喂越来越多的数据、能源和资本。但是，如果我们未能搞懂它们真正在做什么，盲目为其买单便是彻头彻尾的鲁莽——没有任何保证能证明它们的目标会与我们自身的目标保持一致。即便开发者设法对齐这些模型使其不造成直接伤害，一个更为深层的困境依然存在：一个仅仅等待算法告诉自己该怎么做的文明——无论是在实验室中还是在日常生活中——终将沦为一个让人类自甘降格为机器豢养的宠物的社会。",
+                        "wordTokens": [
+                            { "word": "The challenge this poses for science", "role": "主语", "meaning": "此举对科学构成的挑战" },
+                            { "word": "is identical to the one confronting society as a whole.", "role": "系表结构", "meaning": "与整个社会面临的挑战完全相同" },
+                            { "word": "Progress", "role": "主语", "meaning": "进步" }
+                        ],
+                        "syntaxBreakdown": [
+                            { "part": "The challenge this poses for science is identical to the one confronting society as a whole.", "role": "主系表结构", "detail": "identical to：与……完全相同" },
+                            { "part": "Progress will require us to feed these machines ever more data, energy, and capital.", "role": "主谓宾 + 宾补", "detail": "require sb to do：要求某人做某事" },
+                            { "part": "blindly footing the bill is sheer recklessness", "role": "动名词作主语 + 系表", "detail": "foot the bill：买单；sheer recklessness：彻头彻尾的鲁莽" },
+                            { "part": "a civilization ... is one where human beings willingly reduce themselves to the machines' pampered pets.", "role": "主系表 + 定语从句", "detail": "reduce oneself to：自甘沦落为；pampered pets：受宠的宠物" }
+                        ],
+                        "sentenceAnalysis": "主句主干提取：The challenge is identical to the one. Blindly footing the bill is sheer recklessness.",
+                        "vocabularyNotes": [
+                            { "term": "foot the bill", "explanation": "【经典习语】“买单 / 结账”" },
+                            { "term": "sheer recklessness", "explanation": "【搭配】“纯粹的鲁莽蛮干”" },
+                            { "term": "pampered pets", "explanation": "【政治隐喻】“被算法好生照料、养尊处优的宠物”" }
+                        ]
+                    },
+                    {
+                        "paragraphTitle": "第九段：人机协同底线与“人在回路”（Human-in-the-Loop & The Driver’s Seat）",
+                        "thesisAndContext": "第九段给出了应对危机的核心原则论述：在实现绝对价值对齐前，科学界必须坚守“人在回路”底线，这是人类掌控驾驶权不可推卸的代价。",
+                        "englishText": "Some might well accept that trade-off if the reward is, say, wiping out all diseases. Yet until we have absolute certainty that machines and human values are truly aligned, science must always keep a human in the loop. Laboratories should certainly harness AI to crack difficult problems, but critical resources — from physical benches to massive compute — must remain directed by experts capable of truly understanding what the algorithms are doing. This caution will inevitably slow the pace of discovery. But it is an unavoidable price to pay if humanity is to stay in the driver’s seat.",
+                        "chineseText": "如果回报是比方说彻底消灭所有疾病，有些人可能会欣然接受这种权衡。然而，在我们确信机器与人类价值观真正对齐之前，科学必须始终让“人在回路”中。实验室固然应该利用人工智能去攻克棘手难题，但从物理实验台到海量算力的核心关键资源，必须始终由真正懂得算法在做什么的专家来指导控制。这种审慎态度将不可避免地放慢发现的步伐，但如果人类要稳坐驾驶席，这是必须付出的无可避免的代价。",
+                        "wordTokens": [
+                            { "word": "Some", "role": "主语", "meaning": "有些人" },
+                            { "word": "might well accept that trade-off", "role": "谓语 + 宾语", "meaning": "很可能会欣然接受那种权衡" }
+                        ],
+                        "syntaxBreakdown": [
+                            { "part": "Some might well accept that trade-off if the reward is, say, wiping out all diseases.", "role": "主谓宾 + 条件状语", "detail": "trade-off：权衡与妥协；wipe out：彻底消灭" },
+                            { "part": "science must always keep a human in the loop.", "role": "主谓宾 + 宾补", "detail": "keep a human in the loop：前沿术语，“让人在回路中”" },
+                            { "part": "critical resources must remain directed by experts...", "role": "主系表结构", "detail": "remain directed by：必须始终受……指导" },
+                            { "part": "It is an unavoidable price to pay if humanity is to stay in the driver's seat.", "role": "主系表 + 不定式定语", "detail": "stay in the driver's seat：稳坐驾驶席 / 掌控大局" }
+                        ],
+                        "sentenceAnalysis": "主句主干提取：Science must keep a human in the loop. It is an unavoidable price to pay.",
+                        "vocabularyNotes": [
+                            { "term": "keep a human in the loop", "explanation": "【前沿术语】“让人在回路中”" },
+                            { "term": "harness", "explanation": "【高阶动词】“治理 / 驾驭 / 利用”" },
+                            { "term": "stay in the driver's seat", "explanation": "【经典习语】“稳坐驾驶席 / 掌控大局”" }
+                        ]
+                    },
+                    {
+                        "paragraphTitle": "第十段：科研制度的范式重构与企业责任（Institutional Reform & Corporate Citizenship）",
+                        "thesisAndContext": "第十段从实操机制层面开出制度药方：传统学术制度必须推倒重来，将终身教职授予负责引导模型、校验突破的学者；同时要求科技寡头承担科研公民责任。",
+                        "chineseText": "与此同时，一个由人类掌舵的机器科学新时代将倒逼学者从根基上彻底反思其领域。大学必须开始承认并奖赏掌控模型、检验突破以及将机器成果翻译为人类认知等至关重要的工作——在此基础之上授予终身教职与学术声望。科研资助机构也应怀揣相同的优先事项来分配经费。就其自身而言，人工智能公司必须挺身而出，成为负责任的科研公民：它们必须将发现全面向严谨的同行评审开放，并使底层代码与方法论完全透明。",
+                        "englishText": "In the meantime, a new era of human-steered machine science will compel academics to rethink their fields from the ground up. Universities must begin to recognise and reward the vital work of steering models, verifying their breakthroughs, and translating their findings into human understanding — granting tenure and prestige on that basis. Funding agencies should distribute research grants with the same priorities in mind. For their part, AI companies must step up as responsible scientific citizens: they must open their discoveries to rigorous peer review, and make their underlying code and methodologies fully transparent.",
+                        "wordTokens": [
+                            { "word": "a new era of human-steered machine science", "role": "主语", "meaning": "一个由人类掌舵的机器科学新时代" },
+                            { "word": "will compel academics to rethink their fields...", "role": "谓语 + 复合宾语", "meaning": "将倒逼学者从根基上彻底反思其领域" }
+                        ],
+                        "syntaxBreakdown": [
+                            { "part": "a new era ... will compel academics to rethink their fields from the ground up.", "role": "主谓宾 + 宾补", "detail": "from the ground up：从根基上彻底地" },
+                            { "part": "Universities must begin to recognise and reward the vital work...", "role": "主谓宾", "detail": "granting tenure：授予终身教职" },
+                            { "part": "AI companies must step up as responsible scientific citizens:", "role": "主谓 + 身份状语", "detail": "step up：主动承担起责任；scientific citizens：科研公民" },
+                            { "part": "they must open their discoveries ... and make their code transparent.", "role": "并列谓语 + 宾补", "detail": "make + 宾语 + 宾补结构" }
+                        ],
+                        "sentenceAnalysis": "主句主干提取：A new era will compel academics to rethink their fields. Universities must recognise and reward work.",
+                        "vocabularyNotes": [
+                            { "term": "human-steered", "explanation": "【复合形容词】“人类掌舵的”" },
+                            { "term": "grant tenure", "explanation": "【学术体制固定搭配】授予“终身教职”" },
+                            { "term": "step up", "explanation": "【核心短语】“主动承担起责任”" }
+                        ]
+                    },
+                    {
+                        "paragraphTitle": "第十一段：怀疑精神的复兴与历史回响（The Baby, the Bathtub & Nullius in Verba）",
+                        "thesisAndContext": "全篇收官段，以西方经典谚语“把婴儿与洗澡水一起倒掉”统领小标题，意指不能因噎废食否定机器发现。以英国皇家学会 17 世纪的创始格言 Nullius in verba（不轻信任何人言）强力收笔。",
+                        "englishText": "Verifying and digesting machine-generated results might seem like tedious, thankless work. Yet science done by humans has always been riddled with errors, largely because academics receive little reward for double-checking the claims of their peers. A renewed culture of rigorous verification and healthy scepticism would make science stronger, not weaker. It is worth recalling the founding motto of the Royal Society from the 17th century: Nullius in verba, or ‘Take nobody’s word for it.’ That timeless warning was meant for human authorities — today, it applies just as urgently to machines.",
+                        "chineseText": "核验并消化机器生成的成果或许看似是一项乏味且吃力不讨好的差事，然而，由人类完成的科学探索一直以来都充斥着漏洞，很大程度上是因为学者在复核同行主张时极少获得回报。一种重新焕发的、注重严苛核验与良性怀疑精神的文化，将使科学变得更加强大，而非更孱弱。值得重温的是17世纪英国皇家学会的成立校训：Nullius in verba，即‘不信任何人言’。那句跨越时代的永恒告诫原本是针对人类学术权威的——而今天，它同样迫切地适用于机器。",
+                        "wordTokens": [
+                            { "word": "Verifying and digesting machine-generated results", "role": "动名词短语作主语", "meaning": "核验并消化机器生成的成果" },
+                            { "word": "might seem like tedious, thankless work.", "role": "系表结构", "meaning": "或许看似是一项乏味且吃力不讨好的差事" }
+                        ],
+                        "syntaxBreakdown": [
+                            { "part": "Verifying and digesting machine-generated results might seem like tedious, thankless work.", "role": "主系表结构", "detail": "thankless work：吃力不讨好的差事" },
+                            { "part": "science done by humans has always been riddled with errors,", "role": "主系表结构", "detail": "be riddled with：充斥着 / 布满漏洞" },
+                            { "part": "A renewed culture ... would make science stronger, not weaker.", "role": "主谓宾补结构", "detail": "make science stronger：使科学更强大" },
+                            { "part": "It is worth recalling the founding motto of the Royal Society", "role": "形式主语句型", "detail": "be worth doing：值得做……" },
+                            { "part": "That timeless warning was meant for human authorities — today, it applies just as urgently to machines.", "role": "主谓结构 + 比较状语", "detail": "apply to：适用于……" }
+                        ],
+                        "sentenceAnalysis": "主句主干提取: Verifying results might seem like tedious work. A renewed culture would make science stronger. It is worth recalling the motto.",
+                        "vocabularyNotes": [
+                            { "term": "the baby and the bathtub", "explanation": "【经典谚语隐语】不要因噎废食，切勿因机器难懂而彻底否定其科研潜能。" },
+                            { "term": "riddled with", "explanation": "【固定动词短语】“充斥着 / 布满（漏洞、错误、弊端）”" },
+                            { "term": "Nullius in verba", "explanation": "【拉丁文学术格言】“不信任何人言（Take nobody's word for it）”" }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        let currentCategory = 'All';
+
+        function initApp() {
+            try {
+                checkRoute();
+            } catch (error) {
+                console.error("加载失败:", error);
+                document.getElementById('app-view').innerHTML = `
+                    <div class="p-6 bg-red-50 border border-red-200 text-red-700 rounded text-sm space-y-2">
+                        <p class="font-bold">文章库加载失败</p>
+                        <p>错误原因: ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        function checkRoute() {
+            const params = new URLSearchParams(window.location.search);
+            const articleId = params.get('id');
+            if (articleId) {
+                const article = allArticles.find(item => item.id == articleId);
+                if (article) {
+                    renderDetailView(article);
+                    return;
+                }
+            }
+            renderMainLayout(allArticles);
+        }
+
+        function goHome() {
+            try {
+                window.history.pushState({}, '', window.location.pathname);
+            } catch (e) {
+                // Ignore SecurityError in blob/sandbox environments
+            }
+            currentCategory = 'All';
+            renderMainLayout(allArticles);
+        }
+
+        function viewArticle(id) {
+            try {
+                window.history.pushState({}, '', `?id=${id}`);
+            } catch (e) {
+                // Ignore SecurityError in blob/sandbox environments
+            }
+            const article = allArticles.find(item => item.id == id);
+            if (article) renderDetailView(article);
+        }
+
+        function filterCategory(cat) {
+            currentCategory = cat;
+            renderMainLayout(allArticles);
+        }
+
+        // 渲染带侧边栏的主布局（列表页）
+        function renderMainLayout(articles) {
+            const categories = ['All', ...new Set(articles.map(item => item.category))];
+            const filteredArticles = currentCategory === 'All' 
+                ? articles 
+                : articles.filter(item => item.category === currentCategory);
+
+            const container = document.getElementById('app-view');
+            container.innerHTML = `
+                <div class="mb-8 border-b border-sand pb-6">
+                    <h1 class="font-display text-4xl font-bold tracking-tight text-ink mb-2">Curated Insights</h1>
+                    <p class="text-sage text-sm font-sans">深度剖析全球顶级外刊，提炼核心词汇与长难句逻辑结构。</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                    <!-- 左侧边栏：分类导航 -->
+                    <aside class="lg:col-span-1 space-y-2">
+                        <h3 class="text-xs font-sans uppercase tracking-widest text-sage mb-3 px-3 font-semibold">文章分类</h3>
+                        <nav class="flex flex-row lg:flex-col gap-1.5 overflow-x-auto pb-2 lg:pb-0">
+                            ${categories.map(cat => `
+                                <button onclick="filterCategory('${cat}')" class="category-btn ${currentCategory === cat ? 'active' : 'bg-white text-ink hover:bg-sand/50'} text-left px-4 py-2.5 rounded-lg text-sm font-sans font-medium border border-sand transition-all whitespace-nowrap flex items-center justify-between">
+                                    <span>${cat === 'All' ? '全部文章' : cat}</span>
+                                    <span class="text-xs opacity-60">(${cat === 'All' ? articles.length : articles.filter(i => i.category === cat).length})</span>
+                                </button>
+                            `).join('')}
+                        </nav>
+                    </aside>
+
+                    <!-- 右侧：文章列表网格 -->
+                    <div class="lg:col-span-3">
+                        ${filteredArticles.length === 0 ? `
+                            <div class="bg-white border border-sand rounded-xl p-10 text-center text-sage">
+                                该分类下暂无文章。
+                            </div>
+                        ` : `
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                ${filteredArticles.map(item => `
+                                    <article onclick="viewArticle(${item.id})" class="bg-white border border-sand p-6 rounded-lg shadow-sm hover:shadow-md transition-all flex flex-col justify-between cursor-pointer group">
+                                        <div>
+                                            <div class="flex items-center justify-between text-xs text-sage mb-3 font-sans uppercase tracking-wider">
+                                                <span class="bg-wheat px-2 py-0.5 rounded text-moss font-semibold">${item.category}</span>
+                                                <span>${item.date}</span>
+                                            </div>
+                                            <h2 class="font-display text-xl font-bold text-ink mb-1 group-hover:text-moss transition-colors leading-snug">${item.title}</h2>
+                                            <h3 class="text-sm text-sage font-serif mb-4">${item.chineseTitle}</h3>
+                                            <p class="text-sm text-gray-600 line-clamp-3 mb-4 font-serif">${item.summary || ""}</p>
+                                        </div>
+                                        <div class="pt-4 border-t border-sand/60 flex items-center justify-between text-xs text-moss font-sans font-semibold">
+                                            <span>精读文章</span>
+                                            <span class="group-hover:translate-x-1 transition-transform">阅读解析 &rarr;</span>
+                                        </div>
+                                    </article>
+                                `).join('')}
+                            </div>
+                        `}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 渲染深度精读文章详情页（支持全文所有11个段落的完整渲染、悬浮气泡、以及逐句语法对照）
+        function renderDetailView(article) {
+            const container = document.getElementById('app-view');
+            container.innerHTML = `
+                <button onclick="goHome()" class="mb-6 inline-flex items-center text-xs font-sans text-sage hover:text-ink font-semibold uppercase tracking-wider">
+                    &larr; 返回文章列表
+                </button>
+                <div class="bg-white border border-sand rounded-xl p-8 md:p-12 shadow-sm max-w-4xl mx-auto">
+                    <div class="flex items-center space-x-3 text-xs text-sage mb-4 font-sans uppercase tracking-wider">
+                        <span class="bg-wheat px-2.5 py-1 rounded text-moss font-semibold">${article.category}</span>
+                        <span>${article.date}</span>
+                    </div>
+                    <h1 class="font-display text-3xl md:text-4xl font-bold text-ink mb-2 leading-tight">${article.title}</h1>
+                    <h2 class="text-lg text-sage font-serif mb-8 pb-6 border-b border-sand">${article.chineseTitle}</h2>
+                    <p class="text-base text-gray-700 mb-10 italic bg-wheat/40 p-5 rounded-lg border-l-4 border-moss font-serif">${article.summary}</p>
+
+                    <!-- 段落深度精读解析循环渲染（遍历全文所有段落） -->
+                    <div class="space-y-12">
+                        ${article.paragraphs.map((p, index) => `
+                            <div class="p-6 md:p-8 bg-paper/50 border border-sand rounded-xl space-y-6 shadow-xs">
+                                <!-- 段落标题与立论功能 -->
+                                <div>
+                                    <span class="text-xs font-sans font-bold uppercase tracking-widest text-moss bg-wheat px-2.5 py-1 rounded">Paragraph ${index + 1}</span>
+                                    <h3 class="font-display text-xl font-bold text-ink mt-3">${p.paragraphTitle}</h3>
+                                    <p class="text-sm text-sage mt-1 font-sans leading-relaxed"><strong>段落立论功能：</strong>${p.thesisAndContext}</p>
+                                </div>
+
+                                <!-- 原文（支持鼠标悬浮显示语法属性与词义气泡）与翻译 -->
+                                <div class="space-y-3 font-serif text-lg leading-relaxed text-gray-900 border-l-2 border-gold pl-4 py-1">
+                                    <div class="font-semibold text-ink flex flex-wrap items-baseline">
+                                        ${p.wordTokens ? p.wordTokens.map(token => `
+                                            <span class="token-item">
+                                                ${token.word}
+                                                <span class="tooltip-text">
+                                                    <strong>成分：</strong>${token.role}<br>
+                                                    <strong>释义：</strong>${token.meaning}
+                                                </span>
+                                            </span>
+                                        `).join(' ') : `<p>${p.englishText}</p>`}
+                                    </div>
+                                    <p class="text-gray-600 text-base mt-2">${p.chineseText}</p>
+                                </div>
+
+                                <!-- 独立语法成分逐句拆解行（含词义短语深度精析） -->
+                                ${p.syntaxBreakdown && p.syntaxBreakdown.length > 0 ? `
+                                    <div class="bg-white p-5 rounded-lg border border-sand text-sm font-sans space-y-3">
+                                        <h4 class="font-bold text-moss flex items-center space-x-1.5">
+                                            <span>🔍 逐句语法成分与词义精准拆解</span>
+                                        </h4>
+                                        <div class="divide-y divide-sand/60">
+                                            ${p.syntaxBreakdown.map(sb => `
+                                                <div class="py-3 space-y-1">
+                                                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-1">
+                                                        <span class="font-serif text-ink font-medium">${sb.part}</span>
+                                                        <span class="text-xs px-2 py-0.5 bg-wheat text-moss rounded font-semibold whitespace-nowrap self-start md:self-auto">${sb.role}</span>
+                                                    </div>
+                                                    ${sb.detail ? `
+                                                        <div class="text-xs text-sage font-sans pl-2 border-l-2 border-gold/60 mt-1">
+                                                            💡 <strong>词义/用法剖析：</strong> ${sb.detail}
+                                                        </div>
+                                                    ` : ''}
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                ` : ''}
+
+                                <!-- 核心句式与主干提取 -->
+                                ${p.sentenceAnalysis ? `
+                                    <div class="bg-white p-5 rounded-lg border border-sand text-sm font-sans space-y-2">
+                                        <h4 class="font-bold text-ink flex items-center space-x-1.5">
+                                            <span>📊 核心句式与主干提取</span>
+                                        </h4>
+                                        <div class="text-gray-700 leading-relaxed">${p.sentenceAnalysis}</div>
+                                    </div>
+                                ` : ''}
+
+                                <!-- 重难点高阶词汇与短语剖析 -->
+                                ${p.vocabularyNotes && p.vocabularyNotes.length > 0 ? `
+                                    <div class="bg-wheat/30 p-5 rounded-lg border border-sand/60 text-sm font-sans space-y-3">
+                                        <h4 class="font-bold text-moss flex items-center space-x-1.5">
+                                            <span>💡 段落核心高阶词汇总结</span>
+                                        </h4>
+                                        <ul class="grid grid-cols-1 gap-2.5">
+                                            ${p.vocabularyNotes.map(v => `
+                                                <li class="bg-white p-3 rounded border border-sand/40">
+                                                    <span class="font-bold text-ink">${v.term}:</span> 
+                                                    <span class="text-gray-700">${v.explanation}</span>
+                                                </li>
+                                            `).join('')}
+                                        </ul>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        window.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
