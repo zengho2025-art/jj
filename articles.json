@@ -166,6 +166,42 @@
           { "term": "inner workings", "explanation": "【名词搭配】内部运作机制、深层机理" },
           { "term": "drought-tolerant", "explanation": "【复合形容词】耐旱的" }
         ]
+      },
+      {
+        "paragraphTitle": "第五段：学术界的反弹与智力本质之争（Alarm & Intellectual Struggle）",
+        "thesisAndContext": "第五段聚焦学术界强烈的应激反应：揭示科学界在兴奋之余所笼罩的深层恐慌，亮出纯粹学者的终极困惑——研究的真正奖赏在于心智的求索过程。",
+        "englishText": "As with so much in AI, this prospect is both exhilarating and deeply unsettling. For many mathematicians, the initial reaction was outright alarm. Ever since OpenAI’s breakthroughs, scholars have fiercely pushed back against what they see as Silicon Valley encroaching on their territory. The Association for Human Mathematics, representing more than 900 academics, warned bluntly that ‘mathematicians did not ask for this work to be done.’ In their view, the true reward of mathematics lies not simply in obtaining a proof, but in the intellectual struggle itself—the very journey that expands human understanding. Allowing machines to generate answers that humans cannot comprehend is like handing students the answer sheet to their homework: without the effort, real learning simply disappears.",
+        "chineseText": "正如人工智能领域的许多事物一样，这一前景既令人兴奋又深感不安。对许多数学家来说，最初的反应是彻底的惊慌。自OpenAI取得突破以来，学者们一直激烈地抗击他们所认为的硅谷对自身领地的侵蚀。代表了900多名学者的“人类数学协会”直言不讳地警告说，“数学家并没有要求做这项工作。”在他们看来，数学真正的回报不仅仅在于获得一个证明，而在智力斗争本身——正是这段旅程扩展了人类的理解。允许机器生成人类无法理解的答案，就像是把作业答案直接递给学生：没有了努力，真正的学习也就不复存在了。",
+        "wordTokens": [
+          { "word": "As with so much in AI,", "role": "介词短语状语", "meaning": "正如人工智能领域的诸多事物一样" },
+          { "word": "this prospect is both exhilarating and deeply unsettling.", "role": "主系表结构", "meaning": "这一前景既令人振奋又深感不安" },
+          { "word": "For many mathematicians, the initial reaction was outright alarm.", "role": "主系表结构", "meaning": "对许多数学家而言最初反应是彻底的惊恐" },
+          { "word": "Ever since OpenAI’s breakthroughs,", "role": "时间状语", "meaning": "自OpenAI取得突破以来" },
+          { "word": "scholars have fiercely pushed back against", "role": "主谓短语", "meaning": "学者们一直在激烈抵制" },
+          { "word": "what they see as Silicon Valley encroaching on their territory.", "role": "宾语从句", "meaning": "他们所看到的硅谷对自身领地的蚕食" },
+          { "word": "The Association for Human Mathematics, representing more than 900 academics,", "role": "主语 + 现在分词定语", "meaning": "人类数学协会（代表900多名学者）" },
+          { "word": "warned bluntly that ‘mathematicians did not ask for this work to be done.’", "role": "谓语 + 宾语从句", "meaning": "直言不讳地警告称“数学家并未要求做这事”" },
+          { "word": "In their view, the true reward of mathematics lies", "role": "主谓结构", "meaning": "在他们看来数学的真正回报在于" },
+          { "word": "not simply in obtaining a proof,", "role": "并列状语", "meaning": "不仅仅在于获得一个证明" },
+          { "word": "but in the intellectual struggle itself—", "role": "并列状语", "meaning": "而在于心智求索本身——" },
+          { "word": "the very journey that expands human understanding.", "role": "同位语 + 定语从句", "meaning": "正是那段拓展人类理解力的旅程" },
+          { "word": "Allowing machines to generate answers that humans cannot comprehend", "role": "动名词短语作主语", "meaning": "允许机器生成人类无法理解的答案" },
+          { "word": "is like handing students the answer sheet to their homework:", "role": "系表结构 (比喻)", "meaning": "就像把作业答案直接递给学生：" },
+          { "word": "without the effort, real learning simply disappears.", "role": "介词短语状语 + 主谓", "meaning": "没有付出努力真正的学习便荡然无存" }
+        ],
+        "syntaxBreakdown": [
+          { "part": "this prospect is both exhilarating and deeply unsettling.", "role": "主系表结构", "detail": "exhilarating：令人振奋的；unsettling：令人不安的" },
+          { "part": "scholars have fiercely pushed back against what they see as Silicon Valley encroaching on their territory.", "role": "主谓 + 宾语从句", "detail": "push back against：激烈抵制；encroach on：侵占/蚕食领地" },
+          { "part": "the true reward of mathematics lies not simply in obtaining a proof, but in the intellectual struggle itself", "role": "主谓 + 并列介宾结构", "detail": "not simply... but...：不仅在于……而在于……；intellectual struggle：心智跋涉" },
+          { "part": "Allowing machines to generate answers ... is like handing students the answer sheet", "role": "动名词作主语 + 系表", "detail": "handing students the answer sheet：将AI证明比作把答案交给学生" }
+        ],
+        "sentenceAnalysis": "【句子一主干】Prospect（主语）+ is（系动词）+ exhilarating and unsettling（表语）。【句子二主干】Scholars（主语）+ have pushed back against（谓语）+ what they see...（宾语从句）。【句子三主干】Reward（主语）+ lies in（谓语）+ struggle（宾语）。【句子四主干】Allowing machines...（动名词主语）+ is like（系动词）+ handing answer sheet（表语）。",
+        "vocabularyNotes": [
+          { "term": "push back against", "explanation": "【动词短语】强烈反弹、坚决抵制" },
+          { "term": "encroach on", "explanation": "【高阶动词】侵占、蚕食（领地/职能）" },
+          { "term": "intellectual struggle", "explanation": "【学术名词搭配】智力搏击、心智求索跋涉" },
+          { "term": "outright alarm", "explanation": "【名词短语】彻底的惊慌、警惕" }
+        ]
       }
     ]
   }
