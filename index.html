@@ -72,7 +72,7 @@
             pointer-events: auto;
         }
 
-        /* 仅在纯 PC 鼠标设备上支持单指/悬停高亮 */
+        /* 仅在纯 PC 鼠标设备上支持悬浮展示 */
         @media (hover: hover) and (pointer: fine) {
             .token-item:hover {
                 background-color: #F3F0E7;
@@ -179,7 +179,7 @@
         &copy; 2026 Academic Digest · All Rights Reserved. Hosted on Vercel.
     </footer>
 
-    <!-- 词典详细释义弹窗（支持音标、中文直译与英英词典详情） -->
+    <!-- 词典详细释义弹窗（支持音标、中文直译、词根词源、各词性详解与例句） -->
     <div id="dictModal" class="dict-modal-overlay" onclick="closeDictModal(event)">
         <div class="dict-modal-content" onclick="event.stopPropagation()">
             <!-- 弹窗顶部栏 -->
@@ -544,7 +544,7 @@
         }, { passive: true });
 
         // ============================================
-        // 词典与翻译接口（英英详析 + 中文精准释义）
+        // 词典与翻译接口（英英详析 + 中文释义 + 词根溯源）
         // ============================================
 
         async function fetchChineseTranslation(word) {
@@ -553,7 +553,6 @@
                 if (!res.ok) return '';
                 const data = await res.json();
                 if (data && data.responseData && data.responseData.translatedText) {
-                    // 若返回内容与原文完全相同说明未匹配到中文
                     const trans = data.responseData.translatedText.trim();
                     return trans.toLowerCase() !== word.toLowerCase() ? trans : '';
                 }
@@ -562,6 +561,19 @@
                 return '';
             }
         }
+
+        // 词性英文简称转中文对照字典
+        const posChineseMap = {
+            'noun': '名词 (n.)',
+            'verb': '动词 (v.)',
+            'adjective': '形容词 (adj.)',
+            'adverb': '副词 (adv.)',
+            'pronoun': '代词 (pron.)',
+            'preposition': '介词 (prep.)',
+            'conjunction': '连词 (conj.)',
+            'interjection': '感叹词 (interj.)',
+            'exclamation': '感叹词 (excl.)'
+        };
 
         async function openDictionary(word, allWords = []) {
             if (!word) return;
@@ -595,13 +607,13 @@
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
                     </svg>
-                    <span>正在检索中英权威词典...</span>
+                    <span>正在检索中英权威词典及词根...</span>
                 </div>
             `;
             modal.classList.add('active');
 
             try {
-                // 并行发起请求：同时拉取英英词典详细数据与中文翻译结果
+                // 并发请求词典数据与中文释义
                 const [dictRes, chineseTrans] = await Promise.all([
                     fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(cleanWord)}`),
                     fetchChineseTranslation(cleanWord)
@@ -613,13 +625,27 @@
                     dictData = data[0];
                 }
 
-                // 优先展示中文释义卡片
+                // 中文释义区块
                 let chineseBlockHtml = '';
                 if (chineseTrans) {
                     chineseBlockHtml = `
-                        <div class="bg-wheat/60 border border-gold/40 p-3 rounded-lg mb-3">
+                        <div class="bg-wheat/70 border border-gold/40 p-3.5 rounded-lg mb-3">
                             <div class="text-xs text-gold font-bold mb-0.5">中文常用含义</div>
-                            <div class="text-base font-semibold text-ink">${chineseTrans}</div>
+                            <div class="text-base font-bold text-ink">${chineseTrans}</div>
+                        </div>
+                    `;
+                }
+
+                // 词根与词源溯源区块 (Etymology & Roots)
+                let originHtml = '';
+                const wordOrigin = dictData?.origin || '';
+                if (wordOrigin) {
+                    originHtml = `
+                        <div class="bg-paper border border-sand p-3.5 rounded-lg mb-3">
+                            <div class="text-xs text-moss font-bold mb-1 flex items-center space-x-1">
+                                <span>🌱 词根与词源演变 (Etymology & Origin)</span>
+                            </div>
+                            <p class="text-xs text-gray-700 italic leading-relaxed">${wordOrigin}</p>
                         </div>
                     `;
                 }
@@ -633,14 +659,20 @@
                     phoneticEl.innerText = phoneticText;
                 }
 
-                let html = wordSelectorHtml + chineseBlockHtml;
+                let html = wordSelectorHtml + chineseBlockHtml + originHtml;
 
+                // 详细词性与英英义项解析
                 if (dictData && dictData.meanings) {
                     dictData.meanings.forEach(meaning => {
+                        const rawPos = meaning.partOfSpeech.toLowerCase();
+                        const posLabel = posChineseMap[rawPos] || rawPos;
+
                         html += `
                             <div class="space-y-2 border-b border-sand/40 pb-3">
-                                <span class="inline-block px-2.5 py-0.5 bg-wheat text-moss font-semibold text-xs rounded uppercase tracking-wider">${meaning.partOfSpeech}</span>
-                                <ul class="space-y-1.5 text-ink pl-1">
+                                <span class="inline-block px-2.5 py-0.5 bg-wheat text-moss font-bold text-xs rounded border border-moss/20 tracking-wider">
+                                    ${posLabel}
+                                </span>
+                                <ul class="space-y-2 text-ink pl-1">
                                     ${meaning.definitions.slice(0, 3).map((d, i) => `
                                         <li class="flex items-start space-x-2">
                                             <span class="text-xs text-gold font-bold mt-0.5">${i + 1}.</span>
