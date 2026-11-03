@@ -35,7 +35,7 @@
         body { background-color: #FAF9F5; color: #1B3B36; font-family: 'Source Sans 3', 'Noto Serif SC', serif; }
         .category-btn.active { background-color: #2F5D54; color: #FAF9F5; }
 
-        /* 单词/短语基本样式 */
+        /* 单词/短语基本样式：禁用系统默认长按菜单放大镜，保障 iOS/Android 500ms 纯净触发 */
         .token-item {
             position: relative;
             display: inline-block;
@@ -45,6 +45,8 @@
             margin-bottom: 4px;
             transition: background-color 0.2s;
             user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -70,7 +72,7 @@
             pointer-events: auto;
         }
 
-        /* 仅在纯 PC 鼠标设备上支持悬浮展示 */
+        /* 仅在纯 PC 鼠标设备上支持单指/悬停高亮 */
         @media (hover: hover) and (pointer: fine) {
             .token-item:hover {
                 background-color: #F3F0E7;
@@ -81,7 +83,7 @@
             }
         }
 
-        /* 手机端及主动激活类控制 */
+        /* 移动端/触摸设备单击激活类控制 */
         .token-item.is-open {
             background-color: #F3F0E7;
             border-bottom: 2px solid #2F5D54;
@@ -117,7 +119,7 @@
             background-color: rgba(27, 59, 54, 0.45);
             backdrop-filter: blur(3px);
             z-index: 100;
-            align-items: flex-end; /* 移动端从底部升起 */
+            align-items: flex-end; /* 移动端/平板端从底部升起 */
             justify-content: center;
         }
         .dict-modal-overlay.active {
@@ -177,7 +179,7 @@
         &copy; 2026 Academic Digest · All Rights Reserved. Hosted on Vercel.
     </footer>
 
-    <!-- 词典详细释义弹窗（底部抽屉） -->
+    <!-- 词典详细释义弹窗（底部抽屉 / 居中卡片） -->
     <div id="dictModal" class="dict-modal-overlay" onclick="closeDictModal(event)">
         <div class="dict-modal-content" onclick="event.stopPropagation()">
             <!-- 弹窗顶部栏 -->
@@ -200,9 +202,11 @@
         let allArticles = [];
         let currentCategory = 'All';
 
-        // 长按手势相关变量
+        // 触屏手势状态（适配 iOS / Android / iPadOS）
         let touchTimer = null;
         let isLongPress = false;
+        let touchStartX = 0;
+        let touchStartY = 0;
 
         async function initApp() {
             try {
@@ -318,7 +322,7 @@
             `;
         }
 
-        // 渲染详情页
+        // 渲染详情页（同时挂载双击与全端触摸长按）
         function renderDetailView(article) {
             const container = document.getElementById('app-view');
             container.innerHTML = `
@@ -344,14 +348,17 @@
                                     <p class="text-sm text-sage mt-1 font-sans leading-relaxed"><strong>段落立论功能：</strong>${p.thesisAndContext}</p>
                                 </div>
 
-                                <!-- 原文与翻译区（集成短按气泡与长按词典） -->
+                                <!-- 原文与翻译区 -->
                                 <div class="space-y-3 font-serif text-lg leading-relaxed text-gray-900 border-l-2 border-gold pl-4 py-1">
                                     <div class="font-semibold text-ink flex flex-wrap items-baseline">
                                         ${p.wordTokens && p.wordTokens.length > 0 ? p.wordTokens.map(token => `
                                             <span class="token-item" 
+                                                  data-word="${token.word.replace(/"/g, '&quot;')}"
                                                   onclick="handleTokenClick(event, this)"
+                                                  ondblclick="handleTokenDblClick(event, this)"
                                                   ontouchstart="handleTouchStart(event, this)"
                                                   ontouchend="handleTouchEnd(event)"
+                                                  ontouchcancel="handleTouchEnd(event)"
                                                   ontouchmove="handleTouchMove(event)">
                                                 ${token.word}
                                                 <span class="tooltip-text" onclick="event.stopPropagation()">
@@ -429,22 +436,50 @@
             `;
         }
 
-        // =======================
-        // 词元气泡与手势识别逻辑
-        // =======================
+        // ============================================
+        // 核心交互：提取单词、双击检测与全端长按检测
+        // ============================================
 
-        // 触摸开始：按住超过 500ms 触发长按词典
+        // 统一规范化文本提取函数
+        function extractTargetWords(element) {
+            let raw = element.getAttribute('data-word') || element.childNodes[0].nodeValue || "";
+            raw = raw.replace(/[\u4e00-\u9fa5]/g, '').trim();
+            raw = raw.replace(/^[^\w]+|[^\w]+$/g, '');
+
+            const words = raw.split(/\s+/).map(w => w.replace(/^[^\w]+|[^\w]+$/g, '')).filter(w => w.length > 0);
+            if (words.length === 0) return { targetWord: '', allWords: [] };
+
+            const stopWords = ['the', 'a', 'an', 'and', 'or', 'of', 'in', 'on', 'at', 'to', 'for', 'with', 'by', 'is', 'are', 'was', 'were', 'as', 'that', 'this'];
+            let targetWord = words.find(w => !stopWords.includes(w.toLowerCase())) || words[0];
+
+            return { targetWord, allWords: words };
+        }
+
+        // 1. 电脑端鼠标双击查词 (Desktop Double-Click)
+        function handleTokenDblClick(event, element) {
+            event.stopPropagation();
+            closeAllTooltips();
+            const { targetWord, allWords } = extractTargetWords(element);
+            if (targetWord) {
+                openDictionary(targetWord, allWords);
+            }
+        }
+
+        // 2. 移动端/平板 (iOS, iPadOS, Android) 触摸长按检测
         function handleTouchStart(event, element) {
             isLongPress = false;
-            // 提取词元中的纯单词（剥离可能包含的标点与换行）
-            const rawWord = element.childNodes[0].nodeValue || element.innerText.split('\n')[0];
-            const cleanWord = rawWord.trim().replace(/^[^a-zA-Z0-9]+|[^a-zA-Z0-9]+$/g, '');
+            const touch = event.touches[0];
+            touchStartX = touch.clientX;
+            touchStartY = touch.clientY;
+
+            const { targetWord, allWords } = extractTargetWords(element);
+            if (!targetWord) return;
 
             touchTimer = setTimeout(() => {
                 isLongPress = true;
-                if (navigator.vibrate) navigator.vibrate(40); // 震动触感反馈
+                if (navigator.vibrate) navigator.vibrate(40); // 触觉震动反馈
                 closeAllTooltips();
-                openDictionary(cleanWord);
+                openDictionary(targetWord, allWords);
             }, 500);
         }
 
@@ -453,13 +488,22 @@
         }
 
         function handleTouchMove(event) {
-            if (touchTimer) clearTimeout(touchTimer); // 滑动屏幕时取消长按判断
+            if (!touchTimer) return;
+            const touch = event.touches[0];
+            const moveX = Math.abs(touch.clientX - touchStartX);
+            const moveY = Math.abs(touch.clientY - touchStartY);
+            // 手指微小晃动容差为 8 像素，超过说明用户在滑动屏幕，立即取消长按
+            if (moveX > 8 || moveY > 8) {
+                clearTimeout(touchTimer);
+            }
         }
 
-        // 点击词元：如果是长按触发了，则不再打开普通语法气泡
+        // 3. 单击处理（轻触切换短语法成分气泡）
         function handleTokenClick(event, element) {
+            // 如果刚刚是由移动端长按触发的，彻底阻断本次 click
             if (isLongPress) {
                 event.stopPropagation();
+                event.preventDefault();
                 return;
             }
             event.stopPropagation();
@@ -470,7 +514,7 @@
             }
         }
 
-        // 点击 X 按钮（绑定 touchstart 与 click 强化触控拦截）
+        // 气泡内部关闭按钮
         function handleCloseBtn(event, btn) {
             if (event) {
                 event.preventDefault();
@@ -485,14 +529,13 @@
             }
         }
 
-        // 关闭所有语法悬浮气泡
         function closeAllTooltips() {
             document.querySelectorAll('.token-item.is-open').forEach(item => {
                 item.classList.remove('is-open');
             });
         }
 
-        // 点击屏幕任何空白处自动收起语法气泡
+        // 点击空白处收起语法气泡
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.token-item') && !e.target.closest('#dictModal')) {
                 closeAllTooltips();
@@ -506,42 +549,56 @@
         }, { passive: true });
 
         // =======================
-        // 词典 API 查询与弹窗控制
+        // 词典 API 查询与交互渲染
         // =======================
 
-        async function openDictionary(word) {
+        async function openDictionary(word, allWords = []) {
             if (!word) return;
             const modal = document.getElementById('dictModal');
             const wordEl = document.getElementById('dictWord');
             const phoneticEl = document.getElementById('dictPhonetic');
             const bodyEl = document.getElementById('dictBody');
 
-            wordEl.innerText = word;
+            const cleanWord = word.trim().toLowerCase();
+            wordEl.innerText = cleanWord;
             phoneticEl.innerText = '';
+            
+            // 多词短语顶部快捷切换栏
+            let wordSelectorHtml = '';
+            if (allWords.length > 1) {
+                wordSelectorHtml = `
+                    <div class="flex items-center gap-1.5 flex-wrap pb-3 mb-2 border-b border-sand/40">
+                        <span class="text-xs text-sage">短语包含词:</span>
+                        ${allWords.map(w => {
+                            const active = w.toLowerCase() === cleanWord;
+                            return `<button type="button" onclick="openDictionary('${w}', ${JSON.stringify(allWords).replace(/"/g, '&quot;')})" class="text-xs px-2.5 py-1 rounded-md border ${active ? 'bg-moss text-white border-moss' : 'bg-wheat text-ink border-sand'}">${w}</button>`;
+                        }).join('')}
+                    </div>
+                `;
+            }
+
             bodyEl.innerHTML = `
-                <div class="flex items-center space-x-2 text-sage py-6 justify-center">
+                ${wordSelectorHtml}
+                <div class="flex items-center space-x-2 text-sage py-8 justify-center">
                     <svg class="animate-spin h-5 w-5 text-moss" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
                     </svg>
-                    <span>正在检索权威词典释义...</span>
+                    <span>正在检索权威英英词典...</span>
                 </div>
             `;
             modal.classList.add('active');
 
             try {
-                // 请求权威 Free Dictionary API
-                const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word.toLowerCase())}`);
-                if (!res.ok) throw new Error('未检索到该单词的详细释义');
+                const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(cleanWord)}`);
+                if (!res.ok) throw new Error('词典库暂未收录该词条');
                 const data = await res.json();
                 const entry = data[0];
 
-                // 音标显示
                 const phoneticText = entry.phonetic || (entry.phonetics.find(p => p.text)?.text) || '';
                 phoneticEl.innerText = phoneticText;
 
-                // 词性与定义拼接
-                let html = '';
+                let html = wordSelectorHtml;
                 entry.meanings.forEach(meaning => {
                     html += `
                         <div class="space-y-2 border-b border-sand/40 pb-3">
@@ -563,15 +620,15 @@
                 bodyEl.innerHTML = html;
             } catch (err) {
                 bodyEl.innerHTML = `
-                    <div class="p-4 bg-sand/30 rounded-lg text-sage text-center text-xs space-y-1">
-                        <p class="font-medium text-ink">词典库暂未收录该词条</p>
-                        <p>可在段落下方“逐句成分与词义精准拆解”中查看对应解析。</p>
+                    ${wordSelectorHtml}
+                    <div class="p-4 bg-sand/30 rounded-lg text-sage text-center text-xs space-y-1 my-4">
+                        <p class="font-medium text-ink">词条 "${cleanWord}" 检索失败或未收录</p>
+                        <p>如需查阅整体语意，请轻点查看“语法成分与词义分析”。</p>
                     </div>
                 `;
             }
         }
 
-        // 关闭词典弹窗
         function closeDictModal(event) {
             if (event) event.stopPropagation();
             document.getElementById('dictModal').classList.remove('active');
