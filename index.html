@@ -35,7 +35,7 @@
         body { background-color: #FAF9F5; color: #1B3B36; font-family: 'Source Sans 3', 'Noto Serif SC', serif; }
         .category-btn.active { background-color: #2F5D54; color: #FAF9F5; }
 
-        /* 单词/短语基本样式：禁用系统默认长按菜单放大镜，保障 iOS/Android 500ms 纯净触发 */
+        /* 单词/短语基本样式：禁用系统长按菜单，保障移动端长按手势流畅响应 */
         .token-item {
             position: relative;
             display: inline-block;
@@ -179,7 +179,7 @@
         &copy; 2026 Academic Digest · All Rights Reserved. Hosted on Vercel.
     </footer>
 
-    <!-- 词典详细释义弹窗（底部抽屉 / 居中卡片） -->
+    <!-- 词典详细释义弹窗（支持音标、中文直译与英英词典详情） -->
     <div id="dictModal" class="dict-modal-overlay" onclick="closeDictModal(event)">
         <div class="dict-modal-content" onclick="event.stopPropagation()">
             <!-- 弹窗顶部栏 -->
@@ -192,7 +192,7 @@
             </div>
             <!-- 释义展示容器 -->
             <div id="dictBody" class="mt-4 space-y-4 text-sm font-sans leading-relaxed">
-                <div class="text-sage">正在查询详细释义...</div>
+                <div class="text-sage">正在查询中英详细释义...</div>
             </div>
         </div>
     </div>
@@ -322,7 +322,7 @@
             `;
         }
 
-        // 渲染详情页（同时挂载双击与全端触摸长按）
+        // 渲染详情页
         function renderDetailView(article) {
             const container = document.getElementById('app-view');
             container.innerHTML = `
@@ -440,7 +440,6 @@
         // 核心交互：提取单词、双击检测与全端长按检测
         // ============================================
 
-        // 统一规范化文本提取函数
         function extractTargetWords(element) {
             let raw = element.getAttribute('data-word') || element.childNodes[0].nodeValue || "";
             raw = raw.replace(/[\u4e00-\u9fa5]/g, '').trim();
@@ -455,7 +454,7 @@
             return { targetWord, allWords: words };
         }
 
-        // 1. 电脑端鼠标双击查词 (Desktop Double-Click)
+        // 1. 电脑端鼠标双击查词
         function handleTokenDblClick(event, element) {
             event.stopPropagation();
             closeAllTooltips();
@@ -477,7 +476,7 @@
 
             touchTimer = setTimeout(() => {
                 isLongPress = true;
-                if (navigator.vibrate) navigator.vibrate(40); // 触觉震动反馈
+                if (navigator.vibrate) navigator.vibrate(40);
                 closeAllTooltips();
                 openDictionary(targetWord, allWords);
             }, 500);
@@ -492,15 +491,13 @@
             const touch = event.touches[0];
             const moveX = Math.abs(touch.clientX - touchStartX);
             const moveY = Math.abs(touch.clientY - touchStartY);
-            // 手指微小晃动容差为 8 像素，超过说明用户在滑动屏幕，立即取消长按
             if (moveX > 8 || moveY > 8) {
                 clearTimeout(touchTimer);
             }
         }
 
-        // 3. 单击处理（轻触切换短语法成分气泡）
+        // 3. 单击处理
         function handleTokenClick(event, element) {
-            // 如果刚刚是由移动端长按触发的，彻底阻断本次 click
             if (isLongPress) {
                 event.stopPropagation();
                 event.preventDefault();
@@ -514,7 +511,6 @@
             }
         }
 
-        // 气泡内部关闭按钮
         function handleCloseBtn(event, btn) {
             if (event) {
                 event.preventDefault();
@@ -535,7 +531,6 @@
             });
         }
 
-        // 点击空白处收起语法气泡
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.token-item') && !e.target.closest('#dictModal')) {
                 closeAllTooltips();
@@ -548,9 +543,25 @@
             }
         }, { passive: true });
 
-        // =======================
-        // 词典 API 查询与交互渲染
-        // =======================
+        // ============================================
+        // 词典与翻译接口（英英详析 + 中文精准释义）
+        // ============================================
+
+        async function fetchChineseTranslation(word) {
+            try {
+                const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(word)}&langpair=en|zh`);
+                if (!res.ok) return '';
+                const data = await res.json();
+                if (data && data.responseData && data.responseData.translatedText) {
+                    // 若返回内容与原文完全相同说明未匹配到中文
+                    const trans = data.responseData.translatedText.trim();
+                    return trans.toLowerCase() !== word.toLowerCase() ? trans : '';
+                }
+                return '';
+            } catch (e) {
+                return '';
+            }
+        }
 
         async function openDictionary(word, allWords = []) {
             if (!word) return;
@@ -563,7 +574,7 @@
             wordEl.innerText = cleanWord;
             phoneticEl.innerText = '';
             
-            // 多词短语顶部快捷切换栏
+            // 多词短语顶部快速切词按钮
             let wordSelectorHtml = '';
             if (allWords.length > 1) {
                 wordSelectorHtml = `
@@ -584,39 +595,67 @@
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
                     </svg>
-                    <span>正在检索权威英英词典...</span>
+                    <span>正在检索中英权威词典...</span>
                 </div>
             `;
             modal.classList.add('active');
 
             try {
-                const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(cleanWord)}`);
-                if (!res.ok) throw new Error('词典库暂未收录该词条');
-                const data = await res.json();
-                const entry = data[0];
+                // 并行发起请求：同时拉取英英词典详细数据与中文翻译结果
+                const [dictRes, chineseTrans] = await Promise.all([
+                    fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(cleanWord)}`),
+                    fetchChineseTranslation(cleanWord)
+                ]);
 
-                const phoneticText = entry.phonetic || (entry.phonetics.find(p => p.text)?.text) || '';
-                phoneticEl.innerText = phoneticText;
+                let dictData = null;
+                if (dictRes.ok) {
+                    const data = await dictRes.json();
+                    dictData = data[0];
+                }
 
-                let html = wordSelectorHtml;
-                entry.meanings.forEach(meaning => {
-                    html += `
-                        <div class="space-y-2 border-b border-sand/40 pb-3">
-                            <span class="inline-block px-2.5 py-0.5 bg-wheat text-moss font-semibold text-xs rounded uppercase tracking-wider">${meaning.partOfSpeech}</span>
-                            <ul class="space-y-1.5 text-ink pl-1">
-                                ${meaning.definitions.slice(0, 3).map((d, i) => `
-                                    <li class="flex items-start space-x-2">
-                                        <span class="text-xs text-gold font-bold mt-0.5">${i + 1}.</span>
-                                        <div class="space-y-0.5">
-                                            <p class="text-sm text-gray-800">${d.definition}</p>
-                                            ${d.example ? `<p class="text-xs text-sage italic">“${d.example}”</p>` : ''}
-                                        </div>
-                                    </li>
-                                `).join('')}
-                            </ul>
+                // 优先展示中文释义卡片
+                let chineseBlockHtml = '';
+                if (chineseTrans) {
+                    chineseBlockHtml = `
+                        <div class="bg-wheat/60 border border-gold/40 p-3 rounded-lg mb-3">
+                            <div class="text-xs text-gold font-bold mb-0.5">中文常用含义</div>
+                            <div class="text-base font-semibold text-ink">${chineseTrans}</div>
                         </div>
                     `;
-                });
+                }
+
+                if (!dictData && !chineseTrans) {
+                    throw new Error('词典库暂未收录该词条');
+                }
+
+                if (dictData) {
+                    const phoneticText = dictData.phonetic || (dictData.phonetics.find(p => p.text)?.text) || '';
+                    phoneticEl.innerText = phoneticText;
+                }
+
+                let html = wordSelectorHtml + chineseBlockHtml;
+
+                if (dictData && dictData.meanings) {
+                    dictData.meanings.forEach(meaning => {
+                        html += `
+                            <div class="space-y-2 border-b border-sand/40 pb-3">
+                                <span class="inline-block px-2.5 py-0.5 bg-wheat text-moss font-semibold text-xs rounded uppercase tracking-wider">${meaning.partOfSpeech}</span>
+                                <ul class="space-y-1.5 text-ink pl-1">
+                                    ${meaning.definitions.slice(0, 3).map((d, i) => `
+                                        <li class="flex items-start space-x-2">
+                                            <span class="text-xs text-gold font-bold mt-0.5">${i + 1}.</span>
+                                            <div class="space-y-0.5">
+                                                <p class="text-sm text-gray-800">${d.definition}</p>
+                                                ${d.example ? `<p class="text-xs text-sage italic">“${d.example}”</p>` : ''}
+                                            </div>
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                            </div>
+                        `;
+                    });
+                }
+
                 bodyEl.innerHTML = html;
             } catch (err) {
                 bodyEl.innerHTML = `
