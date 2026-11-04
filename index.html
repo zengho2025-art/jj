@@ -7,7 +7,7 @@
     <!-- Google Fonts & Tailwind CSS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -21,6 +21,8 @@
                         sand: "#E8E4D9",
                         wheat: "#F3F0E7",
                         gold: "#C4A35A",
+                        sky: "#EBF3F5",
+                        blueInk: "#1D4ED8",
                     },
                     fontFamily: {
                         display: ["Playfair Display", "Georgia", "serif"],
@@ -54,12 +56,12 @@
         .token-item .tooltip-text {
             display: none;
             width: max-content;
-            max-width: 280px;
+            max-width: 290px;
             background-color: #1B3B36;
             color: #FAF9F5;
             text-align: left;
-            border-radius: 6px;
-            padding: 10px 14px;
+            border-radius: 8px;
+            padding: 12px 14px;
             position: absolute;
             z-index: 50;
             bottom: 125%;
@@ -67,7 +69,7 @@
             transform: translateX(-50%);
             font-size: 0.75rem;
             font-family: 'Source Sans 3', sans-serif;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
             line-height: 1.5;
             pointer-events: auto;
         }
@@ -119,7 +121,7 @@
             background-color: rgba(27, 59, 54, 0.45);
             backdrop-filter: blur(3px);
             z-index: 100;
-            align-items: flex-end; /* 移动端/平板端从底部升起 */
+            align-items: flex-end;
             justify-content: center;
         }
         .dict-modal-overlay.active {
@@ -130,8 +132,8 @@
             background-color: #FAF9F5;
             color: #1B3B36;
             width: 100%;
-            max-width: 600px;
-            max-height: 75vh;
+            max-width: 620px;
+            max-height: 80vh;
             border-radius: 20px 20px 0 0;
             padding: 24px;
             box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.25);
@@ -142,11 +144,11 @@
         }
         @media (min-width: 768px) {
             .dict-modal-overlay {
-                align-items: center; /* PC端居中 */
+                align-items: center;
             }
             .dict-modal-content {
                 border-radius: 16px;
-                max-height: 80vh;
+                max-height: 82vh;
             }
         }
         @keyframes slideUp {
@@ -179,7 +181,7 @@
         &copy; 2026 Academic Digest · All Rights Reserved. Hosted on Vercel.
     </footer>
 
-    <!-- 词典详细释义弹窗（支持音标、中文直译、词根词源、各词性详解与例句） -->
+    <!-- 词典详细释义弹窗 -->
     <div id="dictModal" class="dict-modal-overlay" onclick="closeDictModal(event)">
         <div class="dict-modal-content" onclick="event.stopPropagation()">
             <!-- 弹窗顶部栏 -->
@@ -202,7 +204,6 @@
         let allArticles = [];
         let currentCategory = 'All';
 
-        // 触屏手势状态（适配 iOS / Android / iPadOS）
         let touchTimer = null;
         let isLongPress = false;
         let touchStartX = 0;
@@ -262,7 +263,6 @@
             renderMainLayout(allArticles);
         }
 
-        // 渲染列表页
         function renderMainLayout(articles) {
             const categories = ['All', ...new Set(articles.map(item => item.category))];
             const filteredArticles = currentCategory === 'All' 
@@ -273,11 +273,11 @@
             container.innerHTML = `
                 <div class="mb-8 border-b border-sand pb-6">
                     <h1 class="font-display text-4xl font-bold tracking-tight text-ink mb-2">Curated Insights</h1>
-                    <p class="text-sage text-sm font-sans">深度剖析全球顶级外刊，提炼核心词汇与长难句逻辑结构。</p>
+                    <p class="text-sage text-sm font-sans">深度剖析全球顶级外刊，提炼核心词汇与句式修饰逻辑结构。</p>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                    <!-- 左侧边栏：分类导航 -->
+                    <!-- 左侧边栏 -->
                     <aside class="lg:col-span-1 space-y-2">
                         <h3 class="text-xs font-sans uppercase tracking-widest text-sage mb-3 px-3 font-semibold">文章分类</h3>
                         <nav class="flex flex-row lg:flex-col gap-1.5 overflow-x-auto pb-2 lg:pb-0">
@@ -290,7 +290,7 @@
                         </nav>
                     </aside>
 
-                    <!-- 右侧：文章列表网格 -->
+                    <!-- 右侧：文章网格 -->
                     <div class="lg:col-span-3">
                         ${filteredArticles.length === 0 ? `
                             <div class="bg-white border border-sand rounded-xl p-10 text-center text-sage">
@@ -311,7 +311,7 @@
                                         </div>
                                         <div class="pt-4 border-t border-sand/60 flex items-center justify-between text-xs text-moss font-sans font-semibold">
                                             <span>精读文章</span>
-                                            <span class="group-hover:translate-x-1 transition-transform">阅读解析 &rarr;</span>
+                                            <span class="group-hover:translate-x-1 transition-transform">阅读深度解析 &rarr;</span>
                                         </div>
                                     </article>
                                 `).join('')}
@@ -322,7 +322,7 @@
             `;
         }
 
-        // 渲染详情页
+        // 渲染详情页：包含截图风格的深度语法剖析体系
         function renderDetailView(article) {
             const container = document.getElementById('app-view');
             container.innerHTML = `
@@ -363,13 +363,14 @@
                                                 ${token.word}
                                                 <span class="tooltip-text" onclick="event.stopPropagation()">
                                                     <span class="flex justify-between items-center mb-1.5 pb-1 border-b border-sand/20">
-                                                        <strong class="text-gold">成分分析</strong>
+                                                        <strong class="text-gold">语法成分与修饰</strong>
                                                         <span class="token-close-btn" 
                                                               onclick="handleCloseBtn(event, this)" 
                                                               ontouchstart="handleCloseBtn(event, this)">&times;</span>
                                                     </span>
                                                     <div class="space-y-1">
                                                         <div><strong class="text-sand">成分：</strong>${token.role}</div>
+                                                        ${token.modifies ? `<div><strong class="text-sand">修饰：</strong><span class="text-gold/90">${token.modifies}</span></div>` : ''}
                                                         <div><strong class="text-sand">释义：</strong>${token.meaning}</div>
                                                     </div>
                                                 </span>
@@ -379,37 +380,74 @@
                                     <p class="text-gray-600 text-base mt-2">${p.chineseText}</p>
                                 </div>
 
-                                <!-- 逐句语法拆解 -->
-                                ${p.syntaxBreakdown && p.syntaxBreakdown.length > 0 ? `
-                                    <div class="bg-white p-5 rounded-lg border border-sand text-sm font-sans space-y-3">
-                                        <h4 class="font-bold text-moss flex items-center space-x-1.5">
-                                            <span>🔍 逐句语法成分与词义精准拆解</span>
-                                        </h4>
-                                        <div class="divide-y divide-sand/60">
-                                            ${p.syntaxBreakdown.map(sb => `
-                                                <div class="py-3 space-y-1">
-                                                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-1">
-                                                        <span class="font-serif text-ink font-medium">${sb.part}</span>
-                                                        <span class="text-xs px-2 py-0.5 bg-wheat text-moss rounded font-semibold whitespace-nowrap self-start md:self-auto">${sb.role}</span>
+                                <!-- 深度语法解析器：完全还原截图样式 -->
+                                ${p.detailedSyntax && p.detailedSyntax.length > 0 ? `
+                                    <div class="space-y-4">
+                                        <div class="flex items-center space-x-2 text-moss font-bold text-base font-sans">
+                                            <span class="p-1 bg-wheat rounded">📖</span>
+                                            <span>全句深度语法剖析（句型 · 主干 · 修饰逻辑）</span>
+                                        </div>
+                                        <div class="space-y-4">
+                                            ${p.detailedSyntax.map((item, sIndex) => `
+                                                <div class="bg-white p-5 md:p-6 rounded-xl border border-sand shadow-sm space-y-4 font-sans text-sm">
+                                                    <!-- 句子原文标题 -->
+                                                    <div class="flex items-start justify-between gap-3 border-b border-sand/60 pb-3">
+                                                        <div class="space-y-1">
+                                                            <div class="flex items-center space-x-2">
+                                                                <span class="text-xs px-2 py-0.5 bg-moss/10 text-moss font-bold rounded">句 ${sIndex + 1}</span>
+                                                                <span class="text-xs text-sage font-medium">${item.sentenceType}</span>
+                                                            </div>
+                                                            <h5 class="font-serif text-ink text-base font-medium leading-relaxed">${item.sentence}</h5>
+                                                        </div>
                                                     </div>
-                                                    ${sb.detail ? `
-                                                        <div class="text-xs text-sage font-sans pl-2 border-l-2 border-gold/60 mt-1">
-                                                            💡 <strong>词义/用法剖析：</strong> ${sb.detail}
+
+                                                    <!-- 句子的成分划分 -->
+                                                    <div class="space-y-3 pt-1">
+                                                        <div class="font-bold text-ink flex items-center space-x-1.5 text-xs uppercase tracking-wider text-sage">
+                                                            <span>1. 句子核心主干：</span>
+                                                        </div>
+                                                        <div class="grid grid-cols-1 gap-2 pl-2 border-l-2 border-moss/30">
+                                                            ${item.mainStructure.map(ms => `
+                                                                <div class="text-xs leading-relaxed">
+                                                                    <span class="font-bold text-moss">(${ms.role})</span>
+                                                                    <strong class="font-serif text-ink text-sm mx-1">${ms.content}</strong>
+                                                                    <span class="text-gray-600">(${ms.detail})</span>
+                                                                </div>
+                                                            `).join('')}
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- 修饰成分与指代关系 -->
+                                                    ${item.modifiers && item.modifiers.length > 0 ? `
+                                                        <div class="space-y-3 pt-2">
+                                                            <div class="font-bold text-ink flex items-center space-x-1.5 text-xs uppercase tracking-wider text-sage">
+                                                                <span>2. 层次修饰成分与逻辑指代：</span>
+                                                            </div>
+                                                            <div class="space-y-2.5 pl-2 border-l-2 border-gold/50">
+                                                                ${item.modifiers.map(mod => `
+                                                                    <div class="text-xs leading-relaxed bg-wheat/30 p-2.5 rounded-lg border border-sand/40">
+                                                                        <div class="flex items-center space-x-2 mb-1">
+                                                                            <span class="font-bold text-moss bg-wheat px-1.5 py-0.5 rounded">${mod.role}</span>
+                                                                            <strong class="font-serif text-ink text-sm">${mod.content}</strong>
+                                                                        </div>
+                                                                        <div class="text-gray-700 pl-1 space-y-0.5">
+                                                                            <div class="text-gold font-medium">↳ ${mod.modifies}</div>
+                                                                            <div class="text-gray-600">${mod.detail}</div>
+                                                                        </div>
+                                                                    </div>
+                                                                `).join('')}
+                                                            </div>
                                                         </div>
                                                     ` : ''}
+
+                                                    <!-- 完整含义 -->
+                                                    <div class="pt-2 border-t border-sand/40 text-xs text-gray-700 flex items-baseline space-x-1.5">
+                                                        <span class="font-semibold text-moss whitespace-nowrap">整句含义：</span>
+                                                        <span class="italic font-serif text-gray-900">${item.translation}</span>
+                                                    </div>
                                                 </div>
                                             `).join('')}
                                         </div>
-                                    </div>
-                                ` : ''}
-
-                                <!-- 核心句式与主干提取 -->
-                                ${p.sentenceAnalysis ? `
-                                    <div class="bg-white p-5 rounded-lg border border-sand text-sm font-sans space-y-2">
-                                        <h4 class="font-bold text-ink flex items-center space-x-1.5">
-                                            <span>📊 核心句式与主干提取</span>
-                                        </h4>
-                                        <div class="text-gray-700 leading-relaxed">${p.sentenceAnalysis}</div>
                                     </div>
                                 ` : ''}
 
@@ -419,7 +457,7 @@
                                         <h4 class="font-bold text-moss flex items-center space-x-1.5">
                                             <span>💡 段落核心高阶词汇总结</span>
                                         </h4>
-                                        <ul class="grid grid-cols-1 gap-2.5">
+                                        <ul class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
                                             ${p.vocabularyNotes.map(v => `
                                                 <li class="bg-white p-3 rounded border border-sand/40">
                                                     <span class="font-bold text-ink">${v.term}:</span> 
@@ -562,7 +600,6 @@
             }
         }
 
-        // 词性英文简称转中文对照字典
         const posChineseMap = {
             'noun': '名词 (n.)',
             'verb': '动词 (v.)',
@@ -586,7 +623,6 @@
             wordEl.innerText = cleanWord;
             phoneticEl.innerText = '';
             
-            // 多词短语顶部快速切词按钮
             let wordSelectorHtml = '';
             if (allWords.length > 1) {
                 wordSelectorHtml = `
@@ -613,7 +649,6 @@
             modal.classList.add('active');
 
             try {
-                // 并发请求词典数据与中文释义
                 const [dictRes, chineseTrans] = await Promise.all([
                     fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(cleanWord)}`),
                     fetchChineseTranslation(cleanWord)
@@ -625,7 +660,6 @@
                     dictData = data[0];
                 }
 
-                // 中文释义区块
                 let chineseBlockHtml = '';
                 if (chineseTrans) {
                     chineseBlockHtml = `
@@ -636,7 +670,6 @@
                     `;
                 }
 
-                // 词根与词源溯源区块 (Etymology & Roots)
                 let originHtml = '';
                 const wordOrigin = dictData?.origin || '';
                 if (wordOrigin) {
@@ -661,7 +694,6 @@
 
                 let html = wordSelectorHtml + chineseBlockHtml + originHtml;
 
-                // 详细词性与英英义项解析
                 if (dictData && dictData.meanings) {
                     dictData.meanings.forEach(meaning => {
                         const rawPos = meaning.partOfSpeech.toLowerCase();
@@ -694,7 +726,7 @@
                     ${wordSelectorHtml}
                     <div class="p-4 bg-sand/30 rounded-lg text-sage text-center text-xs space-y-1 my-4">
                         <p class="font-medium text-ink">词条 "${cleanWord}" 检索失败或未收录</p>
-                        <p>如需查阅整体语意，请轻点查看“语法成分与词义分析”。</p>
+                        <p>可在段落下方“逐句成分与词义精准拆解”中查看对应解析。</p>
                     </div>
                 `;
             }
