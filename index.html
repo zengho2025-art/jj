@@ -21,8 +21,6 @@
                         sand: "#E8E4D9",
                         wheat: "#F3F0E7",
                         gold: "#C4A35A",
-                        sky: "#EBF3F5",
-                        blueInk: "#1D4ED8",
                     },
                     fontFamily: {
                         display: ["Playfair Display", "Georgia", "serif"],
@@ -35,9 +33,6 @@
     </script>
     <style>
         body { background-color: #FAF9F5; color: #1B3B36; font-family: 'Source Sans 3', 'Noto Serif SC', serif; }
-        .category-btn.active { background-color: #2F5D54; color: #FAF9F5; }
-
-        /* 单词/短语基本样式：禁用系统长按菜单，保障移动端长按手势流畅响应 */
         .token-item {
             position: relative;
             display: inline-block;
@@ -45,18 +40,14 @@
             border-bottom: 1.5px dashed #C4A35A;
             margin-right: 4px;
             margin-bottom: 4px;
-            transition: background-color 0.2s;
             user-select: none;
             -webkit-user-select: none;
-            -webkit-touch-callout: none;
             -webkit-tap-highlight-color: transparent;
         }
-
-        /* 气泡本体：默认隐藏 */
         .token-item .tooltip-text {
             display: none;
             width: max-content;
-            max-width: 340px;
+            max-width: 320px;
             background-color: #1B3B36;
             color: #FAF9F5;
             text-align: left;
@@ -68,52 +59,15 @@
             left: 50%;
             transform: translateX(-50%);
             font-size: 0.75rem;
-            font-family: 'Source Sans 3', sans-serif;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
             line-height: 1.5;
-            pointer-events: auto;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
         }
-
-        /* 仅在纯 PC 鼠标设备上支持悬浮展示 */
         @media (hover: hover) and (pointer: fine) {
-            .token-item:hover {
-                background-color: #F3F0E7;
-                border-bottom: 2px solid #2F5D54;
-            }
-            .token-item:hover .tooltip-text {
-                display: block;
-            }
+            .token-item:hover { background-color: #F3F0E7; border-bottom: 2px solid #2F5D54; }
+            .token-item:hover .tooltip-text { display: block; }
         }
-
-        /* 移动端/触摸设备单击激活类控制 */
-        .token-item.is-open {
-            background-color: #F3F0E7;
-            border-bottom: 2px solid #2F5D54;
-        }
-        .token-item.is-open .tooltip-text {
-            display: block !important;
-        }
-
-        /* 气泡关闭按钮放大热区 */
-        .token-close-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 28px;
-            height: 28px;
-            margin: -6px -6px 0 0;
-            color: #E8E4D9;
-            font-size: 1.25rem;
-            line-height: 1;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .token-close-btn:active {
-            background-color: rgba(255, 255, 255, 0.2);
-            color: #FFFFFF;
-        }
-
-        /* 详细词典弹窗遮罩层 */
+        .token-item.is-open { background-color: #F3F0E7; border-bottom: 2px solid #2F5D54; }
+        .token-item.is-open .tooltip-text { display: block !important; }
         .dict-modal-overlay {
             display: none;
             position: fixed;
@@ -124,10 +78,7 @@
             align-items: flex-end;
             justify-content: center;
         }
-        .dict-modal-overlay.active {
-            display: flex;
-        }
-        /* 弹窗面板本体 */
+        .dict-modal-overlay.active { display: flex; }
         .dict-modal-content {
             background-color: #FAF9F5;
             color: #1B3B36;
@@ -138,614 +89,126 @@
             padding: 24px;
             box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.25);
             overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
         @media (min-width: 768px) {
-            .dict-modal-overlay {
-                align-items: center;
-            }
-            .dict-modal-content {
-                border-radius: 16px;
-                max-height: 82vh;
-            }
-        }
-        @keyframes slideUp {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
+            .dict-modal-overlay { align-items: center; }
+            .dict-modal-content { border-radius: 16px; }
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col antialiased selection:bg-moss selection:text-paper">
-    <!-- 顶部导航栏 -->
+<body class="min-h-screen flex flex-col antialiased">
     <header class="border-b border-sand bg-paper/80 backdrop-blur-md sticky top-0 z-30">
         <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="goHome()">
-                <span class="font-display italic text-2xl font-bold tracking-tight text-ink">Academic Digest</span>
-                <span class="text-xs uppercase tracking-widest px-2 py-0.5 bg-wheat text-moss font-semibold rounded">外刊精读</span>
-            </div>
+            <span class="font-display italic text-2xl font-bold tracking-tight text-ink">Academic Digest</span>
             <div class="text-sm text-sage font-medium">www.scopix.cn</div>
         </div>
     </header>
 
-    <!-- 主体内容区 -->
-    <main class="max-w-6xl mx-auto px-6 py-10 flex-grow w-full">
-        <div id="app-view">
-            <div class="text-sage text-sm py-10">正在加载外刊文章库...</div>
-        </div>
+    <main class="max-w-4xl mx-auto px-6 py-10 flex-grow w-full">
+        <div id="article-container"></div>
     </main>
 
-    <!-- 页脚 -->
-    <footer class="border-t border-sand py-6 text-center text-xs text-sage font-sans">
-        &copy; 2026 Academic Digest · All Rights Reserved. Hosted on Vercel.
-    </footer>
-
-    <!-- 词典详细释义弹窗 -->
-    <div id="dictModal" class="dict-modal-overlay" onclick="closeDictModal(event)">
+    <!-- 词典弹窗 -->
+    <div id="dictModal" class="dict-modal-overlay" onclick="closeDictModal()">
         <div class="dict-modal-content" onclick="event.stopPropagation()">
-            <!-- 弹窗顶部栏 -->
             <div class="flex items-center justify-between pb-3 border-b border-sand">
-                <div class="flex items-baseline space-x-2">
-                    <span id="dictWord" class="font-display text-2xl font-bold text-ink">Word</span>
-                    <span id="dictPhonetic" class="text-sm text-moss font-mono"></span>
-                </div>
-                <button type="button" onclick="closeDictModal(event)" class="w-8 h-8 rounded-full bg-sand/50 hover:bg-sand flex items-center justify-center text-xl text-ink font-bold leading-none">&times;</button>
+                <span id="dictWord" class="font-display text-2xl font-bold text-ink">Word</span>
+                <button type="button" onclick="closeDictModal()" class="w-8 h-8 rounded-full bg-sand/50 flex items-center justify-center text-xl font-bold">&times;</button>
             </div>
-            <!-- 释义展示容器 -->
-            <div id="dictBody" class="mt-4 space-y-4 text-sm font-sans leading-relaxed">
-                <div class="text-sage">正在查询中英详细释义...</div>
-            </div>
+            <div id="dictBody" class="mt-4 space-y-4 text-sm leading-relaxed"></div>
         </div>
     </div>
 
-    <!-- 核心业务逻辑 -->
     <script>
-        let allArticles = [];
-        let currentCategory = 'All';
-
-        let touchTimer = null;
-        let isLongPress = false;
-        let touchStartX = 0;
-        let touchStartY = 0;
-
-        async function initApp() {
-            try {
-                const response = await fetch('articles.json?t=' + new Date().getTime());
-                if (!response.ok) {
-                    throw new Error(`无法读取 articles.json (状态码: ${response.status})`);
-                }
-                allArticles = await response.json();
-                checkRoute();
-            } catch (error) {
-                console.error("加载失败:", error);
-                document.getElementById('app-view').innerHTML = `
-                    <div class="p-6 bg-red-50 border border-red-200 text-red-700 rounded text-sm space-y-2">
-                        <p class="font-bold">文章库 articles.json 加载失败</p>
-                        <p>错误原因: ${error.message}</p>
-                        <p class="text-xs text-gray-500">提示：若直接双击打开 HTML 文件（file:// 协议），浏览器会因安全限制阻止读取 JSON。请将其部署到 Vercel/GitHub Pages，或使用 VS Code Live Server 预览。</p>
-                    </div>
-                `;
-            }
+        // 核心交互：点击展开/收起气泡
+        function toggleToken(e, el) {
+            e.stopPropagation();
+            const isOpen = el.classList.contains('is-open');
+            document.querySelectorAll('.token-item.is-open').forEach(item => item.classList.remove('is-open'));
+            if (!isOpen) el.classList.add('is-open');
         }
 
-        function checkRoute() {
-            const params = new URLSearchParams(window.location.search);
-            const articleId = params.get('id');
-            if (articleId) {
-                const article = allArticles.find(item => item.id == articleId);
-                if (article) {
-                    renderDetailView(article);
-                    return;
-                }
-            }
-            renderMainLayout(allArticles);
-        }
-
-        function goHome() {
-            try {
-                window.history.pushState({}, '', window.location.pathname);
-            } catch (e) {}
-            currentCategory = 'All';
-            renderMainLayout(allArticles);
-        }
-
-        function viewArticle(id) {
-            try {
-                window.history.pushState({}, '', `?id=${id}`);
-            } catch (e) {}
-            const article = allArticles.find(item => item.id == id);
-            if (article) renderDetailView(article);
-        }
-
-        function filterCategory(cat) {
-            currentCategory = cat;
-            renderMainLayout(allArticles);
-        }
-
-        function renderMainLayout(articles) {
-            const categories = ['All', ...new Set(articles.map(item => item.category))];
-            const filteredArticles = currentCategory === 'All' 
-                ? articles 
-                : articles.filter(item => item.category === currentCategory);
-
-            const container = document.getElementById('app-view');
-            container.innerHTML = `
-                <div class="mb-8 border-b border-sand pb-6">
-                    <h1 class="font-display text-4xl font-bold tracking-tight text-ink mb-2">Curated Insights</h1>
-                    <p class="text-sage text-sm font-sans">深度剖析全球顶级外刊，提炼核心词汇与句式修饰逻辑结构。</p>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                    <!-- 左侧边栏 -->
-                    <aside class="lg:col-span-1 space-y-2">
-                        <h3 class="text-xs font-sans uppercase tracking-widest text-sage mb-3 px-3 font-semibold">文章分类</h3>
-                        <nav class="flex flex-row lg:flex-col gap-1.5 overflow-x-auto pb-2 lg:pb-0">
-                            ${categories.map(cat => `
-                                <button onclick="filterCategory('${cat}')" class="category-btn ${currentCategory === cat ? 'active' : 'bg-white text-ink hover:bg-sand/50'} text-left px-4 py-2.5 rounded-lg text-sm font-sans font-medium border border-sand transition-all whitespace-nowrap flex items-center justify-between">
-                                    <span>${cat === 'All' ? '全部文章' : cat}</span>
-                                    <span class="text-xs opacity-60">(${cat === 'All' ? articles.length : articles.filter(i => i.category === cat).length})</span>
-                                </button>
-                            `).join('')}
-                        </nav>
-                    </aside>
-
-                    <!-- 右侧：文章网格 -->
-                    <div class="lg:col-span-3">
-                        ${filteredArticles.length === 0 ? `
-                            <div class="bg-white border border-sand rounded-xl p-10 text-center text-sage">
-                                该分类下暂无文章。
-                            </div>
-                        ` : `
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                ${filteredArticles.map(item => `
-                                    <article onclick="viewArticle(${item.id})" class="bg-white border border-sand p-6 rounded-lg shadow-sm hover:shadow-md transition-all flex flex-col justify-between cursor-pointer group">
-                                        <div>
-                                            <div class="flex items-center justify-between text-xs text-sage mb-3 font-sans uppercase tracking-wider">
-                                                <span class="bg-wheat px-2 py-0.5 rounded text-moss font-semibold">${item.category}</span>
-                                                <span>${item.date}</span>
-                                            </div>
-                                            <h2 class="font-display text-xl font-bold text-ink mb-1 group-hover:text-moss transition-colors leading-snug">${item.title}</h2>
-                                            <h3 class="text-sm text-sage font-serif mb-4">${item.chineseTitle}</h3>
-                                            <p class="text-sm text-gray-600 line-clamp-3 mb-4 font-serif">${item.summary || ""}</p>
-                                        </div>
-                                        <div class="pt-4 border-t border-sand/60 flex items-center justify-between text-xs text-moss font-sans font-semibold">
-                                            <span>精读文章</span>
-                                            <span class="group-hover:translate-x-1 transition-transform">阅读深度解析 &rarr;</span>
-                                        </div>
-                                    </article>
-                                `).join('')}
-                            </div>
-                        `}
-                    </div>
-                </div>
-            `;
-        }
-
-        // 渲染详情页：包含截图风格的深度语法剖析体系
-        function renderDetailView(article) {
-            const container = document.getElementById('app-view');
-            container.innerHTML = `
-                <button onclick="goHome()" class="mb-6 inline-flex items-center text-xs font-sans text-sage hover:text-ink font-semibold uppercase tracking-wider">
-                    &larr; 返回文章列表
-                </button>
-                <div class="bg-white border border-sand rounded-xl p-8 md:p-12 shadow-sm max-w-4xl mx-auto">
-                    <div class="flex items-center space-x-3 text-xs text-sage mb-4 font-sans uppercase tracking-wider">
-                        <span class="bg-wheat px-2.5 py-1 rounded text-moss font-semibold">${article.category}</span>
-                        <span>${article.date}</span>
-                    </div>
-                    <h1 class="font-display text-3xl md:text-4xl font-bold text-ink mb-2 leading-tight">${article.title}</h1>
-                    <h2 class="text-lg text-sage font-serif mb-8 pb-6 border-b border-sand">${article.chineseTitle}</h2>
-                    <p class="text-base text-gray-700 mb-10 italic bg-wheat/40 p-5 rounded-lg border-l-4 border-moss font-serif">${article.summary}</p>
-
-                    <!-- 段落列表渲染 -->
-                    <div class="space-y-12">
-                        ${article.paragraphs.map((p, index) => `
-                            <div class="p-6 md:p-8 bg-paper/50 border border-sand rounded-xl space-y-6 shadow-xs">
-                                <div>
-                                    <span class="text-xs font-sans font-bold uppercase tracking-widest text-moss bg-wheat px-2.5 py-1 rounded">Paragraph ${index + 1}</span>
-                                    <h3 class="font-display text-xl font-bold text-ink mt-3">${p.paragraphTitle}</h3>
-                                    <p class="text-sm text-sage mt-1 font-sans leading-relaxed"><strong>段落立论功能：</strong>${p.thesisAndContext}</p>
-                                </div>
-
-                                <!-- 原文与翻译区 -->
-                                <div class="space-y-3 font-serif text-lg leading-relaxed text-gray-900 border-l-2 border-gold pl-4 py-1">
-                                    <div class="font-semibold text-ink flex flex-wrap items-baseline">
-                                        ${p.wordTokens && p.wordTokens.length > 0 ? p.wordTokens.map(token => `
-                                            <span class="token-item" 
-                                                  data-word="${token.word.replace(/"/g, '&quot;')}"
-                                                  onclick="handleTokenClick(event, this)"
-                                                  ondblclick="handleTokenDblClick(event, this)"
-                                                  ontouchstart="handleTouchStart(event, this)"
-                                                  ontouchend="handleTouchEnd(event)"
-                                                  ontouchcancel="handleTouchEnd(event)"
-                                                  ontouchmove="handleTouchMove(event)">
-                                                ${token.word}
-                                                <span class="tooltip-text" onclick="event.stopPropagation()">
-                                                    <span class="flex justify-between items-center mb-1.5 pb-1 border-b border-sand/20">
-                                                        <strong class="text-gold">语法成分与修饰</strong>
-                                                        <span class="token-close-btn" 
-                                                              onclick="handleCloseBtn(event, this)" 
-                                                              ontouchstart="handleCloseBtn(event, this)">&times;</span>
-                                                    </span>
-                                                    <div class="space-y-1">
-                                                        <div><strong class="text-sand">成分：</strong>${token.role}</div>
-                                                        ${token.modifies ? `<div><strong class="text-sand">修饰：</strong><span class="text-gold/90">${token.modifies}</span></div>` : ''}
-                                                        <div><strong class="text-sand">释义：</strong>${token.meaning}</div>
-                                                        ${token.etymology ? `
-                                                            <div class="pt-1.5 mt-1.5 border-t border-sand/20 text-xs leading-relaxed">
-                                                                <strong class="text-gold flex items-center space-x-1">
-                                                                    <span>🌱 词根与词源：</span>
-                                                                </strong>
-                                                                <span class="text-sand/90 text-[11px] block mt-0.5">${token.etymology.replace('【词源】', '')}</span>
-                                                            </div>
-                                                        ` : ''}
-                                                    </div>
-                                                </span>
-                                            </span>
-                                        `).join(' ') : `<p>${p.englishText}</p>`}
-                                    </div>
-                                    <p class="text-gray-600 text-base mt-2">${p.chineseText}</p>
-                                </div>
-
-                                <!-- 深度语法解析器：完全还原截图样式 -->
-                                ${p.detailedSyntax && p.detailedSyntax.length > 0 ? `
-                                    <div class="space-y-4">
-                                        <div class="flex items-center space-x-2 text-moss font-bold text-base font-sans">
-                                            <span class="p-1 bg-wheat rounded">📖</span>
-                                            <span>全句深度语法剖析（句型 · 主干 · 修饰逻辑）</span>
-                                        </div>
-                                        <div class="space-y-4">
-                                            ${p.detailedSyntax.map((item, sIndex) => `
-                                                <div class="bg-white p-5 md:p-6 rounded-xl border border-sand shadow-sm space-y-4 font-sans text-sm">
-                                                    <!-- 句子原文标题 -->
-                                                    <div class="flex items-start justify-between gap-3 border-b border-sand/60 pb-3">
-                                                        <div class="space-y-1">
-                                                            <div class="flex items-center space-x-2">
-                                                                <span class="text-xs px-2 py-0.5 bg-moss/10 text-moss font-bold rounded">句 ${sIndex + 1}</span>
-                                                                <span class="text-xs text-sage font-medium">${item.sentenceType}</span>
-                                                            </div>
-                                                            <h5 class="font-serif text-ink text-base font-medium leading-relaxed">${item.sentence}</h5>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- 句子的成分划分 -->
-                                                    <div class="space-y-3 pt-1">
-                                                        <div class="font-bold text-ink flex items-center space-x-1.5 text-xs uppercase tracking-wider text-sage">
-                                                            <span>1. 句子核心主干：</span>
-                                                        </div>
-                                                        <div class="grid grid-cols-1 gap-2 pl-2 border-l-2 border-moss/30">
-                                                            ${item.mainStructure.map(ms => `
-                                                                <div class="text-xs leading-relaxed">
-                                                                    <span class="font-bold text-moss">(${ms.role})</span>
-                                                                    <strong class="font-serif text-ink text-sm mx-1">${ms.content}</strong>
-                                                                    <span class="text-gray-600">(${ms.detail})</span>
-                                                                </div>
-                                                            `).join('')}
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- 修饰成分与指代关系 -->
-                                                    ${item.modifiers && item.modifiers.length > 0 ? `
-                                                        <div class="space-y-3 pt-2">
-                                                            <div class="font-bold text-ink flex items-center space-x-1.5 text-xs uppercase tracking-wider text-sage">
-                                                                <span>2. 层次修饰成分与逻辑指代：</span>
-                                                            </div>
-                                                            <div class="space-y-2.5 pl-2 border-l-2 border-gold/50">
-                                                                ${item.modifiers.map(mod => `
-                                                                    <div class="text-xs leading-relaxed bg-wheat/30 p-2.5 rounded-lg border border-sand/40">
-                                                                        <div class="flex items-center space-x-2 mb-1">
-                                                                            <span class="font-bold text-moss bg-wheat px-1.5 py-0.5 rounded">${mod.role}</span>
-                                                                            <strong class="font-serif text-ink text-sm">${mod.content}</strong>
-                                                                        </div>
-                                                                        <div class="text-gray-700 pl-1 space-y-0.5">
-                                                                            <div class="text-gold font-medium">↳ ${mod.modifies}</div>
-                                                                            <div class="text-gray-600">${mod.detail}</div>
-                                                                        </div>
-                                                                    </div>
-                                                                `).join('')}
-                                                            </div>
-                                                        </div>
-                                                    ` : ''}
-
-                                                    <!-- 完整含义 -->
-                                                    <div class="pt-2 border-t border-sand/40 text-xs text-gray-700 flex items-baseline space-x-1.5">
-                                                        <span class="font-semibold text-moss whitespace-nowrap">整句含义：</span>
-                                                        <span class="italic font-serif text-gray-900">${item.translation}</span>
-                                                    </div>
-                                                </div>
-                                            `).join('')}
-                                        </div>
-                                    </div>
-                                ` : ''}
-
-                                <!-- 核心高阶词汇总结 -->
-                                ${p.vocabularyNotes && p.vocabularyNotes.length > 0 ? `
-                                    <div class="bg-wheat/30 p-5 rounded-lg border border-sand/60 text-sm font-sans space-y-3">
-                                        <h4 class="font-bold text-moss flex items-center space-x-1.5">
-                                            <span>💡 段落核心高阶词汇总结</span>
-                                        </h4>
-                                        <ul class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
-                                            ${p.vocabularyNotes.map(v => `
-                                                <li class="bg-white p-3 rounded border border-sand/40">
-                                                    <span class="font-bold text-ink">${v.term}:</span> 
-                                                    <span class="text-gray-700">${v.explanation}</span>
-                                                </li>
-                                            `).join('')}
-                                        </ul>
-                                    </div>
-                                ` : ''}
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-        }
-
-        // ============================================
-        // 核心交互：提取单词、双击检测与全端长按检测
-        // ============================================
-
-        function extractTargetWords(element) {
-            let raw = element.getAttribute('data-word') || element.childNodes[0].nodeValue || "";
-            raw = raw.replace(/[\u4e00-\u9fa5]/g, '').trim();
-            raw = raw.replace(/^[^\w]+|[^\w]+$/g, '');
-
-            const words = raw.split(/\s+/).map(w => w.replace(/^[^\w]+|[^\w]+$/g, '')).filter(w => w.length > 0);
-            if (words.length === 0) return { targetWord: '', allWords: [] };
-
-            const stopWords = ['the', 'a', 'an', 'and', 'or', 'of', 'in', 'on', 'at', 'to', 'for', 'with', 'by', 'is', 'are', 'was', 'were', 'as', 'that', 'this'];
-            let targetWord = words.find(w => !stopWords.includes(w.toLowerCase())) || words[0];
-
-            return { targetWord, allWords: words };
-        }
-
-        // 1. 电脑端鼠标双击查词
-        function handleTokenDblClick(event, element) {
-            event.stopPropagation();
-            closeAllTooltips();
-            const { targetWord, allWords } = extractTargetWords(element);
-            if (targetWord) {
-                openDictionary(targetWord, allWords);
-            }
-        }
-
-        // 2. 移动端/平板 (iOS, iPadOS, Android) 触摸长按检测
-        function handleTouchStart(event, element) {
-            isLongPress = false;
-            const touch = event.touches[0];
-            touchStartX = touch.clientX;
-            touchStartY = touch.clientY;
-
-            const { targetWord, allWords } = extractTargetWords(element);
-            if (!targetWord) return;
-
-            touchTimer = setTimeout(() => {
-                isLongPress = true;
-                if (navigator.vibrate) navigator.vibrate(40);
-                closeAllTooltips();
-                openDictionary(targetWord, allWords);
-            }, 500);
-        }
-
-        function handleTouchEnd(event) {
-            if (touchTimer) clearTimeout(touchTimer);
-        }
-
-        function handleTouchMove(event) {
-            if (!touchTimer) return;
-            const touch = event.touches[0];
-            const moveX = Math.abs(touch.clientX - touchStartX);
-            const moveY = Math.abs(touch.clientY - touchStartY);
-            if (moveX > 8 || moveY > 8) {
-                clearTimeout(touchTimer);
-            }
-        }
-
-        // 3. 单击处理
-        function handleTokenClick(event, element) {
-            if (isLongPress) {
-                event.stopPropagation();
-                event.preventDefault();
-                return;
-            }
-            event.stopPropagation();
-            const isOpen = element.classList.contains('is-open');
-            closeAllTooltips();
-            if (!isOpen) {
-                element.classList.add('is-open');
-            }
-        }
-
-        function handleCloseBtn(event, btn) {
-            if (event) {
-                event.preventDefault();
-                event.stopPropagation();
-                if (event.stopImmediatePropagation) {
-                    event.stopImmediatePropagation();
-                }
-            }
-            const tokenItem = btn.closest('.token-item');
-            if (tokenItem) {
-                tokenItem.classList.remove('is-open');
-            }
-        }
-
-        function closeAllTooltips() {
-            document.querySelectorAll('.token-item.is-open').forEach(item => {
-                item.classList.remove('is-open');
-            });
-        }
-
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.token-item') && !e.target.closest('#dictModal')) {
-                closeAllTooltips();
-            }
-        });
-
-        document.addEventListener('touchstart', (e) => {
-            if (!e.target.closest('.token-item') && !e.target.closest('#dictModal')) {
-                closeAllTooltips();
-            }
-        }, { passive: true });
-
-        // ============================================
-        // 词典与翻译接口（英英详析 + 中文释义 + 词根溯源）
-        // ============================================
-
-        async function fetchChineseTranslation(word) {
-            try {
-                const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(word)}&langpair=en|zh`);
-                if (!res.ok) return '';
-                const data = await res.json();
-                if (data && data.responseData && data.responseData.translatedText) {
-                    const trans = data.responseData.translatedText.trim();
-                    return trans.toLowerCase() !== word.toLowerCase() ? trans : '';
-                }
-                return '';
-            } catch (e) {
-                return '';
-            }
-        }
-
-        const posChineseMap = {
-            'noun': '名词 (n.)',
-            'verb': '动词 (v.)',
-            'adjective': '形容词 (adj.)',
-            'adverb': '副词 (adv.)',
-            'pronoun': '代词 (pron.)',
-            'preposition': '介词 (prep.)',
-            'conjunction': '连词 (conj.)',
-            'interjection': '感叹词 (interj.)',
-            'exclamation': '感叹词 (excl.)'
-        };
-
-        async function openDictionary(word, allWords = []) {
-            if (!word) return;
+        // 双击或长按查询词典
+        function lookupWord(word) {
             const modal = document.getElementById('dictModal');
-            const wordEl = document.getElementById('dictWord');
-            const phoneticEl = document.getElementById('dictPhonetic');
-            const bodyEl = document.getElementById('dictBody');
-
-            const cleanWord = word.trim().toLowerCase();
-            wordEl.innerText = cleanWord;
-            phoneticEl.innerText = '';
-            
-            let wordSelectorHtml = '';
-            if (allWords.length > 1) {
-                wordSelectorHtml = `
-                    <div class="flex items-center gap-1.5 flex-wrap pb-3 mb-2 border-b border-sand/40">
-                        <span class="text-xs text-sage">短语包含词:</span>
-                        ${allWords.map(w => {
-                            const active = w.toLowerCase() === cleanWord;
-                            return `<button type="button" onclick="openDictionary('${w}', ${JSON.stringify(allWords).replace(/"/g, '&quot;')})" class="text-xs px-2.5 py-1 rounded-md border ${active ? 'bg-moss text-white border-moss' : 'bg-wheat text-ink border-sand'}">${w}</button>`;
-                        }).join('')}
-                    </div>
-                `;
-            }
-
-            bodyEl.innerHTML = `
-                ${wordSelectorHtml}
-                <div class="flex items-center space-x-2 text-sage py-8 justify-center">
-                    <svg class="animate-spin h-5 w-5 text-moss" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-                    </svg>
-                    <span>正在检索中英权威词典及词根...</span>
-                </div>
-            `;
+            document.getElementById('dictWord').innerText = word;
+            document.getElementById('dictBody').innerHTML = '<div class="text-sage py-4 text-center">正在检索中英权威词典...</div>';
             modal.classList.add('active');
 
-            try {
-                const [dictRes, chineseTrans] = await Promise.all([
-                    fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(cleanWord)}`),
-                    fetchChineseTranslation(cleanWord)
-                ]);
-
-                let dictData = null;
-                if (dictRes.ok) {
-                    const data = await dictRes.json();
-                    dictData = data[0];
-                }
-
-                let chineseBlockHtml = '';
-                if (chineseTrans) {
-                    chineseBlockHtml = `
-                        <div class="bg-wheat/70 border border-gold/40 p-3.5 rounded-lg mb-3">
-                            <div class="text-xs text-gold font-bold mb-0.5">中文常用含义</div>
-                            <div class="text-base font-bold text-ink">${chineseTrans}</div>
+            fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(word)}&langpair=en|zh`)
+                .then(r => r.json())
+                .then(data => {
+                    const trans = data.responseData.translatedText;
+                    document.getElementById('dictBody').innerHTML = `
+                        <div class="bg-wheat/70 border border-gold/40 p-4 rounded-lg">
+                            <div class="text-xs text-gold font-bold mb-1">中文常用含义</div>
+                            <div class="text-lg font-bold text-ink">${trans}</div>
                         </div>
                     `;
-                }
-
-                let originHtml = '';
-                const wordOrigin = dictData?.origin || '';
-                if (wordOrigin) {
-                    originHtml = `
-                        <div class="bg-paper border border-sand p-3.5 rounded-lg mb-3">
-                            <div class="text-xs text-moss font-bold mb-1 flex items-center space-x-1">
-                                <span>🌱 词根与词源演变 (Etymology & Origin)</span>
-                            </div>
-                            <p class="text-xs text-gray-700 italic leading-relaxed">${wordOrigin}</p>
-                        </div>
-                    `;
-                }
-
-                if (!dictData && !chineseTrans) {
-                    throw new Error('词典库暂未收录该词条');
-                }
-
-                if (dictData) {
-                    const phoneticText = dictData.phonetic || (dictData.phonetics.find(p => p.text)?.text) || '';
-                    phoneticEl.innerText = phoneticText;
-                }
-
-                let html = wordSelectorHtml + chineseBlockHtml + originHtml;
-
-                if (dictData && dictData.meanings) {
-                    dictData.meanings.forEach(meaning => {
-                        const rawPos = meaning.partOfSpeech.toLowerCase();
-                        const posLabel = posChineseMap[rawPos] || rawPos;
-
-                        html += `
-                            <div class="space-y-2 border-b border-sand/40 pb-3">
-                                <span class="inline-block px-2.5 py-0.5 bg-wheat text-moss font-bold text-xs rounded border border-moss/20 tracking-wider">
-                                    ${posLabel}
-                                </span>
-                                <ul class="space-y-2 text-ink pl-1">
-                                    ${meaning.definitions.slice(0, 3).map((d, i) => `
-                                        <li class="flex items-start space-x-2">
-                                            <span class="text-xs text-gold font-bold mt-0.5">${i + 1}.</span>
-                                            <div class="space-y-0.5">
-                                                <p class="text-sm text-gray-800">${d.definition}</p>
-                                                ${d.example ? `<p class="text-xs text-sage italic">“${d.example}”</p>` : ''}
-                                            </div>
-                                        </li>
-                                    `).join('')}
-                                </ul>
-                            </div>
-                        `;
-                    });
-                }
-
-                bodyEl.innerHTML = html;
-            } catch (err) {
-                bodyEl.innerHTML = `
-                    ${wordSelectorHtml}
-                    <div class="p-4 bg-sand/30 rounded-lg text-sage text-center text-xs space-y-1 my-4">
-                        <p class="font-medium text-ink">词条 "${cleanWord}" 检索失败或未收录</p>
-                        <p>可在段落下方“逐句成分与词义精准拆解”中查看对应解析。</p>
-                    </div>
-                `;
-            }
+                }).catch(() => {
+                    document.getElementById('dictBody').innerHTML = '<div class="text-sage text-center">查询暂不可用</div>';
+                });
         }
 
-        function closeDictModal(event) {
-            if (event) event.stopPropagation();
+        function closeDictModal() {
             document.getElementById('dictModal').classList.remove('active');
         }
 
-        window.addEventListener('DOMContentLoaded', initApp);
+        // 点击页面空白处关闭所有气泡
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.token-item.is-open').forEach(item => item.classList.remove('is-open'));
+        });
+
+        // 尝试自动读取 articles.json，若本地拦截则自动渲染离线数据
+        fetch('articles.json')
+            .then(res => res.json())
+            .then(renderArticles)
+            .catch(() => {
+                console.warn("未通过 Web Server 打开，已切换至内置离线演示数据");
+                // 自动演示第一段
+                renderArticles([{
+                    title: "The Baby and the Bathtub: AI, Science, and the Crisis of Understanding",
+                    paragraphs: [{
+                        paragraphTitle: "第一段：引子与背景段",
+                        englishText: "October 6th, 2026, may be hailed as the most significant turning point in mathematics.",
+                        chineseText: "2026年10月6日，可能会被奉为数学史上最重要的转折点。",
+                        wordTokens: [
+                            { word: "October 6th, 2026,", role: "时间状语", meaning: "特定时间点", etymology: "源自拉丁语 octo (八)" },
+                            { word: "may be hailed as", role: "谓语", meaning: "被誉为/被奉为", etymology: "源自古诺斯语 heill (健全、欢呼赞扬)" },
+                            { word: "the most significant turning point", role: "宾补", meaning: "最重要的转折点", etymology: "源自拉丁语 signum (标志)" },
+                            { word: "in mathematics.", role: "后置定语", meaning: "在数学领域", etymology: "源自希腊语 mathema (科学知识)" }
+                        ]
+                    }]
+                }]);
+            });
+
+        function renderArticles(data) {
+            const art = data[0];
+            const html = `
+                <div class="bg-white border border-sand rounded-xl p-8 shadow-sm">
+                    <h1 class="font-display text-3xl font-bold text-ink mb-6">${art.title}</h1>
+                    ${art.paragraphs.map(p => `
+                        <div class="mb-8 p-6 bg-paper/50 border border-sand rounded-xl">
+                            <h3 class="font-bold text-moss mb-3">${p.paragraphTitle}</h3>
+                            <div class="text-lg leading-relaxed mb-3">
+                                ${p.wordTokens ? p.wordTokens.map(t => `
+                                    <span class="token-item" onclick="toggleToken(event, this)" ondblclick="lookupWord('${t.word}')">
+                                        ${t.word}
+                                        <span class="tooltip-text">
+                                            <div><strong class="text-gold">成分：</strong>${t.role}</div>
+                                            <div><strong class="text-sand">释义：</strong>${t.meaning}</div>
+                                            ${t.etymology ? `<div class="mt-1 pt-1 border-t border-sand/20 text-gold/90 text-xs">🌱 词源：${t.etymology}</div>` : ''}
+                                        </span>
+                                    </span>
+                                `).join(' ') : p.englishText}
+                            </div>
+                            <div class="text-gray-600 text-sm">${p.chineseText}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            document.getElementById('article-container').innerHTML = html;
+        }
     </script>
 </body>
 </html>
