@@ -17,103 +17,120 @@
             "word": "October 6th, 2026,",
             "role": "时间状语",
             "meaning": "特定时间节点：2026年10月6日",
-            "modifies": "修饰全句谓语动作发生的时间"
+            "modifies": "修饰全句谓语动作发生的时间",
+            "etymology": "【词源】October 源自拉丁语 octo (八)。古罗马历法原以三月为岁首，故十月原为第八个月。"
           },
           {
             "word": "may be hailed as",
             "role": "谓语 (情态动词+被动)",
             "meaning": "可能被称赞为 / 被奉为……",
-            "modifies": "核心动词短语"
+            "modifies": "核心动词短语",
+            "etymology": "【词源】hail 源自古诺斯语 heill (健全、繁荣) -> 演变为高呼赞誉、拥戴奉为。"
           },
           {
             "word": "the most significant turning point",
             "role": "介宾补足语/中心词",
             "meaning": "最重要的转折点",
-            "modifies": "作介词 as 的宾语"
+            "modifies": "作介词 as 的宾语",
+            "etymology": "【词源】significant 源自拉丁语 signum (标志) + facere (制作) -> 产生重大标记作用的。"
           },
           {
             "word": "in mathematics.",
             "role": "介词短语作后置定语",
             "meaning": "在数学领域中",
-            "modifies": "修饰 turning point，限定转折点所属学术领域"
+            "modifies": "修饰 turning point，限定转折点所属学术领域",
+            "etymology": "【词源】mathematics 源自希腊语 mathema (所学之物、知识) -> manthanein (学习求知)。"
           },
           {
             "word": "An American frontier lab",
             "role": "主语",
             "meaning": "一家美国前沿实验室",
-            "modifies": "句子施动主体"
+            "modifies": "句子施动主体",
+            "etymology": "【词源】frontier 源自拉丁语 frons (前额、前沿) -> 探索的最前哨边界。"
           },
           {
             "word": "unleashed",
             "role": "谓语",
             "meaning": "倾泻 / 集中抛出",
-            "modifies": "及物动词"
+            "modifies": "及物动词",
+            "etymology": "【词源】leash 源自古法语 laissier (系带放手) -> un- (解开) -> 犹如解开猎犬锁链般集中倾泻释放。"
           },
           {
             "word": "a torrent of",
             "role": "隐喻修饰语",
             "meaning": "如洪流般的 / 大规模的",
-            "modifies": "修饰 papers"
+            "modifies": "修饰 papers",
+            "etymology": "【词源】torrent 源自拉丁语 torrere (烘烤、干枯河道在暴雨时形成的汹涌山洪) -> 洪流隐喻。"
           },
           {
             "word": "more than 700 papers,",
             "role": "核心宾语",
             "meaning": "多达700多篇学术论文",
-            "modifies": "动作 unleashed 的承受对象"
+            "modifies": "动作 unleashed 的承受对象",
+            "etymology": "【词源】paper 源自希腊语 papyros (埃及纸莎草) -> 书写学术文献的载体。"
           },
           {
             "word": "professing to have cracked",
             "role": "现在分词伴随状语",
             "meaning": "声称已经破解了",
-            "modifies": "修饰主语 lab，表主动态伴随说明"
+            "modifies": "修饰主语 lab，表主动态伴随说明",
+            "etymology": "【词源】profess 源自拉丁语 pro- (向前、公开) + fateri (宣称、招认) -> 公开声明自称具备某种成就。"
           },
           {
             "word": "or nudged forward",
             "role": "并列分词短语",
             "meaning": "或向前推进了",
-            "modifies": "与 have cracked 并列"
+            "modifies": "与 have cracked 并列",
+            "etymology": "【词源】nudge 源自斯堪的纳维亚语系方言 (轻推、微调) -> 科学攻坚中的关键小步推进。"
           },
           {
             "word": "372 enigmas",
             "role": "分词短语宾语",
             "meaning": "372个世纪谜题/未解之谜",
-            "modifies": "作 cracked/nudged 的直接宾语"
+            "modifies": "作 cracked/nudged 的直接宾语",
+            "etymology": "【词源】enigma 源自希腊语 ainigma (谜语、暗语) -> ainos (寓言故事) -> 难以捉摸的自然世纪谜题。"
           },
           {
             "word": "that had defied researchers",
             "role": "定语从句主干",
             "meaning": "那些让研究人员束手无策的",
-            "modifies": "修饰先行词 enigmas"
+            "modifies": "修饰先行词 enigmas",
+            "etymology": "【词源】defy 源自拉丁语 dis- (背离) + fidere (信任) -> 原指撕毁封建誓约，引申为使破解者束手无策。"
           },
           {
             "word": "for decades.",
             "role": "时间状语",
             "meaning": "长达数十年之久",
-            "modifies": "修饰定语从句动词 had defied"
+            "modifies": "修饰定语从句动词 had defied",
+            "etymology": "【词源】decade 源自希腊语 dekas (十个一组) -> deka (数字十)。"
           },
           {
             "word": "Mathematicians",
             "role": "主语",
             "meaning": "数学家们",
-            "modifies": "行为主体"
+            "modifies": "行为主体",
+            "etymology": "【词源】希腊语 mathematikos (爱好学习科学者) -> 从事严密数理逻辑推演的学者。"
           },
           {
             "word": "are still trying to figure out",
             "role": "谓语动词短语",
             "meaning": "仍在极力琢磨弄清楚",
-            "modifies": "进行时态谓语"
+            "modifies": "进行时态谓语",
+            "etymology": "【词源】figure 源自拉丁语 figura (形状、轮廓、算术数字) -> 心智勾勒出清晰轮廓。"
           },
           {
             "word": "what this means",
             "role": "宾语从句主谓",
             "meaning": "这意味着什么",
-            "modifies": "作 figure out 的宾语"
+            "modifies": "作 figure out 的宾语",
+            "etymology": "【词源】mean 源自原始印欧语 *men- (心智、思考) -> 蕴含着什么内在意义。"
           },
           {
             "word": "for their field.",
             "role": "介宾状语",
             "meaning": "对他们的领域而言",
-            "modifies": "修饰宾语从句中的 means"
+            "modifies": "修饰宾语从句中的 means",
+            "etymology": "【词源】field 原指耕作土地平原，学术隐喻为特定研究学术领域。"
           }
         ],
         "detailedSyntax": [
@@ -256,109 +273,127 @@
             "word": "The impact",
             "role": "主语",
             "meaning": "这一影响",
-            "modifies": "句子行为主体"
+            "modifies": "句子行为主体",
+            "etymology": "【词源】impact 源自拉丁语 impingere (强力撞击、压紧) -> 物理碰撞引发的深层震荡。"
           },
           {
             "word": "will reach",
             "role": "谓语",
             "meaning": "将延伸/触及",
-            "modifies": "一般将来时及物动词"
+            "modifies": "一般将来时及物动词",
+            "etymology": "【词源】reach 源自西日耳曼语 *raikijan (伸展、触碰延伸)。"
           },
           {
             "word": "far beyond mathematics.",
             "role": "程度状语 + 介宾",
             "meaning": "远远超越数学的范围",
-            "modifies": "修饰 reach，说明影响范围的纵深"
+            "modifies": "修饰 reach，说明影响范围的纵深",
+            "etymology": "【词源】beyond 源自古英语 be- (在旁) + geond (那一边) -> 跨越特定学科边界。"
           },
           {
             "word": "Science",
             "role": "主语",
             "meaning": "科学界",
-            "modifies": "泛指整个自然科学共同体"
+            "modifies": "泛指整个自然科学共同体",
+            "etymology": "【词源】science 源自拉丁语 scientia (知识体系) -> scire (分辨、割开并理解事物机理)。"
           },
           {
             "word": "must now come to terms with",
             "role": "谓语动词短语",
             "meaning": "现在必须正视/学着接受",
-            "modifies": "情态动词短语"
+            "modifies": "情态动词短语",
+            "etymology": "【词源】term 源自拉丁语 terminus (界标、界限、契约条款) -> 达成妥协接受客观现实。"
           },
           {
             "word": "how artificial intelligence",
             "role": "从句主语",
             "meaning": "人工智能如何",
-            "modifies": "从句主语"
+            "modifies": "从句主语",
+            "etymology": "【词源】intelligence 源自拉丁语 inter- (在...之间) + legere (挑选、辨识) -> 综合辨别与认知能力。"
           },
           {
             "word": "is reshaping",
             "role": "从句谓语",
             "meaning": "正在重塑",
-            "modifies": "现在进行时"
+            "modifies": "现在进行时",
+            "etymology": "【词源】shape 源自原始日耳曼语 *skap- (创造、塑造形态) -> 重新塑造根基形态。"
           },
           {
             "word": "its entire foundation.",
             "role": "从句宾语",
             "meaning": "其整个根基",
-            "modifies": "动作 reshaping 的受体"
+            "modifies": "动作 reshaping 的受体",
+            "etymology": "【词源】foundation 源自拉丁语 fundare (奠基) -> fundus (底部、最深处根基)。"
           },
           {
             "word": "These breakthroughs",
             "role": "主语",
             "meaning": "这些突破",
-            "modifies": "代词短语"
+            "modifies": "代词短语",
+            "etymology": "【词源】breakthrough 复合词：break (打破) + through (穿透) -> 穿透攻坚壁垒的技术飞跃。"
           },
           {
             "word": "are a double-edged sword:",
             "role": "系表结构",
             "meaning": "是一把双刃剑",
-            "modifies": "比喻修辞"
+            "modifies": "比喻修辞",
+            "etymology": "【词源】sword 源自原始印欧语 *swer- (伤口、伤害) -> 古代决斗利器，双刃意指利弊互斥。"
           },
           {
             "word": "they mark a great leap forward for humanity",
             "role": "分句主谓宾",
             "meaning": "它们标志着人类的一大飞跃",
-            "modifies": "冒号后正面论述"
+            "modifies": "冒号后正面论述",
+            "etymology": "【词源】humanity 源自拉丁语 humanus (属于人类的) -> homo (人)。"
           },
           {
             "word": "and prove the astonishing speed of AI,",
             "role": "并列谓宾",
             "meaning": "并证明了AI惊人的速度",
-            "modifies": "与 mark 并列"
+            "modifies": "与 mark 并列",
+            "etymology": "【词源】astonish 源自拉丁语 ex- (向外) + tonare (雷鸣) -> 犹如雷击般令人震惊。"
           },
           {
             "word": "yet they also caution us against a future",
             "role": "转折主谓宾",
             "meaning": "但它们也告诫我们要警惕这样一个未来",
-            "modifies": "转折分句"
+            "modifies": "转折分句",
+            "etymology": "【词源】caution 源自拉丁语 cavere (警惕、当心、防备预险)。"
           },
           {
             "word": "where machines decipher a universe",
             "role": "定语从句主谓宾",
             "meaning": "机器解出了一个宇宙",
-            "modifies": "修饰 a future"
+            "modifies": "修饰 a future",
+            "etymology": "【词源】decipher 源自拉丁语 de- (去除) + 阿拉伯语 sifr (零、密码数字) -> 破译晦涩暗号。"
           },
           {
             "word": "that humans can no longer comprehend.",
             "role": "定语从句",
             "meaning": "人类再也无法理解的",
-            "modifies": "修饰 a universe"
+            "modifies": "修饰 a universe",
+            "etymology": "【词源】comprehend 源自拉丁语 com- (彻底) + prehendere (抓取、捕获) -> 心智完全掌握抓住机理。"
           },
           {
             "word": "The defining question is",
             "role": "主系表结构",
             "meaning": "决定性的问题在于",
-            "modifies": "核心论点引出"
+            "modifies": "核心论点引出",
+            "etymology": "【词源】define 源自拉丁语 de- (彻底) + finire (划定边界、终结) -> 决定性界定本质的。"
           },
           {
             "word": "whether we can push boundaries forward",
             "role": "表语从句",
             "meaning": "我们能否推进前沿边界",
-            "modifies": "作 is 的表语"
+            "modifies": "作 is 的表语",
+            "etymology": "【词源】boundary 源自古法语 bonde (界碑石) -> 人类认知的最前线界标。"
           },
           {
             "word": "without leaving our own understanding behind.",
             "role": "伴随状语",
             "meaning": "而在身后不落下我们自己的理解",
-            "modifies": "修饰 push boundaries"
+            "modifies": "修饰 push boundaries",
+            "etymology": "【词源】understanding 源自古英语 understandan (伫立于事物之间探究深意)。"
           }
         ],
         "detailedSyntax": [
@@ -519,91 +554,106 @@
             "word": "Mathematics",
             "role": "主语",
             "meaning": "数学",
-            "modifies": "学术领域实体"
+            "modifies": "学术领域实体",
+            "etymology": "【词源】希腊语 mathema (所学之科学) -> 纯逻辑演绎的铁律知识。"
           },
           {
             "word": "proved to be an ideal testing ground for AI,",
             "role": "系表结构",
             "meaning": "被证明是AI的理想试验场",
-            "modifies": "prove to be 表被动转主动结论"
+            "modifies": "prove to be 表被动转主动结论",
+            "etymology": "【词源】ideal 源自希腊语 idea (原型、理念形状) -> 完美的典范形态。"
           },
           {
             "word": "driven as it is by ironclad logic",
             "role": "原因倒装状语",
             "meaning": "受铁律逻辑驱动",
-            "modifies": "修饰主语 Mathematics，说明其作为试验场的原因"
+            "modifies": "修饰主语 Mathematics，说明其作为试验场的原因",
+            "etymology": "【词源】logic 源自希腊语 logos (言语、理性、辩论法则)；ironclad 源自 19 世纪装甲铁甲舰。"
           },
           {
             "word": "that computers can verify step by step.",
             "role": "定语从句",
             "meaning": "计算机能够一步步验证的",
-            "modifies": "修饰先行词 ironclad logic"
+            "modifies": "修饰先行词 ironclad logic",
+            "etymology": "【词源】verify 源自拉丁语 verus (真实的) + facere (使成为) -> 验证确证其真实有效。"
           },
           {
             "word": "Yet the breakthrough hardly ends with pure calculation.",
             "role": "转折主句",
             "meaning": "然而突破绝不仅止于纯计算",
-            "modifies": "转折引出应用学科"
+            "modifies": "转折引出应用学科",
+            "etymology": "【词源】calculate 源自拉丁语 calculus (用于在算盘上记数的小石子)。"
           },
           {
             "word": "As our science reports explore this week,",
             "role": "方式状语从句",
             "meaning": "正如我们本周科学报道所探讨的那样",
-            "modifies": "修饰主句"
+            "modifies": "修饰主句",
+            "etymology": "【词源】explore 源自拉丁语 ex- (向外) + plorare (大声呼喊探寻) -> 狩猎者搜寻未知森林。"
           },
           {
             "word": "AI is rapidly transforming the practical sciences,",
             "role": "主谓宾",
             "meaning": "人工智能正在迅速变革应用科学",
-            "modifies": "现在进行时核心句"
+            "modifies": "现在进行时核心句",
+            "etymology": "【词源】transform 源自拉丁语 trans- (跨越) + formare (形成形状) -> 彻底改写形态。"
           },
           {
             "word": "largely because they lean on mathematics as a foundation.",
             "role": "原因状语从句",
             "meaning": "主要是因为它们依托数学为根基",
-            "modifies": "解释变革的原因"
+            "modifies": "解释变革的原因",
+            "etymology": "【词源】lean 源自古英语 hleonian (倚靠、仰仗支撑)。"
           },
           {
             "word": "It has already sharpened meteorological forecasts,",
             "role": "并列主谓宾",
             "meaning": "它已经使气象预报更加精准",
-            "modifies": "现在完成时排比项一"
+            "modifies": "现在完成时排比项一",
+            "etymology": "【词源】meteorology 源自希腊语 meteōros (悬在空中的天象) + logia (学说)。"
           },
           {
             "word": "envisioned millions of promising new materials,",
             "role": "并列谓宾",
             "meaning": "构想出数百万种极具前景的新材料",
-            "modifies": "排比项二"
+            "modifies": "排比项二",
+            "etymology": "【词源】envision 源自拉丁语 en- (在心智中) + videre (看见) -> 在算法中构想呈现。"
           },
           {
             "word": "and helped stabilise nuclear fusion experiments.",
             "role": "并列谓宾",
             "meaning": "并协助稳定了核聚变实验",
-            "modifies": "排比项三"
+            "modifies": "排比项三",
+            "etymology": "【词源】fusion 源自拉丁语 fundere (熔解、铸造融合)。"
           },
           {
             "word": "Most remarkably, it has learned to predict",
             "role": "插入语 + 主谓",
             "meaning": "最引人注目的是，它已学会预测",
-            "modifies": "最高级修饰"
+            "modifies": "最高级修饰",
+            "etymology": "【词源】predict 源自拉丁语 prae- (在前面) + dicere (言说) -> 提前预判。"
           },
           {
             "word": "the intricate 3D shapes of nearly every known protein",
             "role": "宾语中心词",
             "meaning": "几乎所有已知蛋白质错综复杂的3D构型",
-            "modifies": "动作 predict 的受体"
+            "modifies": "动作 predict 的受体",
+            "etymology": "【词源】intricate 源自拉丁语 in- (进入) + tricae (圈套、烦难琐事) -> 像网一样错综复杂。"
           },
           {
             "word": "from simple amino acids—",
             "role": "介词短语状语",
             "meaning": "从简单的氨基酸分子",
-            "modifies": "指明预测起点与原料"
+            "modifies": "指明预测起点与原料",
+            "etymology": "【词源】amino 缩写自 ammonia (阿蒙神庙附近产出的氨盐)。"
           },
           {
             "word": "a triumph that rightfully earned a Nobel Prize.",
             "role": "同位语 + 定语从句",
             "meaning": "一项实至名归赢得诺贝尔奖的巨大胜利",
-            "modifies": "同位语概括上文成就"
+            "modifies": "同位语概括上文成就",
+            "etymology": "【词源】triumph 源自拉丁语 triumphus (罗马凯旋式仪式高呼)。"
           }
         ],
         "detailedSyntax": [
@@ -745,91 +795,106 @@
             "word": "Further AI-driven breakthroughs",
             "role": "主语",
             "meaning": "人工智能驱动的进一步突破",
-            "modifies": "复合名词短语"
+            "modifies": "复合名词短语",
+            "etymology": "【词源】further 古英语 furthor (更向前推进)。"
           },
           {
             "word": "are practically inevitable,",
             "role": "系表结构",
             "meaning": "几乎是不可避免的",
-            "modifies": "肯定的必然性判断"
+            "modifies": "肯定的必然性判断",
+            "etymology": "【词源】inevitable 源自拉丁语 in- (不可) + evitare (避开) -> 避无可避的命运走向。"
           },
           {
             "word": "and nowhere is the potential more profound than in biology.",
             "role": "否定词倒装并列句",
             "meaning": "在生物学领域的潜力最为深远",
-            "modifies": "与前半句并列，否定副词 nowhere 引起倒装"
+            "modifies": "与前半句并列，否定副词 nowhere 引起倒装",
+            "etymology": "【词源】profound 源自拉丁语 pro- (向前) + fundus (深处底部) -> 触及本质深渊的。"
           },
           {
             "word": "Researchers are already deploying AI",
             "role": "主谓宾",
             "meaning": "研究人员已经在部署人工智能",
-            "modifies": "进行时态主干"
+            "modifies": "进行时态主干",
+            "etymology": "【词源】deploy 源自拉丁语 dis- (分开) + plicare (折叠) -> 展开战线军阵布局。"
           },
           {
             "word": "to breed drought-tolerant crops,",
             "role": "不定式目的状语",
             "meaning": "培育耐旱作物",
-            "modifies": "修饰 deploying，表目的之一"
+            "modifies": "修饰 deploying，表目的之一",
+            "etymology": "【词源】drought 源自原始日耳曼语 *drugiz (干枯燥热)。"
           },
           {
             "word": "accelerate drug discovery,",
             "role": "并列目的状语",
             "meaning": "加速新药研发",
-            "modifies": "表目的之二"
+            "modifies": "表目的之二",
+            "etymology": "【词源】accelerate 源自拉丁语 ad- (朝向) + celer (快速敏捷)。"
           },
           {
             "word": "and engineer targeted viruses to attack lethal bacteria.",
             "role": "并列目的状语",
             "meaning": "设计靶向病毒以攻击致死细菌",
-            "modifies": "表目的之三"
+            "modifies": "表目的之三",
+            "etymology": "【词源】lethal 源自希腊神话 Lethe (忘川河) -> 饮下即永眠的致死剧毒。"
           },
           {
             "word": "At the same time, teams are working",
             "role": "状语 + 主谓",
             "meaning": "与此同时各团队正致力于",
-            "modifies": "主谓结构"
+            "modifies": "主谓结构",
+            "etymology": "【词源】simulate 源自拉丁语 similis (相似、如同) -> 在计算环境模拟真实机理。"
           },
           {
             "word": "to simulate the inner workings of living cells inside silicon.",
             "role": "不定式宾语",
             "meaning": "在硅芯片内部模拟活细胞的内部运作",
-            "modifies": "作 work 的目的/对象"
+            "modifies": "作 work 的目的/对象",
+            "etymology": "【词源】silicon 源自拉丁语 silex (火石、燧石硬硅)。"
           },
           {
             "word": "If scientists can truly model life computationally,",
             "role": "条件状语从句",
             "meaning": "如果科学家能真正用计算对生命建模",
-            "modifies": "修饰主句假设条件"
+            "modifies": "修饰主句假设条件",
+            "etymology": "【词源】computation 源自拉丁语 com- (共同) + putare (结算、思考衡量)。"
           },
           {
             "word": "they may eventually master biology",
             "role": "主句主谓宾",
             "meaning": "他们最终可能掌握生物学",
-            "modifies": "主句"
+            "modifies": "主句",
+            "etymology": "【词源】biology 源自希腊语 bios (生命生存) + logia (科学论理)。"
           },
           {
             "word": "to the point of creating entirely new organisms from scratch.",
             "role": "程度状语",
             "meaning": "达到从零开始创造出全新生物的程度",
-            "modifies": "修饰 master，界定掌握的深度"
+            "modifies": "修饰 master，界定掌握的深度",
+            "etymology": "【词源】organism 源自希腊语 organon (具备特定职能的工具组织)。"
           },
           {
             "word": "In that world, DNA would look less like a sacred mystery of nature",
             "role": "状语 + 主系表对比",
             "meaning": "在那样的世界中DNA将不再像大自然的神秘圣物",
-            "modifies": "虚拟语气主干"
+            "modifies": "虚拟语气主干",
+            "etymology": "【词源】sacred 源自拉丁语 sacer (神圣不可触碰之禁忌)。"
           },
           {
             "word": "and more like software code—",
             "role": "并列表语",
             "meaning": "而更像软件代码——",
-            "modifies": "与 less like 对照"
+            "modifies": "与 less like 对照",
+            "etymology": "【词源】code 源自拉丁语 codex (木板写成的法律文书卷帙)。"
           },
           {
             "word": "ready to be edited and rearranged by algorithms at will.",
             "role": "形容词短语作后置定语",
             "meaning": "随时可被算法随心所欲地编辑与重组",
-            "modifies": "修饰 software code"
+            "modifies": "修饰 software code",
+            "etymology": "【词源】algorithm 源自 9 世纪波斯数学家阿尔·花剌子模 (al-Khwārizmī)。"
           }
         ],
         "detailedSyntax": [
@@ -925,91 +990,106 @@
             "word": "As with so much in AI,",
             "role": "介词短语状语",
             "meaning": "正如人工智能领域的诸多事物一样",
-            "modifies": "修饰主句 prospect"
+            "modifies": "修饰主句 prospect",
+            "etymology": "【词源】prospect 源自拉丁语 pro- (向前) + specere (凝视眺望)。"
           },
           {
             "word": "this prospect is both exhilarating and deeply unsettling.",
             "role": "主系表结构",
             "meaning": "这一前景既令人振奋又深感不安",
-            "modifies": "主系表判断句"
+            "modifies": "主系表判断句",
+            "etymology": "【词源】exhilarate 源自拉丁语 ex- (彻底) + hilaris (欢腾高兴) -> 令人极度亢奋。"
           },
           {
             "word": "For many mathematicians, the initial reaction was outright alarm.",
             "role": "主系表结构",
             "meaning": "对许多数学家而言最初反应是彻底的惊恐",
-            "modifies": "学界心理反应"
+            "modifies": "学界心理反应",
+            "etymology": "【词源】alarm 源自意大利语 all'arme! (拿起武器迎战！) -> 突然面临外敌入侵警报。"
           },
           {
             "word": "Ever since OpenAI’s breakthroughs,",
             "role": "时间状语",
             "meaning": "自OpenAI取得突破以来",
-            "modifies": "时间起点"
+            "modifies": "时间起点",
+            "etymology": "【词源】breakthrough 打破防线取得技术纵深演进。"
           },
           {
             "word": "scholars have fiercely pushed back against",
             "role": "主谓短语",
             "meaning": "学者们一直在激烈抵制",
-            "modifies": "现在完成时态"
+            "modifies": "现在完成时态",
+            "etymology": "【词源】fierce 源自拉丁语 ferus (野性未驯、强悍凶猛)。"
           },
           {
             "word": "what they see as Silicon Valley encroaching on their territory.",
             "role": "宾语从句",
             "meaning": "他们所看到的硅谷对自身领地的蚕食",
-            "modifies": "作 against 的宾语"
+            "modifies": "作 against 的宾语",
+            "etymology": "【词源】encroach 源自古法语 en- (在内) + croc (钩爪) -> 用钩爪逐步勾取蚕食领地。"
           },
           {
             "word": "The Association for Human Mathematics, representing more than 900 academics,",
             "role": "主语 + 现在分词定语",
             "meaning": "人类数学协会（代表900多名学者）",
-            "modifies": "主语"
+            "modifies": "主语",
+            "etymology": "【词源】academic 源自希腊雅典阿卡德米庄园 (Akadēmeia，柏拉图讲学圣地)。"
           },
           {
             "word": "warned bluntly that ‘mathematicians did not ask for this work to be done.’",
             "role": "谓语 + 宾语从句",
             "meaning": "直言不讳地警告称“数学家并未要求做这事”",
-            "modifies": "转述引语"
+            "modifies": "转述引语",
+            "etymology": "【词源】blunt 源自中古英语 (刀锋钝厚)，引申为直截了当不加修饰。"
           },
           {
             "word": "In their view, the true reward of mathematics lies",
             "role": "主谓结构",
             "meaning": "在他们看来数学的真正回报在于",
-            "modifies": "核心论点"
+            "modifies": "核心论点",
+            "etymology": "【词源】reward 源自古法语 regarder (注视、给予应得之赏赐)。"
           },
           {
             "word": "not simply in obtaining a proof,",
             "role": "并列状语",
             "meaning": "不仅仅在于获得一个证明",
-            "modifies": "not simply 引导"
+            "modifies": "not simply 引导",
+            "etymology": "【词源】proof 源自拉丁语 probare (检验证明为真)。"
           },
           {
             "word": "but in the intellectual struggle itself—",
             "role": "并列状语",
             "meaning": "而在于心智求索本身——",
-            "modifies": "but 引导强化项"
+            "modifies": "but 引导强化项",
+            "etymology": "【词源】struggle 源自斯堪的纳维亚语系 (角力厮杀拼搏)。"
           },
           {
             "word": "the very journey that expands human understanding.",
             "role": "同位语 + 定语从句",
             "meaning": "正是那段拓展人类理解力的旅程",
-            "modifies": "同位语修饰 struggle"
+            "modifies": "同位语修饰 struggle",
+            "etymology": "【词源】journey 源自拉丁语 diurnum (一日之行程日记)。"
           },
           {
             "word": "Allowing machines to generate answers that humans cannot comprehend",
             "role": "动名词短语作主语",
             "meaning": "允许机器生成人类无法理解的答案",
-            "modifies": "动名词复合主语"
+            "modifies": "动名词复合主语",
+            "etymology": "【词源】generate 源自拉丁语 genus (种族、孕育生产)。"
           },
           {
             "word": "is like handing students the answer sheet to their homework:",
             "role": "系表结构 (比喻)",
             "meaning": "就像把作业答案直接递给学生：",
-            "modifies": "比喻评价"
+            "modifies": "比喻评价",
+            "etymology": "【词源】hand 原始日耳曼语 *handuz (抓握手)。"
           },
           {
             "word": "without the effort, real learning simply disappears.",
             "role": "介词短语状语 + 主谓",
             "meaning": "没有付出努力真正的学习便荡然无存",
-            "modifies": "推论收束"
+            "modifies": "推论收束",
+            "etymology": "【词源】disappear 源自拉丁语 dis- (消散) + apparere (显露现身)。"
           }
         ],
         "detailedSyntax": [
@@ -1110,97 +1190,113 @@
             "word": "There is more than a hint of self-interest",
             "role": "There be 句型",
             "meaning": "充斥着浓厚的私利意味",
-            "modifies": "存在句主干"
+            "modifies": "存在句主干",
+            "etymology": "【词源】interest 源自拉丁语 inter- (在...之间) + esse (存在) -> 与自身休戚相关的利害得失。"
           },
           {
             "word": "in these complaints.",
             "role": "介词状语",
             "meaning": "在这些抱怨之中",
-            "modifies": "地点/范围状语"
+            "modifies": "地点/范围状语",
+            "etymology": "【词源】complaint 源自拉丁语 com- (彻底) + plangere (捶胸哀号抗议)。"
           },
           {
             "word": "Academics have no exclusive right",
             "role": "主谓宾",
             "meaning": "学者并没有专属独占特权",
-            "modifies": "陈述主干"
+            "modifies": "陈述主干",
+            "etymology": "【词源】exclusive 源自拉丁语 ex- (在外) + claudere (关闭锁门) -> 闭门排他的特权。"
           },
           {
             "word": "to decide how knowledge is made,",
             "role": "不定式定语",
             "meaning": "去决定知识是如何被生产的",
-            "modifies": "修饰 right"
+            "modifies": "修饰 right",
+            "etymology": "【词源】decide 源自拉丁语 de- (切断) + caedere (砍劈砍断) -> 快刀斩乱麻下定决心。"
           },
           {
             "word": "and the search for truth belongs to everyone,",
             "role": "并列主谓状",
             "meaning": "而对真理的追寻属于每一个人",
-            "modifies": "并列正向命题"
+            "modifies": "并列正向命题",
+            "etymology": "【词源】search 源自拉丁语 circare (在周围绕圈盘查巡索)。"
           },
           {
             "word": "not just an academic guild.",
             "role": "并列状语",
             "meaning": "而不仅是一个学术行会公会",
-            "modifies": "修饰 everyone"
+            "modifies": "修饰 everyone",
+            "etymology": "【词源】guild 源自古英语 gield (缴税互助的行会结社，带排他垄断利益色彩)。"
           },
           {
             "word": "The traditional scholarly ladder,",
             "role": "主语中心词",
             "meaning": "传统的学术晋升阶梯",
-            "modifies": "主语"
+            "modifies": "主语",
+            "etymology": "【词源】ladder 原始日耳曼语 *hlidr (攀登之阶梯)。"
           },
           {
             "word": "climbed by solving theorems,",
             "role": "过去分词后置定语",
             "meaning": "通过求解定理一步步攀爬的",
-            "modifies": "修饰 ladder"
+            "modifies": "修饰 ladder",
+            "etymology": "【词源】theorem 源自希腊语 theōrēma (心智沉思凝视的公理命题)。"
           },
           {
             "word": "is far from sacred.",
             "role": "系表结构",
             "meaning": "绝非神圣不可侵犯",
-            "modifies": "系表断言"
+            "modifies": "系表断言",
+            "etymology": "【词源】sacred 源自拉丁语 sacer (神圣不可亵渎违背)。"
           },
           {
             "word": "If necessary, it must be reshaped",
             "role": "条件从句 + 主谓被动",
             "meaning": "如有必要它必须被重塑",
-            "modifies": "推论主干"
+            "modifies": "推论主干",
+            "etymology": "【词源】necessary 源自拉丁语 ne- (不) + cedere (退让) -> 绝不退让、不可避免的必需品。"
           },
           {
             "word": "for an era where AI generates the proofs and humans simply evaluate them.",
             "role": "介宾 + 定语从句",
             "meaning": "去适应AI生成证明而人类仅负责评估的时代",
-            "modifies": "修饰 reshaped 的目的与背景"
+            "modifies": "修饰 reshaped 的目的与背景",
+            "etymology": "【词源】evaluate 源自拉丁语 e- (向外) + valere (具有价值) -> 评估量度其价值真伪。"
           },
           {
             "word": "In the end, science should not prize theoretical understanding",
             "role": "主谓宾",
             "meaning": "归根结底科学不应将理论理解",
-            "modifies": "规范性价值判断"
+            "modifies": "规范性价值判断",
+            "etymology": "【词源】prize 源自拉丁语 pretium (价格、重金珍视奖赏)。"
           },
           {
             "word": "above tangible results.",
             "role": "介宾状语",
             "meaning": "凌驾于切实的成果之上",
-            "modifies": "修饰 prize ... above"
+            "modifies": "修饰 prize ... above",
+            "etymology": "【词源】tangible 源自拉丁语 tangere (触碰、触摸) -> 能够被实体触摸感知的实际成果。"
           },
           {
             "word": "Every time someone takes a painkiller to cure a headache,",
             "role": "时间状语从句",
             "meaning": "每当有人服用止痛药来缓解头痛时",
-            "modifies": "类比论证条件"
+            "modifies": "类比论证条件",
+            "etymology": "【词源】cure 源自拉丁语 cura (照料、护理康复)。"
           },
           {
             "word": "they rely on a cure that works,",
             "role": "主谓宾 + 定语从句",
             "meaning": "他们依赖的是行之有效的疗法",
-            "modifies": "主句"
+            "modifies": "主句",
+            "etymology": "【词源】rely 源自古法语 relier (重新捆紧绑在一起) -> 深度信赖倚靠。"
           },
           {
             "word": "even if the exact mechanism behind it remains a mystery.",
             "role": "让步状语从句",
             "meaning": "哪怕其背后的具体机制依然是个谜",
-            "modifies": "修饰主句"
+            "modifies": "修饰主句",
+            "etymology": "【词源】mechanism 源自希腊语 mēkhanē (机械机关装置)。"
           }
         ],
         "detailedSyntax": [
@@ -1298,115 +1394,134 @@
             "word": "Yet the anxiety over ceding science to machines",
             "role": "主语",
             "meaning": "对于将科学拱手让给机器的焦虑",
-            "modifies": "核心名词短语"
+            "modifies": "核心名词短语",
+            "etymology": "【词源】cede 源自拉丁语 cedere (退让、割让撤退) -> 把权力拱手让给机器。"
           },
           {
             "word": "is far from groundless.",
             "role": "系表结构",
             "meaning": "绝非毫无根据",
-            "modifies": "系表定性"
+            "modifies": "系表定性",
+            "etymology": "【词源】groundless 复合词：ground (大地根基) + less (缺乏) -> 毫无基石根据。"
           },
           {
             "word": "AI companies are not pouring vast resources into research",
             "role": "主谓宾状",
             "meaning": "AI公司并不是向研发倾注海量资源",
-            "modifies": "否定句"
+            "modifies": "否定句",
+            "etymology": "【词源】resource 源自拉丁语 resurgere (重新泉涌升起之源泉)。"
           },
           {
             "word": "out of pure generosity.",
             "role": "原因状语",
             "meaning": "出于纯粹的慷慨",
-            "modifies": "修饰 pouring"
+            "modifies": "修饰 pouring",
+            "etymology": "【词源】generosity 源自拉丁语 generosus (高贵出身、慷慨大度之品格)。"
           },
           {
             "word": "Much like human beings,",
             "role": "比喻状语",
             "meaning": "就像人类一样",
-            "modifies": "类比修饰"
+            "modifies": "类比修饰",
+            "etymology": "【词源】human 拉丁语 humanus (大地之子)。"
           },
           {
             "word": "models grow sharper and more capable",
             "role": "主系表结构",
             "meaning": "模型变得越来越敏锐且更有能力",
-            "modifies": "主系表"
+            "modifies": "主系表",
+            "etymology": "【词源】capable 源自拉丁语 capere (能够容纳抓取、具备能力)。"
           },
           {
             "word": "by tackling hard problems.",
             "role": "方式状语",
             "meaning": "通过攻克难题",
-            "modifies": "修饰 grow"
+            "modifies": "修饰 grow",
+            "etymology": "【词源】tackle 源自中古低地德语 takel (船只索具帆具) -> 用索具抓牢猛烈搏击攻克。"
           },
           {
             "word": "Many experts believe that",
             "role": "主谓从句",
             "meaning": "许多专家相信",
-            "modifies": "观点引出"
+            "modifies": "观点引出",
+            "etymology": "【词源】expert 源自拉丁语 expertus (经过实践检验经验丰富者)。"
           },
           {
             "word": "any system that excels at scientific reasoning",
             "role": "从句主语 + 定语从句",
             "meaning": "任何擅长科学推理的系统",
-            "modifies": "从句主语"
+            "modifies": "从句主语",
+            "etymology": "【词源】excel 源自拉丁语 ex- (向上超越) + celsus (高耸崇山) -> 卓越拔尖。"
           },
           {
             "word": "will inevitably excel at almost everything else.",
             "role": "从句谓宾",
             "meaning": "必然也会在几乎所有其他领域表现出色",
-            "modifies": "从句主干"
+            "modifies": "从句主干",
+            "etymology": "【词源】inevitably 源自拉丁语 in- (不) + evitare (规避)。"
           },
           {
             "word": "If that proves true,",
             "role": "条件状语从句",
             "meaning": "如果这被证明属实",
-            "modifies": "假设条件"
+            "modifies": "假设条件",
+            "etymology": "【词源】prove 源自拉丁语 probare (检验合格)。"
           },
           {
             "word": "competing with the leading AI labs will become virtually impossible.",
             "role": "动名词主语 + 系表",
             "meaning": "与领军AI实验室竞争将几乎变成不可能",
-            "modifies": "推论主干"
+            "modifies": "推论主干",
+            "etymology": "【词源】compete 源自拉丁语 com- (共同) + petere (追求角逐索取)。"
           },
           {
             "word": "They will hold models capable of continuously upgrading themselves,",
             "role": "主谓宾 + 形容词定语",
             "meaning": "他们将掌握能够持续自我升级的模型",
-            "modifies": "主谓宾补"
+            "modifies": "主谓宾补",
+            "etymology": "【词源】upgrade 复合词：up (向上) + grade (拉丁语 gradus 步伐台阶)。"
           },
           {
             "word": "reaching a level of intelligence beyond human grasp.",
             "role": "分词结果状语",
             "meaning": "达到超越人类掌握水平的智能高度",
-            "modifies": "结果状语"
+            "modifies": "结果状语",
+            "etymology": "【词源】grasp 源自古英语 *græpsan (伸手紧紧掐住捕获)。"
           },
           {
             "word": "Nor will these digital minds stay confined to screens:",
             "role": "否定词倒装句",
             "meaning": "这些数字心智也不会仅仅局限于屏幕中：",
-            "modifies": "Nor 倒装并列"
+            "modifies": "Nor 倒装并列",
+            "etymology": "【词源】confine 源自拉丁语 com- (共同) + finis (边界封锁) -> 圈禁局限。"
           },
           {
             "word": "they will step directly into the physical world,",
             "role": "主谓状",
             "meaning": "它们将径直迈入物理世界",
-            "modifies": "具身智能展开"
+            "modifies": "具身智能展开",
+            "etymology": "【词源】physical 源自希腊语 physis (自然万物的生长本质)。"
           },
           {
             "word": "operating through humanoid robots",
             "role": "并列分词伴随状语",
             "meaning": "通过人形机器人开展操作",
-            "modifies": "修饰 step"
+            "modifies": "修饰 step",
+            "etymology": "【词源】humanoid 源自 human + 希腊后缀 -oeides (具象外形如同人类的)。"
           },
           {
             "word": "or taking direct charge of laboratory instruments,",
             "role": "并列分词伴随状语",
             "meaning": "或直接掌控接管实验室仪器",
-            "modifies": "并列伴随"
+            "modifies": "并列伴随",
+            "etymology": "【词源】laboratory 源自拉丁语 labor (劳作、科研艰苦推演之工坊)。"
           },
           {
             "word": "much as Anthropic has already demonstrated.",
             "role": "方式状语从句",
             "meaning": "正如Anthropic已经展示的那样",
-            "modifies": "现实案例例证"
+            "modifies": "现实案例例证",
+            "etymology": "【词源】demonstrate 源自拉丁语 de- (完全) + monstrare (用手指展示证明)。"
           }
         ],
         "detailedSyntax": [
@@ -1502,79 +1617,92 @@
             "word": "The challenge this poses for science",
             "role": "主语 (含定语从句)",
             "meaning": "这对科学所带来的挑战",
-            "modifies": "this poses for science 省略 that 作定语修饰 challenge"
+            "modifies": "this poses for science 省略 that 作定语修饰 challenge",
+            "etymology": "【词源】challenge 源自拉丁语 calumnia (法庭指控诉讼驳诘)。"
           },
           {
             "word": "is identical to the one confronting society as a whole.",
             "role": "系表结构",
             "meaning": "与整个社会所面临的挑战完全相同",
-            "modifies": "对比同构"
+            "modifies": "对比同构",
+            "etymology": "【词源】identical 源自拉丁语 idem (同一、完全相同一致)。"
           },
           {
             "word": "Progress will require us to feed these machines",
             "role": "主谓宾补",
             "meaning": "进步将需要我们向机器投喂",
-            "modifies": "require sb to do"
+            "modifies": "require sb to do",
+            "etymology": "【词源】progress 源自拉丁语 pro- (向前) + gradi (迈步行走)。"
           },
           {
             "word": "ever more data, energy, and capital.",
             "role": "直接宾语",
             "meaning": "越来越多的数据、能源与资本",
-            "modifies": "受体"
+            "modifies": "受体",
+            "etymology": "【词源】capital 源自拉丁语 caput (头颅头等重要的牲口资产资本)。"
           },
           {
             "word": "But if we fail to understand what they are actually doing,",
             "role": "转折 + 条件状语从句",
             "meaning": "但如果我们不能理解它们实际上在做什么",
-            "modifies": "条件从句"
+            "modifies": "条件从句",
+            "etymology": "【词源】actual 源自拉丁语 actus (行动事实)。"
           },
           {
             "word": "blindly footing the bill is sheer recklessness—",
             "role": "动名词主语 + 系表",
             "meaning": "盲目买单就是彻头彻尾的鲁莽——",
-            "modifies": "主干断言"
+            "modifies": "主干断言",
+            "etymology": "【词源】reckless 源自古英语 rece (顾虑考量) -> 不计后果之蛮干。"
           },
           {
             "word": "there is no guarantee their objectives will align with our own.",
             "role": "同位语从句",
             "meaning": "没有任何保证表明它们的目标能与我们的一致",
-            "modifies": "修饰 guarantee"
+            "modifies": "修饰 guarantee",
+            "etymology": "【词源】align 源自古法语 à- (向着) + ligne (线、队列) -> 排成一条直线保持对齐。"
           },
           {
             "word": "Even if developers manage to ‘align’ these models so they cause no harm,",
             "role": "让步状语从句",
             "meaning": "即便开发者成功对齐这些模型使之不造成伤害",
-            "modifies": "让步条件"
+            "modifies": "让步条件",
+            "etymology": "【词源】develop 源自古法语 des- (解开) + voloper (包裹卷轴展开)。"
           },
           {
             "word": "a deeper dilemma remains:",
             "role": "主谓倒装/结构",
             "meaning": "一个更深层的困境依然存在：",
-            "modifies": "引出困境"
+            "modifies": "引出困境",
+            "etymology": "【词源】dilemma 源自希腊语 di- (两个) + lemma (命题假设) -> 进退两难之困局。"
           },
           {
             "word": "a civilization that merely waits for algorithms to tell it what to do—",
             "role": "主语 + 定语从句",
             "meaning": "一个仅仅坐等算法告知其该做什么的文明——",
-            "modifies": "核心主语"
+            "modifies": "核心主语",
+            "etymology": "【词源】civilization 源自拉丁语 civis (公民) -> 城邦制度文明实体。"
           },
           {
             "word": "whether in the lab or in daily life—",
             "role": "让步状语插入语",
             "meaning": "无论是在实验室还是日常生活中——",
-            "modifies": "插入语"
+            "modifies": "插入语",
+            "etymology": "【词源】whether 古英语 hwæther (二者择一)。"
           },
           {
             "word": "is one where human beings willingly reduce themselves",
             "role": "系表 + 定语从句",
             "meaning": "是一个人类心甘情愿将自身贬低为",
-            "modifies": "系表定义"
+            "modifies": "系表定义",
+            "etymology": "【词源】reduce 源自拉丁语 re- (向后退) + ducere (引导致使) -> 贬损退化沦落为。"
           },
           {
             "word": "to the machines’ pampered pets.",
             "role": "介宾补语",
             "meaning": "机器豢养的宠物的文明",
-            "modifies": "reduce themselves to 介宾"
+            "modifies": "reduce themselves to 介宾",
+            "etymology": "【词源】pamper 源自低地德语 (喂饱塞满娇惯)；pet 源自苏格兰方言 (受宠驯顺动物)。"
           }
         ],
         "detailedSyntax": [
@@ -1681,73 +1809,85 @@
             "word": "Some might well accept that trade-off",
             "role": "主谓宾",
             "meaning": "有些人很可能会接受那种权衡",
-            "modifies": "情态动词主干"
+            "modifies": "情态动词主干",
+            "etymology": "【词源】trade-off 复合词：贸易权衡取舍牺牲。"
           },
           {
             "word": "if the reward is, say, wiping out all diseases.",
             "role": "条件状语从句",
             "meaning": "如果回报是比方说根除所有疾病",
-            "modifies": "假设条件"
+            "modifies": "假设条件",
+            "etymology": "【词源】disease 源自古法语 des- (去除) + aise (安逸舒适) -> 痛苦疾恙。"
           },
           {
             "word": "Yet until we have absolute certainty",
             "role": "时间状语从句",
             "meaning": "然而直到我们拥有绝对把握",
-            "modifies": "时间界限"
+            "modifies": "时间界限",
+            "etymology": "【词源】absolute 源自拉丁语 ab- (远离) + solvere (松绑解开) -> 不受任何外力限制的绝对性。"
           },
           {
             "word": "that machines and human values are truly aligned,",
             "role": "同位语从句",
             "meaning": "机器与人类价值真正实现对齐",
-            "modifies": "修饰 certainty"
+            "modifies": "修饰 certainty",
+            "etymology": "【词源】value 源自拉丁语 valere (具有强韧力量价值)。"
           },
           {
             "word": "science must always keep a human in the loop.",
             "role": "主谓宾补",
             "meaning": "科学必须始终让人留在回路中",
-            "modifies": "核心底线原则"
+            "modifies": "核心底线原则",
+            "etymology": "【词源】loop 航海与控制理论中的闭合回路反馈链条。"
           },
           {
             "word": "Laboratories should certainly harness AI to crack difficult problems,",
             "role": "主谓宾 + 目的状语",
             "meaning": "实验室当然应该驾驭AI去攻坚克难",
-            "modifies": "让步分句"
+            "modifies": "让步分句",
+            "etymology": "【词源】harness 原指马匹驾驭挽具，引申为驯服控制并利用强大自然力。"
           },
           {
             "word": "but critical resources—from physical benches to massive compute—",
             "role": "转折并列主语",
             "meaning": "但核心关键资源——从实体实验台到海量算力——",
-            "modifies": "主语"
+            "modifies": "主语",
+            "etymology": "【词源】critical 源自希腊语 krinein (审判、在关节点决断裁决)。"
           },
           {
             "word": "must remain directed by experts",
             "role": "系表被动结构",
             "meaning": "必须继续由专家指导掌舵",
-            "modifies": "系表"
+            "modifies": "系表",
+            "etymology": "【词源】direct 源自拉丁语 di- (分开) + regere (统治指引规正)。"
           },
           {
             "word": "capable of truly understanding what the algorithms are doing.",
             "role": "形容词后置定语 + 宾从",
             "meaning": "能够真正理解算法所作所为的专家",
-            "modifies": "修饰 experts"
+            "modifies": "修饰 experts",
+            "etymology": "【词源】algorithm 纪念波斯代数之父花剌子模名号。"
           },
           {
             "word": "This caution will inevitably slow the pace of discovery.",
             "role": "主谓宾",
             "meaning": "这种审慎将不可避免地放缓发现步伐",
-            "modifies": "坦承代价"
+            "modifies": "坦承代价",
+            "etymology": "【词源】pace 源自拉丁语 passus (跨步跨距)。"
           },
           {
             "word": "But it is an unavoidable price to pay",
             "role": "主系表 + 不定式定语",
             "meaning": "但这是必须付出的不可避免的代价",
-            "modifies": "转折定性"
+            "modifies": "转折定性",
+            "etymology": "【词源】avoid 源自拉丁语 ex- (向外) + vacuus (变空避开)。"
           },
           {
             "word": "if humanity is to stay in the driver’s seat.",
             "role": "条件状语从句",
             "meaning": "如果人类还想稳坐驾驶席的话",
-            "modifies": "修饰 price to pay"
+            "modifies": "修饰 price to pay",
+            "etymology": "【词源】driver 掌舵控制主导权之核心象征位。"
           }
         ],
         "detailedSyntax": [
@@ -1847,85 +1987,99 @@
             "word": "In the meantime,",
             "role": "时间状语",
             "meaning": "与此同时",
-            "modifies": "过渡时间短语"
+            "modifies": "过渡时间短语",
+            "etymology": "【词源】meantime 复合词：时间间隙过渡阶段。"
           },
           {
             "word": "a new era of human-steered machine science",
             "role": "主语",
             "meaning": "人类掌舵的机器科学新时代",
-            "modifies": "核心名词短语"
+            "modifies": "核心名词短语",
+            "etymology": "【词源】era 源自拉丁语 aera (用于记账计数的青铜代币年代基点)。"
           },
           {
             "word": "will compel academics to rethink their fields",
             "role": "谓语 + 复合宾语",
             "meaning": "将倒逼学者彻底反思其领域",
-            "modifies": "compel sb to do"
+            "modifies": "compel sb to do",
+            "etymology": "【词源】compel 源自拉丁语 com- (彻底) + pellere (驱动推搡迫使)。"
           },
           {
             "word": "from the ground up.",
             "role": "方式状语",
             "meaning": "从根基上/从头开始",
-            "modifies": "修饰 rethink"
+            "modifies": "修饰 rethink",
+            "etymology": "【词源】ground 原始印欧语 *ghrendh- (研磨坚实的大地岩基)。"
           },
           {
             "word": "Universities must begin to recognise and reward",
             "role": "主谓宾",
             "meaning": "大学必须开始认可与奖赏",
-            "modifies": "动宾结构"
+            "modifies": "动宾结构",
+            "etymology": "【词源】recognise 源自拉丁语 re- (再次) + cognoscere (心智认清辨识)。"
           },
           {
             "word": "the vital work of steering models,",
             "role": "介宾短语",
             "meaning": "指导引导模型的关键工作",
-            "modifies": "作 reward 的宾语"
+            "modifies": "作 reward 的宾语",
+            "etymology": "【词源】vital 源自拉丁语 vita (生命、生死攸关核心重要的)。"
           },
           {
             "word": "verifying their breakthroughs,",
             "role": "并列动名词",
             "meaning": "核验验证机器突破",
-            "modifies": "并列介宾"
+            "modifies": "并列介宾",
+            "etymology": "【词源】verify 源自拉丁语 verus (真实) + facere (使成)。"
           },
           {
             "word": "and translating their findings into human understanding—",
             "role": "并列动名词",
             "meaning": "并将成果转化为人类理解——",
-            "modifies": "并列介宾"
+            "modifies": "并列介宾",
+            "etymology": "【词源】translate 源自拉丁语 trans- (横跨) + latus (运载渡送) -> 将异质思维渡送为人类能懂之语言。"
           },
           {
             "word": "granting tenure and prestige on that basis.",
             "role": "现在分词伴随状语",
             "meaning": "并以此为基础授予终身教职与声望",
-            "modifies": "伴随状语"
+            "modifies": "伴随状语",
+            "etymology": "【词源】tenure 源自拉丁语 tenere (握住不放)；prestige 原指魔术幻象声威，后指崇高学术威望。"
           },
           {
             "word": "Funding agencies should distribute research grants",
             "role": "主谓宾",
             "meaning": "科研资助机构在分配经费时",
-            "modifies": "主谓宾"
+            "modifies": "主谓宾",
+            "etymology": "【词源】distribute 源自拉丁语 dis- (分开) + tribuere (按部族分配配给)。"
           },
           {
             "word": "with the same priorities in mind.",
             "role": "介词伴随状语",
             "meaning": "也应当秉持相同的优先准则",
-            "modifies": "方式状语"
+            "modifies": "方式状语",
+            "etymology": "【词源】priority 源自拉丁语 prior (先前的、居于首位的)。"
           },
           {
             "word": "For their part, AI companies must step up as responsible scientific citizens:",
             "role": "主谓状",
             "meaning": "就AI企业而言必须主动承担负责任科研公民的角色：",
-            "modifies": "企业责任引出"
+            "modifies": "企业责任引出",
+            "etymology": "【词源】citizen 源自拉丁语 civitas (城邦公民契约权利共同体)。"
           },
           {
             "word": "they must open their discoveries to rigorous peer review,",
             "role": "主谓宾介补",
             "meaning": "必须向严格的同行评审开放研究发现",
-            "modifies": "具体行动一"
+            "modifies": "具体行动一",
+            "etymology": "【词源】rigorous 源自拉丁语 rigere (坚挺僵硬严苛)。"
           },
           {
             "word": "and make their underlying code and methodologies fully transparent.",
             "role": "使役动词复合宾语",
             "meaning": "并使其底层代码与方法论完全透明",
-            "modifies": "具体行动二"
+            "modifies": "具体行动二",
+            "etymology": "【词源】transparent 源自拉丁语 trans- (穿透) + parere (显现可视) -> 毫无暗箱遮蔽。"
           }
         ],
         "detailedSyntax": [
@@ -2020,79 +2174,92 @@
             "word": "Verifying and digesting machine-generated results",
             "role": "动名词短语作主语",
             "meaning": "核验并消化机器生成的成果",
-            "modifies": "动作主语"
+            "modifies": "动作主语",
+            "etymology": "【词源】digest 源自拉丁语 dis- (分开) + gerere (运载消化吸收)。"
           },
           {
             "word": "might seem like tedious, thankless work.",
             "role": "系表结构",
             "meaning": "或许看似是一项乏味且吃力不讨好的差事",
-            "modifies": "情态表语"
+            "modifies": "情态表语",
+            "etymology": "【词源】tedious 源自拉丁语 taedium (心智生厌倦怠)。"
           },
           {
             "word": "Yet science done by humans",
             "role": "主语 (带后置定语)",
             "meaning": "然而由人类完成的科学",
-            "modifies": "主语"
+            "modifies": "主语",
+            "etymology": "【词源】human 源自拉丁语 humanus (陆地凡人)。"
           },
           {
             "word": "has always been riddled with errors,",
             "role": "系表结构",
             "meaning": "一直以来都充斥着漏洞与谬误",
-            "modifies": "现在完成时"
+            "modifies": "现在完成时",
+            "etymology": "【词源】riddle 原始日耳曼语 *hrid- (大眼筛子，喻指漏洞百出充斥瑕疵)。"
           },
           {
             "word": "largely because academics receive little reward",
             "role": "原因状语从句",
             "meaning": "很大程度上是因为学者极少得到回报",
-            "modifies": "原因从句"
+            "modifies": "原因从句",
+            "etymology": "【词源】receive 拉丁语 re- (向回) + capere (接纳获取)。"
           },
           {
             "word": "for double-checking the claims of their peers.",
             "role": "介宾短语",
             "meaning": "为了复核同行的主张论断",
-            "modifies": "修饰 reward"
+            "modifies": "修饰 reward",
+            "etymology": "【词源】peer 源自拉丁语 par (平起平坐对等之人同辈)。"
           },
           {
             "word": "A renewed culture of rigorous verification and healthy scepticism",
             "role": "主语",
             "meaning": "重焕生机的严苛核验与良性怀疑精神文化",
-            "modifies": "主语"
+            "modifies": "主语",
+            "etymology": "【词源】scepticism 源自希腊语 skeptikos (探寻者、求证反思不盲信者)。"
           },
           {
             "word": "would make science stronger, not weaker.",
             "role": "谓语 + 宾语 + 并列宾补",
             "meaning": "将使科学变得更强大而非更羸弱",
-            "modifies": "使役动词"
+            "modifies": "使役动词",
+            "etymology": "【词源】strong 原始日耳曼语 *strangaz (紧绷坚实有韧劲)。"
           },
           {
             "word": "It is worth recalling the founding motto of the Royal Society",
             "role": "形式主语主干",
             "meaning": "值得重温皇家学会成立时的校训格言",
-            "modifies": "形式主语结构"
+            "modifies": "形式主语结构",
+            "etymology": "【词源】motto 源自晚期拉丁语 muttum (低语发声之箴言座右铭)。"
           },
           {
             "word": "from the 17th century:",
             "role": "时间状语",
             "meaning": "源自17世纪的",
-            "modifies": "修饰 Royal Society"
+            "modifies": "修饰 Royal Society",
+            "etymology": "【词源】century 拉丁语 centum (数字一百)。"
           },
           {
             "word": "Nullius in verba, or ‘Take nobody’s word for it.’",
             "role": "同位语解释",
             "meaning": "Nullius in verba，即“不轻信任何人言”",
-            "modifies": "同位语解释 motto"
+            "modifies": "同位语解释 motto",
+            "etymology": "【词源】Nullius in verba 出自古罗马诗人贺拉斯《书简集》：Nullius addictus iurare in verba magistri (不誓死盲从任何导师宗师的一家之言)。"
           },
           {
             "word": "That timeless warning was meant for human authorities—",
             "role": "主系表结构",
             "meaning": "那句永恒的告诫当年是针对人类权威的——",
-            "modifies": "历史语境"
+            "modifies": "历史语境",
+            "etymology": "【词源】authority 源自拉丁语 auctor (创造者、推动者、发端奠基人)。"
           },
           {
             "word": "today, it applies just as urgently to machines.",
             "role": "转折主谓比较状语",
             "meaning": "而在今天它同样迫切地适用于机器",
-            "modifies": "当下警示"
+            "modifies": "当下警示",
+            "etymology": "【词源】apply 源自拉丁语 ad- (贴近) + plicare (折叠附着实施)。"
           }
         ],
         "detailedSyntax": [

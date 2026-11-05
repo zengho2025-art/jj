@@ -56,7 +56,7 @@
         .token-item .tooltip-text {
             display: none;
             width: max-content;
-            max-width: 290px;
+            max-width: 340px;
             background-color: #1B3B36;
             color: #FAF9F5;
             text-align: left;
@@ -372,6 +372,14 @@
                                                         <div><strong class="text-sand">成分：</strong>${token.role}</div>
                                                         ${token.modifies ? `<div><strong class="text-sand">修饰：</strong><span class="text-gold/90">${token.modifies}</span></div>` : ''}
                                                         <div><strong class="text-sand">释义：</strong>${token.meaning}</div>
+                                                        ${token.etymology ? `
+                                                            <div class="pt-1.5 mt-1.5 border-t border-sand/20 text-xs leading-relaxed">
+                                                                <strong class="text-gold flex items-center space-x-1">
+                                                                    <span>🌱 词根与词源：</span>
+                                                                </strong>
+                                                                <span class="text-sand/90 text-[11px] block mt-0.5">${token.etymology.replace('【词源】', '')}</span>
+                                                            </div>
+                                                        ` : ''}
                                                     </div>
                                                 </span>
                                             </span>
