@@ -504,6 +504,7 @@
         }
 
         function renderMainLayout(articles) {
+            if (typeof closeScopixAnnotationSidebar === 'function') closeScopixAnnotationSidebar();
             const categories = ['All', ...new Set(articles.map(item => item.category))];
             const filteredArticles = currentCategory === 'All' 
                 ? articles 
