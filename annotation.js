@@ -5,6 +5,7 @@ let scopixAnnotationMode = false;
 let scopixMarks = readScopixMarks();
 let scopixSelected = null;
 let scopixEditingId = null;
+let scopixToolbarAnchor = null;
 
 function readScopixMarks() {
     try {
@@ -94,6 +95,30 @@ function closeAnnotationToolbar() {
     if (editor) editor.hidden = true;
     scopixSelected = null;
     scopixEditingId = null;
+    scopixToolbarAnchor = null;
+}
+
+function repositionAnnotationToolbar() {
+    const bar = document.getElementById('scopixAnnotationToolbar');
+    const rect = scopixToolbarAnchor;
+    if (!bar || bar.hidden || !rect) return;
+    // Mobile: a fixed bottom sheet above the safe area avoids covering the selection.
+    if (window.matchMedia('(max-width: 640px)').matches) {
+        bar.style.left = '';
+        bar.style.top = '';
+        return;
+    }
+    const margin = 12;
+    const width = bar.getBoundingClientRect().width;
+    const height = bar.getBoundingClientRect().height;
+    const left = Math.max(margin, Math.min(rect.left,
+        Math.max(margin, window.innerWidth - width - margin)));
+    let top = rect.top - height - margin;
+    if (top < margin) top = rect.bottom + margin;
+    top = Math.max(margin, Math.min(top,
+        Math.max(margin, window.innerHeight - height - margin)));
+    bar.style.left = left + 'px';
+    bar.style.top = top + 'px';
 }
 
 function positionAnnotationToolbar(rect) {
@@ -102,18 +127,16 @@ function positionAnnotationToolbar(rect) {
     bar.hidden = false;
     document.getElementById('scopixNoteEditor').hidden = true;
     document.getElementById('scopixDeleteMark').hidden = !scopixEditingId;
-    // Prefer above the selected text; fall back below when there is no room.
-    const margin = 10;
-    const width = bar.getBoundingClientRect().width;
-    const height = bar.getBoundingClientRect().height;
-    const maxLeft = Math.max(margin, window.innerWidth - width - margin);
-    const left = Math.max(margin, Math.min(rect.left, maxLeft));
-    let top = rect.top - height - 10;
-    if (top < margin) top = rect.bottom + 10;
-    top = Math.max(margin, Math.min(top, Math.max(margin, window.innerHeight-height-margin)));
-    bar.style.left = left + 'px';
-    bar.style.top = top + 'px';
+    scopixToolbarAnchor = {
+        left: rect.left, top: rect.top, bottom: rect.bottom
+    };
+    const selectedText = document.getElementById('scopixSelectedText');
+    if (selectedText) selectedText.textContent = '已选中：' +
+        (scopixSelected?.text || '').replace(/\s+/g,' ').trim().slice(0, 90);
+    const heading = document.getElementById('scopixToolbarTitle');
+    if (heading) heading.textContent = scopixEditingId ? '编辑已有批注' : '添加阅读批注';
     showAnnotationFeedback('');
+    repositionAnnotationToolbar();
 }
 
 function captureScopixSelection() {
@@ -207,7 +230,8 @@ function editScopixAnnotation() {
     const previous = scopixMarks.find(m => m.id === scopixEditingId);
     document.getElementById('scopixNoteEditor').hidden = false;
     document.getElementById('scopixAnnotationNote').value = previous?.note || '';
-    document.getElementById('scopixAnnotationNote').focus();
+    document.getElementById('scopixAnnotationNote').focus({preventScroll:true});
+    repositionAnnotationToolbar();
 }
 
 function saveScopixNote() {
@@ -234,10 +258,16 @@ document.addEventListener('touchend', e => {
 document.addEventListener('click', e => {
     if (!scopixAnnotationMode) return;
     const mark = e.target.closest('.annotation-mark');
-    if (mark && window.getSelection()?.isCollapsed) { openScopixMark(mark); return; }
-    if (!e.target.closest('#scopixAnnotationToolbar') && !e.target.closest('.annotation-reader'))
-        closeAnnotationToolbar();
+    if (mark && window.getSelection()?.isCollapsed) {
+        openScopixMark(mark);
+        return;
+    }
+    if (e.target.closest('#scopixAnnotationToolbar')) return;
+    // Clicking plain text without selecting a range closes stale toolbars.
+    if (window.getSelection()?.isCollapsed) closeAnnotationToolbar();
 });
+window.addEventListener('resize', repositionAnnotationToolbar);
+
 document.addEventListener('keydown', e => {
     if (!scopixAnnotationMode) return;
     if (e.key === 'Escape') closeAnnotationToolbar();
