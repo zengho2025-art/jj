@@ -57,6 +57,8 @@ function setupArticleAnnotations(article) {
         b.setAttribute('aria-pressed', String(scopixAnnotationMode));
     });
     closeAnnotationToolbar();
+    closeScopixAnnotationSidebar();
+    renderScopixAnnotationSidebar();
 }
 
 function renderScopixMarks(reader) {
@@ -215,6 +217,7 @@ function saveScopixMark(color, note, isNoteEdit) {
     const next = resolvedPrevious ? scopixMarks.map(m=>m.id===resolvedPrevious.id?item:m) : [...scopixMarks,item];
     if (!persistScopixMarks(next)) return;
     refreshScopixMarks();
+    renderScopixAnnotationSidebar();
     closeAnnotationToolbar();
     window.getSelection()?.removeAllRanges();
 }
@@ -244,8 +247,138 @@ function deleteScopixMark() {
     if (!scopixEditingId) return;
     if (!persistScopixMarks(scopixMarks.filter(m=>m.id!==scopixEditingId))) return;
     refreshScopixMarks();
+    renderScopixAnnotationSidebar();
     closeAnnotationToolbar();
 }
+
+
+/* V1.3: Manage current article marks in a safe, local-only sidebar. */
+let scopixSidebarReturnFocus = null;
+function getArticleMarks() {
+    const readers = [...document.querySelectorAll('.annotation-reader')];
+    if (!readers.length) return [];
+    const articleId = readers[0].dataset.articleId;
+    return scopixMarks.filter(m => {
+        const reader = readers.find(r => Number(r.dataset.paragraph) === m.paragraph);
+        return m.articleId === articleId && reader &&
+            (reader.dataset.source || '').slice(m.start,m.end) === m.text;
+    }).sort((a,b) => a.paragraph-b.paragraph || a.start-b.start);
+}
+function makeSidebarAction(label, fn) {
+    const button = document.createElement('button');
+    button.type='button';
+    button.className='text-xs rounded-md border border-sand px-2.5 py-2 text-moss hover:bg-wheat';
+    button.textContent=label;
+    button.addEventListener('click',fn);
+    return button;
+}
+function renderScopixAnnotationSidebar() {
+    const list = document.getElementById('scopixAnnotationList');
+    if (!list) return;
+    list.replaceChildren();
+    const marks = getArticleMarks();
+    document.querySelectorAll('.scopix-annotation-count').forEach(node => node.textContent=String(marks.length));
+    document.getElementById('scopixDrawerCount').textContent=marks.length+' 条标记';
+    if (!marks.length) {
+        const empty=document.createElement('p');
+        empty.className='p-4 rounded-lg bg-wheat/40 text-sm text-sage leading-relaxed';
+        empty.textContent='这篇文章还没有批注。开启批注模式，选中英文即可添加高亮和笔记。';
+        list.append(empty);
+        return;
+    }
+    const palette={yellow:'#fde68a',green:'#a7f3d0',blue:'#bfdbfe',pink:'#fbcfe8',underline:'#e05353'};
+    for (const mark of marks) {
+        const card=document.createElement('div');
+        card.className='border border-sand bg-white rounded-lg p-3 space-y-2';
+        const header=document.createElement('div');
+        header.className='flex items-center gap-2 text-xs text-sage';
+        const indicator=document.createElement('span');
+        indicator.className='w-3 h-3 rounded-full border border-sand inline-block shrink-0';
+        indicator.style.backgroundColor=palette[mark.color] || palette.yellow;
+        const pos=document.createElement('span');
+        pos.textContent='第 '+(mark.paragraph+1)+' 段';
+        header.append(indicator,pos);
+        const text=document.createElement('p');
+        text.className='text-sm text-ink leading-relaxed break-words';
+        text.textContent=mark.text;
+        card.append(header,text);
+        if (mark.note) {
+            const note=document.createElement('p');
+            note.className='p-2 bg-wheat/50 rounded-md text-xs text-gray-700 whitespace-pre-wrap break-words';
+            note.textContent=mark.note;
+            card.append(note);
+        }
+        const actions=document.createElement('div');
+        actions.className='flex gap-2 flex-wrap';
+        actions.append(
+            makeSidebarAction('定位原文',()=>locateScopixMark(mark.id,false)),
+            makeSidebarAction('编辑',()=>locateScopixMark(mark.id,true)),
+            makeSidebarAction('删除',()=>deleteSidebarMark(mark.id))
+        );
+        card.append(actions);
+        list.append(card);
+    }
+}
+function openScopixAnnotationSidebar() {
+    const drawer=document.getElementById('scopixAnnotationSidebar');
+    if (!drawer || !document.querySelector('.annotation-reader')) return;
+    scopixSidebarReturnFocus=document.activeElement;
+    closeAnnotationToolbar();
+    renderScopixAnnotationSidebar();
+    drawer.hidden=false;
+    document.getElementById('scopixAnnotationOverlay').hidden=false;
+    document.body.classList.add('scopix-drawer-open');
+    document.getElementById('scopixDrawerClose').focus();
+}
+function closeScopixAnnotationSidebar() {
+    const drawer=document.getElementById('scopixAnnotationSidebar');
+    if (!drawer || drawer.hidden) return;
+    drawer.hidden=true;
+    document.getElementById('scopixAnnotationOverlay').hidden=true;
+    document.body.classList.remove('scopix-drawer-open');
+    if (scopixSidebarReturnFocus?.isConnected) scopixSidebarReturnFocus.focus();
+    scopixSidebarReturnFocus=null;
+}
+function locateScopixMark(id,edit) {
+    const markData=getArticleMarks().find(m=>m.id===id);
+    if (!markData) return;
+    if (!scopixAnnotationMode) toggleAnnotationMode();
+    closeScopixAnnotationSidebar();
+    const reader=[...document.querySelectorAll('.annotation-reader')].find(r=>
+        r.dataset.articleId===markData.articleId && Number(r.dataset.paragraph)===markData.paragraph);
+    const mark=[...(reader?.querySelectorAll('.annotation-mark')||[])].find(el=>el.dataset.markId===id);
+    if (!mark) return;
+    mark.scrollIntoView({behavior:'smooth',block:'center'});
+    mark.focus({preventScroll:true});
+    // Open after scrolling settles enough to calculate a meaningful anchor.
+    setTimeout(()=>{
+        if (!mark.isConnected || !scopixAnnotationMode) return;
+        openScopixMark(mark);
+        if (edit) editScopixAnnotation();
+    },350);
+}
+function deleteSidebarMark(id) {
+    if (!getArticleMarks().some(m=>m.id===id)) return;
+    if (!confirm('确定删除此高亮和对应的笔记吗？')) return;
+    if (!persistScopixMarks(scopixMarks.filter(m=>m.id!==id))) return;
+    refreshScopixMarks();
+    renderScopixAnnotationSidebar();
+}
+document.addEventListener('keydown',event=>{
+    const drawer=document.getElementById('scopixAnnotationSidebar');
+    if (!drawer || drawer.hidden) return;
+    if (event.key==='Escape') {
+        event.preventDefault();
+        closeScopixAnnotationSidebar();
+        return;
+    }
+    if (event.key!=='Tab') return;
+    const buttons=[...drawer.querySelectorAll('button:not([disabled])')];
+    if (!buttons.length) return;
+    const first=buttons[0],last=buttons[buttons.length-1];
+    if (event.shiftKey && document.activeElement===first) {event.preventDefault();last.focus();}
+    if (!event.shiftKey && document.activeElement===last) {event.preventDefault();first.focus();}
+});
 
 document.addEventListener('mouseup', e => {
     if (!scopixAnnotationMode || e.target.closest('#scopixAnnotationToolbar')) return;
