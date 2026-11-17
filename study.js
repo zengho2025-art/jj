@@ -23,6 +23,7 @@ function persistScopixVocabulary(next) {
         scopixVocabulary = next;
         renderScopixStudyLibrary();
         updateScopixSaveWordButton();
+        if (typeof updateScopixReviewCounts === 'function') updateScopixReviewCounts();
         return true;
     } catch (_) {
         showScopixStudyFeedback('保存失败：本地存储空间不足或浏览器禁止保存。');
@@ -221,7 +222,19 @@ function emptyStudyList(text) {
 }
 
 function toggleScopixWordLearned(id) {
-    const next=scopixVocabulary.map(w=>w.id===id?{...w,learned:!w.learned}:w);
+    const now=Date.now();
+    const next=scopixVocabulary.map(w=>{
+        if(w.id!==id) return w;
+        const learned=!w.learned;
+        // Manual change adjusts the due date without falsely counting a review.
+        const oldReview=w.review && typeof w.review==='object' ? w.review : {};
+        const nextReview={
+            ...oldReview,
+            dueAt: learned ? now+3*86400000 : now,
+            intervalDays: learned ? Math.max(3,oldReview.intervalDays || 0) : 0
+        };
+        return {...w, learned,review:nextReview};
+    });
     persistScopixVocabulary(next);
 }
 
