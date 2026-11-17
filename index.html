@@ -302,6 +302,20 @@
         .scopix-drawer[hidden], .scopix-drawer-overlay[hidden] { display:none !important; }
         body.scopix-drawer-open { overflow:hidden; }
         .scopix-drawer button:focus-visible { outline:2px solid #2F5D54; outline-offset:2px; }
+
+        /* V1.4 unified wordbook & annotation library */
+        .scopix-study-overlay { position:fixed; inset:0; z-index:120; background:rgba(27,59,54,.4); }
+        .scopix-study-panel {
+            position:fixed; z-index:121; right:0; top:0; bottom:0;
+            width:min(530px,100vw); display:flex; flex-direction:column;
+            background:#FAF9F5; padding:20px; padding-bottom:calc(20px + env(safe-area-inset-bottom));
+            box-shadow:-8px 0 32px rgba(27,59,54,.22);
+        }
+        .scopix-study-panel[hidden], .scopix-study-overlay[hidden] { display:none !important; }
+        body.scopix-study-open { overflow:hidden; }
+        .scopix-study-tab { flex:1; border:1px solid #E8E4D9; padding:10px 4px; border-radius:8px; font-size:13px; background:white; color:#2F5D54; }
+        .scopix-study-tab.active { background:#2F5D54; border-color:#2F5D54; color:white; }
+        .scopix-study-panel button:focus-visible, .scopix-study-panel input:focus-visible { outline:2px solid #2F5D54; outline-offset:2px; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-moss selection:text-paper">
@@ -312,7 +326,10 @@
                 <span class="font-display italic text-2xl font-bold tracking-tight text-ink">Academic Digest</span>
                 <span class="text-xs uppercase tracking-widest px-2 py-0.5 bg-wheat text-moss font-semibold rounded">外刊精读</span>
             </div>
-            <div class="text-sm text-sage font-medium">www.scopix.cn</div>
+            <div class="flex items-center gap-2">
+                <button type="button" class="text-xs sm:text-sm border border-sand bg-white rounded-lg px-3 py-2 text-moss font-semibold hover:bg-wheat" onclick="openScopixStudyPanel()">📚 我的学习资料</button>
+                <div class="hidden lg:block text-sm text-sage font-medium">www.scopix.cn</div>
+            </div>
         </div>
     </header>
 
@@ -338,6 +355,10 @@
                     <span id="dictPhonetic" class="text-sm text-moss font-mono"></span>
                 </div>
                 <button type="button" onclick="closeDictModal(event)" class="w-8 h-8 rounded-full bg-sand/50 hover:bg-sand flex items-center justify-center text-xl text-ink font-bold leading-none">&times;</button>
+            </div>
+            <div class="pt-3">
+                <button type="button" id="scopixSaveWordBtn" disabled onclick="saveScopixCurrentWord()" class="border border-sand rounded-lg px-3 py-2 bg-wheat text-moss text-sm font-semibold disabled:opacity-50">＋ 加入生词本</button>
+                <p id="scopixStudyFeedback" class="text-xs text-sage mt-2" aria-live="polite" hidden></p>
             </div>
             <!-- 释义展示容器 -->
             <div id="dictBody" class="mt-4 space-y-4 text-sm font-sans leading-relaxed">
@@ -387,6 +408,28 @@
         </div>
         <p class="text-xs text-sage py-3">仅显示当前文章的标记。点击“定位原文”可跳转到对应位置。数据仅保存在本浏览器。</p>
         <div id="scopixAnnotationList" class="flex-1 space-y-3 pb-5" aria-live="polite"></div>
+    </aside>
+
+    <!-- V1.4 unified learning library -->
+    <div id="scopixStudyOverlay" class="scopix-study-overlay" hidden onclick="closeScopixStudyPanel()"></div>
+    <aside id="scopixStudyPanel" class="scopix-study-panel font-sans" role="dialog" aria-modal="true" aria-labelledby="scopixStudyTitle" hidden>
+        <div class="flex justify-between items-center gap-3 border-b border-sand pb-3 mb-3">
+            <div>
+                <h2 id="scopixStudyTitle" class="text-xl text-ink font-bold">我的学习资料</h2>
+                <p class="text-xs text-sage mt-1">生词与阅读批注统一管理 · 仅保存在本浏览器</p>
+            </div>
+            <button id="scopixStudyClose" type="button" onclick="closeScopixStudyPanel()" aria-label="关闭学习资料" class="border border-sand rounded-lg px-3 py-2">✕</button>
+        </div>
+        <div class="flex gap-2 mb-3" role="tablist" aria-label="学习资料类别">
+            <button type="button" role="tab" id="scopixTabWords" aria-controls="scopixStudyList" aria-selected="true" class="scopix-study-tab active" onclick="setScopixStudyTab('words')">生词本（<span id="scopixStudyWordCount">0</span>）</button>
+            <button type="button" role="tab" id="scopixTabNotes" aria-controls="scopixStudyList" aria-selected="false" class="scopix-study-tab" onclick="setScopixStudyTab('notes')">阅读批注（<span id="scopixStudyNoteCount">0</span>）</button>
+        </div>
+        <label class="block text-xs text-sage mb-1" for="scopixStudySearch">搜索词汇、笔记或文章标题</label>
+        <input type="search" id="scopixStudySearch" class="w-full border border-sand rounded-lg p-3 mb-3 text-sm bg-white" placeholder="搜索全部学习资料…" oninput="searchScopixStudy(this.value)" />
+        <div class="flex justify-end mb-3">
+            <button type="button" class="text-xs border border-sand rounded-lg px-3 py-2 text-moss" onclick="exportScopixStudyData()">导出 JSON 备份</button>
+        </div>
+        <div id="scopixStudyList" role="tabpanel" aria-labelledby="scopixTabWords" class="space-y-3 flex-1 overflow-y-auto pb-5"></div>
     </aside>
     <!-- 核心业务逻辑 -->
     <script>
@@ -622,7 +665,7 @@
                     <!-- 段落列表渲染 -->
                     <div class="space-y-12">
                         ${article.paragraphs.map((p, index) => `
-                            <div class="p-6 md:p-8 bg-paper/50 border border-sand rounded-xl space-y-6 shadow-xs">
+                            <div data-study-paragraph="${index}" class="p-6 md:p-8 bg-paper/50 border border-sand rounded-xl space-y-6 shadow-xs">
                                 <div>
                                     <span class="text-xs font-sans font-bold uppercase tracking-widest text-moss bg-wheat px-2.5 py-1 rounded">Paragraph ${index + 1}</span>
                                     <h3 class="font-display text-xl font-bold text-ink mt-3">${p.paragraphTitle}</h3>
@@ -826,6 +869,7 @@
             closeAllTooltips();
             const { targetWord, allWords } = extractTargetWords(element);
             if (targetWord) {
+                captureScopixWordContext(element);
                 openDictionary(targetWord, allWords);
             }
         }
@@ -844,6 +888,7 @@
                 isLongPress = true;
                 if (navigator.vibrate) navigator.vibrate(40);
                 closeAllTooltips();
+                captureScopixWordContext(element);
                 openDictionary(targetWord, allWords);
             }, 500);
         }
@@ -949,6 +994,7 @@
 
             const cleanWord = word.trim().toLowerCase();
             wordEl.innerText = cleanWord;
+            prepareScopixDictionaryWord(cleanWord);
             phoneticEl.innerText = '';
             
             let wordSelectorHtml = '';
@@ -988,6 +1034,7 @@
                     dictData = data[0];
                 }
 
+                setScopixWordMeaning(cleanWord, chineseTrans);
                 let chineseBlockHtml = '';
                 if (chineseTrans) {
                     chineseBlockHtml = `
@@ -1075,5 +1122,6 @@
         window.addEventListener('DOMContentLoaded', initApp);
     </script>
     <script src="annotation.js"></script>
+    <script src="study.js"></script>
 </body>
 </html>
