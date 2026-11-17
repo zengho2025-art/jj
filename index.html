@@ -245,6 +245,24 @@
             }
         }
 
+
+        /* V1.3 selectable annotation reader; original token gestures unchanged */
+        .annotation-reader { display:none; user-select:text; -webkit-user-select:text; white-space:pre-wrap; overflow-wrap:anywhere; line-height:1.85; }
+        body.annotation-mode .tokenized-reader { display:none; }
+        body.annotation-mode .annotation-reader { display:block; }
+        body.annotation-mode .annotation-toggle { background:#2F5D54; color:#fff; }
+        .annotation-mark { cursor:pointer; border-radius:2px; box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+        .annotation-mark[data-color="yellow"] { background:#fde68a; }
+        .annotation-mark[data-color="green"] { background:#a7f3d0; }
+        .annotation-mark[data-color="blue"] { background:#bfdbfe; }
+        .annotation-mark[data-color="pink"] { background:#fbcfe8; }
+        .annotation-mark[data-color="underline"] { text-decoration:underline 2px #e05353; text-underline-offset:3px; }
+        .annotation-mark:focus-visible { outline:2px solid #2F5D54; }
+        .annotation-toolbar { position:fixed; z-index:95; width:min(355px,calc(100vw - 20px)); background:white; border:1px solid #E8E4D9; border-radius:12px; padding:10px; box-shadow:0 12px 32px #1b3b363b; }
+        .annotation-toolbar[hidden], .annotation-note-editor[hidden] { display:none; }
+        .annotation-toolbar button { border:1px solid #E8E4D9; padding:5px 8px; border-radius:6px; font-size:12px; }
+        .annotation-toolbar .annotation-color { width:26px; height:26px; border-radius:50%; padding:0; border:2px solid white; box-shadow:0 0 0 1px #a5aaa5; }
+        .annotation-toolbar textarea { width:100%; min-height:70px; padding:8px; border:1px solid #E8E4D9; border-radius:6px; resize:vertical; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-moss selection:text-paper">
@@ -289,6 +307,25 @@
         </div>
     </div>
 
+
+    <!-- V1.3 floating annotation toolbar -->
+    <div id="scopixAnnotationToolbar" class="annotation-toolbar font-sans" hidden role="group" aria-label="阅读批注">
+        <div class="flex flex-wrap items-center gap-2 mb-2">
+            <button type="button" class="annotation-color" style="background:#fde68a" title="黄色" aria-label="黄色高亮" onclick="colorScopixSelection('yellow')"></button>
+            <button type="button" class="annotation-color" style="background:#a7f3d0" title="绿色" aria-label="绿色高亮" onclick="colorScopixSelection('green')"></button>
+            <button type="button" class="annotation-color" style="background:#bfdbfe" title="蓝色" aria-label="蓝色高亮" onclick="colorScopixSelection('blue')"></button>
+            <button type="button" class="annotation-color" style="background:#fbcfe8" title="粉色" aria-label="粉色高亮" onclick="colorScopixSelection('pink')"></button>
+            <button type="button" onclick="colorScopixSelection('underline')">红色下划线</button>
+            <button type="button" onclick="editScopixAnnotation()">批注</button>
+            <button type="button" id="scopixDeleteMark" hidden onclick="deleteScopixMark()">删除</button>
+            <button type="button" onclick="closeAnnotationToolbar()" aria-label="关闭">×</button>
+        </div>
+        <div id="scopixNoteEditor" class="annotation-note-editor space-y-2" hidden>
+            <label class="text-xs text-sage" for="scopixAnnotationNote">我的阅读批注</label>
+            <textarea id="scopixAnnotationNote" maxlength="2000" placeholder="记录对所选词句的理解…"></textarea>
+            <button type="button" onclick="saveScopixNote()">保存批注</button>
+        </div>
+    </div>
     <!-- 核心业务逻辑 -->
     <script>
         let allArticles = [];
@@ -514,6 +551,10 @@
                         </div>
                     </div>
 
+                        <div class="mt-3 flex flex-wrap items-center gap-2">
+                            <button type="button" class="annotation-toggle px-3 py-2 border border-sand rounded-lg bg-white text-moss text-sm" aria-pressed="false" onclick="toggleAnnotationMode()">✍ 开启批注模式</button>
+                            <span class="text-xs text-sage">批注模式下可选择英文高亮和写笔记；退出后恢复查词。记录仅保存在当前浏览器。</span>
+                        </div>
                     <!-- 段落列表渲染 -->
                     <div class="space-y-12">
                         ${article.paragraphs.map((p, index) => `
@@ -530,7 +571,8 @@
 
                                 <!-- 原文与翻译区 -->
                                 <div class="space-y-3 font-serif text-lg leading-relaxed text-gray-900 border-l-2 border-gold pl-4 py-1">
-                                    <div class="reading-english font-semibold text-ink flex flex-wrap items-baseline">
+                                    <div class="reading-english font-semibold text-ink">
+                                        <div class="tokenized-reader flex flex-wrap items-baseline">
                                         ${p.wordTokens && p.wordTokens.length > 0 ? p.wordTokens.map(token => `
                                             <span class="token-item" 
                                                   data-word="${token.word.replace(/"/g, '&quot;')}"
@@ -564,6 +606,8 @@
                                                 </span>
                                             </span>
                                         `).join(' ') : `<p>${p.englishText}</p>`}
+                                        </div>
+                                        <div class="annotation-reader" data-paragraph="${index}" aria-label="可选择并批注的英文正文"></div>
                                     </div>
                                     <p class="reading-translation text-gray-600 text-base mt-2">${p.chineseText}</p>
                                     <button type="button" class="paragraph-translation-toggle text-xs text-moss border border-sand bg-wheat px-3 py-1.5 rounded-md mt-2" aria-expanded="false" onclick="toggleParagraphTranslation(this)">查看段落翻译</button>
@@ -672,6 +716,7 @@
             `;
              // Scopix V1.1：恢复用户上次选择的阅读模式
             setReadingMode(readingMode);
+            setupArticleAnnotations(article);
         }
 
         // Scopix V1.2：英文模式下按需查看段落翻译
@@ -965,5 +1010,6 @@
 
         window.addEventListener('DOMContentLoaded', initApp);
     </script>
+    <script src="annotation.js"></script>
 </body>
 </html>
