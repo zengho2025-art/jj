@@ -176,6 +176,7 @@ function renderScopixStudyLibrary() {
     notesBtn.setAttribute('aria-selected',String(scopixStudyTab==='notes'));
     wordsBtn.classList.toggle('active',scopixStudyTab==='words');
     notesBtn.classList.toggle('active',scopixStudyTab==='notes');
+    list.setAttribute('aria-labelledby', scopixStudyTab==='words' ? 'scopixTabWords' : 'scopixTabNotes');
     list.replaceChildren();
     const query=scopixStudyQuery.trim().toLowerCase();
     if (scopixStudyTab==='words') {
@@ -204,6 +205,7 @@ function renderScopixStudyLibrary() {
                 (article?.title || '未知文章')+' · 第'+(n.paragraph+1)+'段',
                 n.note||'（无文字批注）', [
                     ['定位原文',()=>locateScopixStudyNote(n.id)],
+                    ['编辑批注',()=>locateScopixStudyNote(n.id,true)],
                     ['删除',()=>deleteScopixStudyNote(n.id),'text-red-700']
                 ]));
         }
@@ -245,12 +247,12 @@ function locateScopixWord(id) {
     target?.scrollIntoView({behavior:'smooth',block:'center'});
 }
 
-function locateScopixStudyNote(id) {
+function locateScopixStudyNote(id, edit=false) {
     const mark=getStudyAnnotations().find(m=>m.id===id);
     if (!mark) return;
     closeScopixStudyPanel();
     if (!navigateScopixToArticle(mark.articleId)) return;
-    if (typeof locateScopixMark === 'function') locateScopixMark(id,false);
+    if (typeof locateScopixMark === 'function') locateScopixMark(id,edit);
 }
 
 function deleteScopixStudyNote(id) {
@@ -265,6 +267,7 @@ function deleteScopixStudyNote(id) {
 function openScopixStudyPanel() {
     const panel=document.getElementById('scopixStudyPanel');
     scopixStudyReturnFocus=document.activeElement;
+    if (typeof closeScopixAnnotationSidebar==='function') closeScopixAnnotationSidebar();
     panel.hidden=false;
     document.getElementById('scopixStudyOverlay').hidden=false;
     document.body.classList.add('scopix-study-open');
