@@ -181,8 +181,27 @@
         }
 
         /* 纯英文：隐藏中文译文 */
-        html[data-reading-mode="en"] .reading-translation {
+        html[data-reading-mode="en"] .reading-translation:not(.translation-revealed) {
             display: none;
+        }
+        .paragraph-translation-toggle { display: none; }
+        html[data-reading-mode="en"] .paragraph-translation-toggle { display: inline-flex; }
+        .sentence-details > summary { cursor: pointer; list-style: none; }
+        .sentence-details > summary::-webkit-details-marker { display: none; }
+        .sentence-details > summary::after {
+            content: "展开句法";
+            font-size: 12px;
+            color: #5C7A74;
+            margin-left: auto;
+            white-space: nowrap;
+        }
+        .sentence-details[open] > summary::after { content: "收起句法"; }
+        .sentence-translation[hidden] { display: none; }
+        .sentence-details > summary:focus-visible,
+        .sentence-translation-toggle:focus-visible,
+        .paragraph-translation-toggle:focus-visible {
+            outline: 2px solid #2F5D54;
+            outline-offset: 2px;
         }
 
         /* 纯中文：隐藏英文正文 */
@@ -297,6 +316,16 @@
 
             readingMode = mode;
             document.documentElement.dataset.readingMode = mode;
+
+            if (mode !== 'en') {
+                document.querySelectorAll('.reading-translation.translation-revealed').forEach(el => {
+                    el.classList.remove('translation-revealed');
+                });
+                document.querySelectorAll('.paragraph-translation-toggle').forEach(button => {
+                    button.textContent = '查看段落翻译';
+                    button.setAttribute('aria-expanded', 'false');
+                });
+            }
 
             try {
                 localStorage.setItem(READING_MODE_KEY, mode);
@@ -537,6 +566,7 @@
                                         `).join(' ') : `<p>${p.englishText}</p>`}
                                     </div>
                                     <p class="reading-translation text-gray-600 text-base mt-2">${p.chineseText}</p>
+                                    <button type="button" class="paragraph-translation-toggle text-xs text-moss border border-sand bg-wheat px-3 py-1.5 rounded-md mt-2" aria-expanded="false" onclick="toggleParagraphTranslation(this)">查看段落翻译</button>
                                 </div>
 
                                 <!-- 深度语法解析器：完全还原截图样式 -->
@@ -551,17 +581,17 @@
                                     <div class="space-y-4 p-4 pt-0">
 
                                             ${p.detailedSyntax.map((item, sIndex) => `
-                                                <div class="bg-white p-5 md:p-6 rounded-xl border border-sand shadow-sm space-y-4 font-sans text-sm">
-                                                    <!-- 句子原文标题 -->
-                                                    <div class="flex items-start justify-between gap-3 border-b border-sand/60 pb-3">
-                                                        <div class="space-y-1">
-                                                            <div class="flex items-center space-x-2">
+                                                <details class="sentence-details bg-white p-4 md:p-5 rounded-xl border border-sand shadow-sm font-sans text-sm">
+                                                    <summary class="flex items-start gap-3 pb-2">
+                                                        <div class="space-y-2 flex-1 min-w-0">
+                                                            <div class="flex flex-wrap items-center gap-2">
                                                                 <span class="text-xs px-2 py-0.5 bg-moss/10 text-moss font-bold rounded">句 ${sIndex + 1}</span>
                                                                 <span class="text-xs text-sage font-medium">${item.sentenceType}</span>
                                                             </div>
                                                             <h5 class="font-serif text-ink text-base font-medium leading-relaxed">${item.sentence}</h5>
                                                         </div>
-                                                    </div>
+                                                    </summary>
+                                                    <div class="space-y-4 pt-3 border-t border-sand/60">
 
                                                     <!-- 句子的成分划分 -->
                                                     <div class="space-y-3 pt-1">
@@ -602,12 +632,16 @@
                                                         </div>
                                                     ` : ''}
 
-                                                    <!-- 完整含义 -->
-                                                    <div class="pt-2 border-t border-sand/40 text-xs text-gray-700 flex items-baseline space-x-1.5">
-                                                        <span class="font-semibold text-moss whitespace-nowrap">整句含义：</span>
-                                                        <span class="italic font-serif text-gray-900">${item.translation}</span>
+                                                    <!-- 逐句翻译：用户按需查看 -->
+                                                        <div class="pt-2 border-t border-sand/40">
+                                                            <button type="button" class="sentence-translation-toggle text-xs text-moss font-semibold border border-sand bg-wheat px-3 py-1.5 rounded-md" aria-expanded="false" onclick="toggleSentenceTranslation(this)">查看整句翻译</button>
+                                                            <div class="sentence-translation mt-3 text-sm text-gray-700 leading-relaxed" hidden>
+                                                                <span class="font-semibold text-moss">整句含义：</span>
+                                                                <span class="italic font-serif text-gray-900">${item.translation}</span>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </details>
                                         
                                             `).join('')}
                                         </div>
@@ -638,6 +672,25 @@
             `;
              // Scopix V1.1：恢复用户上次选择的阅读模式
             setReadingMode(readingMode);
+        }
+
+        // Scopix V1.2：英文模式下按需查看段落翻译
+        function toggleParagraphTranslation(button) {
+            const translation = button.previousElementSibling;
+            if (!translation || !translation.classList.contains('reading-translation')) return;
+            const visible = translation.classList.toggle('translation-revealed');
+            button.textContent = visible ? '隐藏段落翻译' : '查看段落翻译';
+            button.setAttribute('aria-expanded', String(visible));
+        }
+
+        // Scopix V1.2：重点句子在展开句法之后按需查看整句翻译
+        function toggleSentenceTranslation(button) {
+            const translation = button.nextElementSibling;
+            if (!translation || !translation.classList.contains('sentence-translation')) return;
+            translation.hidden = !translation.hidden;
+            const visible = !translation.hidden;
+            button.textContent = visible ? '隐藏整句翻译' : '查看整句翻译';
+            button.setAttribute('aria-expanded', String(visible));
         }
 
         // ============================================
