@@ -330,6 +330,17 @@
         .review-rating-btn {border:1px solid #E8E4D9;border-radius:8px;padding:12px 8px;background:#fff;color:#2F5D54;font-size:14px}
         .review-rating-btn:hover {background:#F3F0E7}
         .scopix-review-panel button:focus-visible {outline:2px solid #2F5D54;outline-offset:2px}
+
+        /* V1.6 email login and cloud sync */
+        .scopix-cloud-overlay { position:fixed; inset:0; z-index:140; background:rgba(27,59,54,.45); }
+        .scopix-cloud-panel {position:fixed;z-index:141;top:0;right:0;bottom:0;width:min(500px,100vw);
+            background:#FAF9F5;overflow-y:auto;padding:22px;
+            padding-bottom:calc(22px + env(safe-area-inset-bottom));
+            box-shadow:-8px 0 32px rgba(27,59,54,.24);}
+        .scopix-cloud-panel[hidden], .scopix-cloud-overlay[hidden], .scopix-cloud-panel [hidden] {display:none!important;}
+        .scopix-cloud-panel button:focus-visible, .scopix-cloud-panel input:focus-visible {outline:2px solid #2F5D54;outline-offset:2px;}
+        .scopix-cloud-panel [data-error="true"] {color:#ad3434;}
+        body.scopix-cloud-open {overflow:hidden;}
     </style>
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-moss selection:text-paper">
@@ -342,6 +353,7 @@
             </div>
             <div class="flex items-center gap-2">
                 <button type="button" class="text-xs sm:text-sm border border-sand bg-white rounded-lg px-3 py-2 text-moss font-semibold hover:bg-wheat" onclick="openScopixReview()">🧠 每日复习 <span class="scopix-review-count">0</span></button>
+                <button type="button" id="scopixAccountButton" class="text-xs sm:text-sm border border-sand bg-white rounded-lg px-3 py-2 text-moss font-semibold hover:bg-wheat" onclick="openScopixCloudPanel()">☁ 登录与同步</button>
                 <button type="button" class="text-xs sm:text-sm border border-sand bg-white rounded-lg px-3 py-2 text-moss font-semibold hover:bg-wheat" onclick="openScopixStudyPanel()">📚 我的学习资料</button>
                 <div class="hidden lg:block text-sm text-sage font-medium">www.scopix.cn</div>
             </div>
@@ -489,6 +501,43 @@
         </div>
         <p class="text-xs text-sage mt-4">本地复习计划 · 每轮最多 20 个单词 · 不记得的单词约 10 分钟后到期。请定期导出学习数据备份。</p>
     </section>
+
+    <!-- V1.6: email account and safe cloud sync -->
+    <div id="scopixCloudOverlay" class="scopix-cloud-overlay" hidden onclick="closeScopixCloudPanel()"></div>
+    <aside id="scopixCloudPanel" class="scopix-cloud-panel font-sans" role="dialog" aria-modal="true" aria-labelledby="scopixCloudTitle" hidden>
+        <div class="flex justify-between items-center gap-3 pb-3 border-b border-sand">
+            <div>
+                <h2 id="scopixCloudTitle" class="text-xl font-bold text-ink">☁ 账号登录与云端同步</h2>
+                <p class="text-xs text-sage mt-1">登录后可在不同设备使用同一份生词、批注与复习记录。</p>
+            </div>
+            <button id="scopixCloudClose" type="button" onclick="closeScopixCloudPanel()" class="px-3 py-2 border border-sand rounded-lg" aria-label="关闭账号面板">✕</button>
+        </div>
+        <div class="bg-white border border-sand rounded-xl p-4 space-y-3 mt-4">
+            <p class="text-sm"><strong>当前账号：</strong><span id="scopixCloudAccount">尚未登录</span></p>
+            <form id="scopixCloudLogin" onsubmit="event.preventDefault();cloudSignIn()" class="space-y-3">
+                <label for="scopixCloudEmail" class="block text-sm font-semibold text-ink">邮箱地址</label>
+                <input id="scopixCloudEmail" type="email" autocomplete="email" required placeholder="you@example.com"
+                       class="w-full p-3 border border-sand rounded-lg text-sm" />
+                <button type="submit" class="w-full p-3 rounded-lg bg-moss text-white font-semibold">发送邮箱登录链接</button>
+                <p class="text-xs text-sage">无需设置密码。点击邮件里的链接完成登录。请勿分享登录邮件中的链接。</p>
+            </form>
+            <div class="flex flex-wrap gap-2">
+                <button id="scopixCloudSync" type="button" onclick="cloudRefresh()" hidden
+                    class="px-3 py-2 text-sm border border-sand rounded-lg text-moss">检查云端更新</button>
+                <button id="scopixCloudLogout" type="button" onclick="cloudSignOut()" hidden
+                    class="px-3 py-2 text-sm border border-sand rounded-lg text-moss">退出登录</button>
+            </div>
+            <p id="scopixCloudStatus" role="status" aria-live="polite" class="text-xs text-sage leading-relaxed"></p>
+            <div id="scopixCloudChoices" hidden class="space-y-2 border-t border-sand pt-3">
+                <p class="text-xs text-red-700">发现本地与云端版本不同。请选择保留哪份数据。此操作不会自动合并两份记录，建议先导出本地备份。</p>
+                <div class="flex flex-wrap gap-2">
+                    <button type="button" onclick="cloudResolve('cloud')" class="px-3 py-2 rounded-lg bg-moss text-white text-sm">使用云端记录</button>
+                    <button type="button" onclick="cloudResolve('local')" class="px-3 py-2 rounded-lg border border-sand text-moss text-sm">使用本地并覆盖云端</button>
+                </div>
+            </div>
+        </div>
+        <p class="text-xs text-sage leading-relaxed mt-4">云端需由站点管理员先配置 Supabase 数据库与访问策略。未登录时继续在本浏览器离线保存。请勿在共享设备上长期保持登录。</p>
+    </aside>
     <!-- 核心业务逻辑 -->
     <script>
         let allArticles = [];
@@ -1182,5 +1231,8 @@
     <script src="annotation.js"></script>
     <script src="study.js"></script>
     <script src="review.js"></script>
+    <script src="cloud-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="cloud.js"></script>
 </body>
 </html>
