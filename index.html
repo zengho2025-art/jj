@@ -34,6 +34,12 @@
         };
     </script>
     <style>
+        
+        /* 纯英文阅读时隐藏段落立论提示 */
+        html[data-reading-mode="en"] .reading-analysis {
+            display: none;
+        }
+
         body { background-color: #FAF9F5; color: #1B3B36; font-family: 'Source Sans 3', 'Noto Serif SC', serif; }
         .category-btn.active { background-color: #2F5D54; color: #FAF9F5; }
 
@@ -155,6 +161,71 @@
             from { transform: translateY(100%); }
             to { transform: translateY(0); }
         }
+
+        /* Scopix V1.1：阅读模式 */
+        .reading-mode-btn {
+            border: 1px solid #E8E4D9;
+            background: #fff;
+            color: #2F5D54;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .reading-mode-btn.active {
+            background: #2F5D54;
+            color: #fff;
+            border-color: #2F5D54;
+        }
+
+        /* 纯英文：隐藏中文译文 */
+        html[data-reading-mode="en"] .reading-translation {
+            display: none;
+        }
+
+        /* 纯中文：隐藏英文正文 */
+        html[data-reading-mode="zh"] .reading-english {
+            display: none;
+        }
+
+        /* 语法折叠区域 */
+        .syntax-details > summary {
+            cursor: pointer;
+            list-style: none;
+        }
+
+        .syntax-details > summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .syntax-details > summary::after {
+            content: "展开分析 ＋";
+            font-size: 12px;
+            font-weight: 500;
+            margin-left: auto;
+            white-space: nowrap;
+        }
+
+        .syntax-details[open] > summary::after {
+            content: "收起分析 −";
+        }
+
+        .syntax-details > summary:focus-visible,
+        .reading-mode-btn:focus-visible {
+            outline: 2px solid #2F5D54;
+            outline-offset: 3px;
+        }
+
+        @media (max-width: 640px) {
+            .reading-mode-btn {
+                flex: 1;
+                padding: 10px 5px;
+                font-size: 12px;
+            }
+        }
+
     </style>
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-moss selection:text-paper">
@@ -203,6 +274,47 @@
     <script>
         let allArticles = [];
         let currentCategory = 'All';
+
+        /* Scopix V1.1：阅读模式管理 */
+        const READING_MODE_KEY = 'scopix_reading_mode_v1';
+        const VALID_READING_MODES = ['en', 'both', 'zh'];
+
+        function getSavedReadingMode() {
+            try {
+                const saved = localStorage.getItem(READING_MODE_KEY);
+                return VALID_READING_MODES.includes(saved) ? saved : 'both';
+            } catch (error) {
+                return 'both';
+            }
+        }
+
+        let readingMode = getSavedReadingMode();
+
+        document.documentElement.dataset.readingMode = readingMode;
+
+        function setReadingMode(mode) {
+            if (!VALID_READING_MODES.includes(mode)) return;
+
+            readingMode = mode;
+            document.documentElement.dataset.readingMode = mode;
+
+            try {
+                localStorage.setItem(READING_MODE_KEY, mode);
+            } catch (error) {
+                console.warn('阅读偏好无法保存', error);
+            }
+
+            document.querySelectorAll('.reading-mode-btn')
+                .forEach(button => {
+                    const active = button.dataset.mode === mode;
+                    button.classList.toggle('active', active);
+                    button.setAttribute('aria-pressed', String(active));
+                });
+
+            if (typeof closeAllTooltips === 'function') {
+                closeAllTooltips();
+            }
+        }
 
         let touchTimer = null;
         let isLongPress = false;
@@ -338,6 +450,41 @@
                     <h2 class="text-lg text-sage font-serif mb-8 pb-6 border-b border-sand">${article.chineseTitle}</h2>
                     <p class="text-base text-gray-700 mb-10 italic bg-wheat/40 p-5 rounded-lg border-l-4 border-moss font-serif">${article.summary}</p>
 
+                    <!-- Scopix V1.1：阅读模式切换 -->
+                    <div class="mb-8 p-4 bg-wheat/30 border border-sand rounded-xl">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-sm font-bold text-moss">
+                                📖 阅读模式
+                            </span>
+                            <span class="text-xs text-sage">
+                                自动记住您的选择
+                            </span>
+                        </div>
+
+                        <div class="flex gap-2" role="group" aria-label="阅读模式">
+                            <button type="button"
+                                    class="reading-mode-btn"
+                                    data-mode="en"
+                                    onclick="setReadingMode('en')">
+                                纯英文
+                            </button>
+
+                            <button type="button"
+                                    class="reading-mode-btn"
+                                    data-mode="both"
+                                    onclick="setReadingMode('both')">
+                                中英对照
+                            </button>
+
+                            <button type="button"
+                                    class="reading-mode-btn"
+                                    data-mode="zh"
+                                    onclick="setReadingMode('zh')">
+                                纯中文
+                            </button>
+                        </div>
+                    </div>
+
                     <!-- 段落列表渲染 -->
                     <div class="space-y-12">
                         ${article.paragraphs.map((p, index) => `
@@ -345,12 +492,16 @@
                                 <div>
                                     <span class="text-xs font-sans font-bold uppercase tracking-widest text-moss bg-wheat px-2.5 py-1 rounded">Paragraph ${index + 1}</span>
                                     <h3 class="font-display text-xl font-bold text-ink mt-3">${p.paragraphTitle}</h3>
-                                    <p class="text-sm text-sage mt-1 font-sans leading-relaxed"><strong>段落立论功能：</strong>${p.thesisAndContext}</p>
+                                    
+                                    <p class="reading-analysis text-sm text-sage mt-1 font-sans leading-relaxed">
+                                        <strong>段落立论功能：</strong>${p.thesisAndContext}
+                                    </p>
+
                                 </div>
 
                                 <!-- 原文与翻译区 -->
                                 <div class="space-y-3 font-serif text-lg leading-relaxed text-gray-900 border-l-2 border-gold pl-4 py-1">
-                                    <div class="font-semibold text-ink flex flex-wrap items-baseline">
+                                    <div class="reading-english font-semibold text-ink flex flex-wrap items-baseline">
                                         ${p.wordTokens && p.wordTokens.length > 0 ? p.wordTokens.map(token => `
                                             <span class="token-item" 
                                                   data-word="${token.word.replace(/"/g, '&quot;')}"
@@ -385,17 +536,20 @@
                                             </span>
                                         `).join(' ') : `<p>${p.englishText}</p>`}
                                     </div>
-                                    <p class="text-gray-600 text-base mt-2">${p.chineseText}</p>
+                                    <p class="reading-translation text-gray-600 text-base mt-2">${p.chineseText}</p>
                                 </div>
 
                                 <!-- 深度语法解析器：完全还原截图样式 -->
                                 ${p.detailedSyntax && p.detailedSyntax.length > 0 ? `
-                                    <div class="space-y-4">
-                                        <div class="flex items-center space-x-2 text-moss font-bold text-base font-sans">
-                                            <span class="p-1 bg-wheat rounded">📖</span>
-                                            <span>全句深度语法剖析（句型 · 主干 · 修饰逻辑）</span>
-                                        </div>
-                                        <div class="space-y-4">
+                                    
+                                <details class="syntax-details rounded-xl border border-sand bg-white overflow-hidden">
+                                    <summary class="flex items-center gap-2 p-4 text-moss font-bold text-sm md:text-base">
+                                        <span>📖</span>
+                                        <span>全句深度语法剖析（句型 · 主干 · 修饰逻辑）</span>
+                                    </summary>
+
+                                    <div class="space-y-4 p-4 pt-0">
+
                                             ${p.detailedSyntax.map((item, sIndex) => `
                                                 <div class="bg-white p-5 md:p-6 rounded-xl border border-sand shadow-sm space-y-4 font-sans text-sm">
                                                     <!-- 句子原文标题 -->
@@ -454,12 +608,14 @@
                                                         <span class="italic font-serif text-gray-900">${item.translation}</span>
                                                     </div>
                                                 </div>
+                                        
                                             `).join('')}
                                         </div>
-                                    </div>
+                                    </details>
                                 ` : ''}
 
                                 <!-- 核心高阶词汇总结 -->
+
                                 ${p.vocabularyNotes && p.vocabularyNotes.length > 0 ? `
                                     <div class="bg-wheat/30 p-5 rounded-lg border border-sand/60 text-sm font-sans space-y-3">
                                         <h4 class="font-bold text-moss flex items-center space-x-1.5">
@@ -480,6 +636,8 @@
                     </div>
                 </div>
             `;
+             // Scopix V1.1：恢复用户上次选择的阅读模式
+            setReadingMode(readingMode);
         }
 
         // ============================================
@@ -744,6 +902,13 @@
             if (event) event.stopPropagation();
             document.getElementById('dictModal').classList.remove('active');
         }
+        
+        /* Scopix V1.1：支持浏览器前进与后退 */
+        window.addEventListener('popstate', () => {
+            if (allArticles.length > 0) {
+                checkRoute();
+            }
+        });
 
         window.addEventListener('DOMContentLoaded', initApp);
     </script>
