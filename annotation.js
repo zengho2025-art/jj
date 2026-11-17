@@ -102,8 +102,18 @@ function positionAnnotationToolbar(rect) {
     bar.hidden = false;
     document.getElementById('scopixNoteEditor').hidden = true;
     document.getElementById('scopixDeleteMark').hidden = !scopixEditingId;
-    bar.style.left = Math.max(10, Math.min(rect.left, window.innerWidth - 365)) + 'px';
-    bar.style.top = Math.max(10, Math.min(rect.bottom + 8, window.innerHeight - 210)) + 'px';
+    // Prefer above the selected text; fall back below when there is no room.
+    const margin = 10;
+    const width = bar.getBoundingClientRect().width;
+    const height = bar.getBoundingClientRect().height;
+    const maxLeft = Math.max(margin, window.innerWidth - width - margin);
+    const left = Math.max(margin, Math.min(rect.left, maxLeft));
+    let top = rect.top - height - 10;
+    if (top < margin) top = rect.bottom + 10;
+    top = Math.max(margin, Math.min(top, Math.max(margin, window.innerHeight-height-margin)));
+    bar.style.left = left + 'px';
+    bar.style.top = top + 'px';
+    showAnnotationFeedback('');
 }
 
 function captureScopixSelection() {
@@ -139,24 +149,47 @@ function openScopixMark(mark) {
     positionAnnotationToolbar(mark.getBoundingClientRect());
 }
 
-function overlapsScopixMark(target) {
-    return scopixMarks.some(m => m.articleId === target.articleId &&
+function findOverlappingScopixMarks(target) {
+    return scopixMarks.filter(m => m.articleId === target.articleId &&
         m.paragraph === target.paragraph && m.start < target.end && m.end > target.start);
+}
+
+function showAnnotationFeedback(message) {
+    const tip = document.getElementById('scopixAnnotationFeedback');
+    if (!tip) return;
+    tip.textContent = message;
+    tip.hidden = !message;
+}
+
+function handleOverlappingSelection() {
+    const overlapping = findOverlappingScopixMarks(scopixSelected);
+    if (!overlapping.length) return false;
+    if (overlapping.length === 1) {
+        // Selecting an existing mark (or part of it) edits that mark.
+        const mark = overlapping[0];
+        scopixEditingId = mark.id;
+        scopixSelected = {articleId:mark.articleId,paragraph:mark.paragraph,
+            start:mark.start,end:mark.end,text:mark.text};
+        document.getElementById('scopixDeleteMark').hidden = false;
+        showAnnotationFeedback('已选中已有高亮：当前操作将修改整条标记。');
+        return false;
+    }
+    // Multiple overlapping marks should never be merged or overwritten silently.
+    showAnnotationFeedback('选区包含多个已有高亮。请单击其中一条标记后修改。');
+    return true;
 }
 
 function saveScopixMark(color, note, isNoteEdit) {
     if (!scopixSelected) return;
     const previous = scopixMarks.find(m => m.id === scopixEditingId);
-    if (!previous && overlapsScopixMark(scopixSelected)) {
-        alert('选区与已有高亮重叠，请点击已有标记进行编辑。');
-        return;
-    }
-    const item = previous
-        ? {...previous, color: isNoteEdit ? previous.color : color,
-            note: isNoteEdit ? note : previous.note}
+    if (!previous && handleOverlappingSelection()) return;
+    const resolvedPrevious = scopixMarks.find(m => m.id === scopixEditingId);
+    const item = resolvedPrevious
+        ? {...resolvedPrevious, color: isNoteEdit ? resolvedPrevious.color : color,
+            note: isNoteEdit ? note : resolvedPrevious.note}
         : {...scopixSelected, id: Date.now()+'-'+Math.random().toString(36).slice(2),
             color, note: note || '', createdAt:Date.now()};
-    const next = previous ? scopixMarks.map(m=>m.id===previous.id?item:m) : [...scopixMarks,item];
+    const next = resolvedPrevious ? scopixMarks.map(m=>m.id===resolvedPrevious.id?item:m) : [...scopixMarks,item];
     if (!persistScopixMarks(next)) return;
     refreshScopixMarks();
     closeAnnotationToolbar();
@@ -170,6 +203,7 @@ function colorScopixSelection(color) {
 
 function editScopixAnnotation() {
     if (!scopixSelected) return;
+    if (!scopixEditingId && handleOverlappingSelection()) return;
     const previous = scopixMarks.find(m => m.id === scopixEditingId);
     document.getElementById('scopixNoteEditor').hidden = false;
     document.getElementById('scopixAnnotationNote').value = previous?.note || '';
@@ -200,7 +234,7 @@ document.addEventListener('touchend', e => {
 document.addEventListener('click', e => {
     if (!scopixAnnotationMode) return;
     const mark = e.target.closest('.annotation-mark');
-    if (mark) { openScopixMark(mark); return; }
+    if (mark && window.getSelection()?.isCollapsed) { openScopixMark(mark); return; }
     if (!e.target.closest('#scopixAnnotationToolbar') && !e.target.closest('.annotation-reader'))
         closeAnnotationToolbar();
 });
