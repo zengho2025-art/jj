@@ -137,6 +137,7 @@ function scopixCloudLocalChanged() {
 async function cloudFlush() {
     if (!scopixCloudUser || scopixCloudBusy || scopixCloudConflict || !scopixCloudPending) return;
     scopixCloudBusy=true;
+    let syncSucceeded=false;
     const epoch=scopixCloudEpoch;
     const snapshot=JSON.parse(JSON.stringify(cloudReadLocal()));
     scopixCloudPending=false;
@@ -153,6 +154,7 @@ async function cloudFlush() {
             return;
         }
         scopixCloudRevision=nextRev;
+        syncSucceeded=true;
         cloudStatus('已安全同步到云端（版本 '+nextRev+'）。');
         if (!cloudSame(snapshot,cloudReadLocal())) scopixCloudPending=true;
     } catch(err) {
@@ -161,8 +163,11 @@ async function cloudFlush() {
         cloudStatus('暂时无法同步：'+String(err.message||err)+'。本地记录仍在；联网后可重试。',true);
     } finally {
         scopixCloudBusy=false;
-        if(scopixCloudPending && !scopixCloudConflict && epoch===scopixCloudEpoch)
-            cloudStatus('尚有未同步的更改，请稍后点击“立即同步”。',true);
+        if(scopixCloudPending && !scopixCloudConflict && epoch===scopixCloudEpoch) {
+            // Retry remaining edits only after a successful write; network failures stay local.
+            if (syncSucceeded) cloudScheduleSync();
+            else cloudStatus('仍有未同步更改，请联网后点击“检查云端更新”重试。',true);
+        }
     }
 }
 async function cloudResolve(choice) {
