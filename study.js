@@ -222,7 +222,19 @@ function emptyStudyList(text) {
 }
 
 function toggleScopixWordLearned(id) {
-    const next=scopixVocabulary.map(w=>w.id===id?{...w,learned:!w.learned}:w);
+    const now=Date.now();
+    const next=scopixVocabulary.map(w=>{
+        if(w.id!==id) return w;
+        const learned=!w.learned;
+        // Manual change adjusts the due date without falsely counting a review.
+        const oldReview=w.review && typeof w.review==='object' ? w.review : {};
+        const nextReview={
+            ...oldReview,
+            dueAt: learned ? now+3*86400000 : now,
+            intervalDays: learned ? Math.max(3,oldReview.intervalDays || 0) : 0
+        };
+        return {...w, learned,review:nextReview};
+    });
     persistScopixVocabulary(next);
 }
 
