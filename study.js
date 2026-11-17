@@ -23,6 +23,7 @@ function persistScopixVocabulary(next) {
         scopixVocabulary = next;
         renderScopixStudyLibrary();
         updateScopixSaveWordButton();
+        if (typeof updateScopixReviewCounts === 'function') updateScopixReviewCounts();
         return true;
     } catch (_) {
         showScopixStudyFeedback('保存失败：本地存储空间不足或浏览器禁止保存。');
