@@ -258,11 +258,38 @@
         .annotation-mark[data-color="pink"] { background:#fbcfe8; }
         .annotation-mark[data-color="underline"] { text-decoration:underline 2px #e05353; text-underline-offset:3px; }
         .annotation-mark:focus-visible { outline:2px solid #2F5D54; }
-        .annotation-toolbar { position:fixed; z-index:95; width:min(355px,calc(100vw - 20px)); background:white; border:1px solid #E8E4D9; border-radius:12px; padding:10px; box-shadow:0 12px 32px #1b3b363b; }
-        .annotation-toolbar[hidden], .annotation-note-editor[hidden] { display:none; }
-        .annotation-toolbar button { border:1px solid #E8E4D9; padding:5px 8px; border-radius:6px; font-size:12px; }
-        .annotation-toolbar .annotation-color { width:26px; height:26px; border-radius:50%; padding:0; border:2px solid white; box-shadow:0 0 0 1px #a5aaa5; }
-        .annotation-toolbar textarea { width:100%; min-height:70px; padding:8px; border:1px solid #E8E4D9; border-radius:6px; resize:vertical; }
+        .annotation-toolbar {
+            position:fixed; z-index:95; width:min(390px,calc(100vw - 24px));
+            background:#fff; border:1px solid #E8E4D9; border-radius:14px;
+            padding:12px; box-shadow:0 12px 34px rgba(27,59,54,.22);
+            max-height:min(70vh,440px); overflow-y:auto;
+        }
+        .annotation-toolbar[hidden], .annotation-note-editor[hidden],
+        .annotation-toolbar [hidden] { display:none !important; }
+        .annotation-toolbar button {
+            border:1px solid #E8E4D9; padding:8px 11px; border-radius:8px;
+            font-size:13px; min-height:35px; transition:background-color .15s;
+        }
+        .annotation-toolbar button:hover { background:#F3F0E7; }
+        .annotation-toolbar button:focus-visible { outline:2px solid #2F5D54; outline-offset:2px; }
+        .annotation-toolbar .annotation-color {
+            width:32px; height:32px; border-radius:50%; padding:0;
+            min-height:32px; border:3px solid #fff; box-shadow:0 0 0 1px #9baba6;
+        }
+        .annotation-toolbar .annotation-color:hover { transform:scale(1.08); }
+        .annotation-toolbar textarea {
+            width:100%; min-height:80px; padding:10px; border:1px solid #E8E4D9;
+            border-radius:8px; resize:vertical; font-size:14px;
+        }
+        @media (max-width:640px) {
+            .annotation-toolbar {
+                left:8px !important; right:8px !important; bottom:calc(8px + env(safe-area-inset-bottom)) !important;
+                top:auto !important; width:auto; max-height:min(58vh,420px);
+                border-radius:16px; padding:12px;
+            }
+            .annotation-toolbar button { min-height:40px; }
+            .annotation-toolbar .annotation-color { width:36px; height:36px; }
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-moss selection:text-paper">
@@ -310,21 +337,27 @@
 
     <!-- V1.3 floating annotation toolbar -->
     <div id="scopixAnnotationToolbar" class="annotation-toolbar font-sans" hidden role="group" aria-label="阅读批注">
-        <div class="flex flex-wrap items-center gap-2 mb-2">
-            <button type="button" class="annotation-color" style="background:#fde68a" title="黄色" aria-label="黄色高亮" onclick="colorScopixSelection('yellow')"></button>
-            <button type="button" class="annotation-color" style="background:#a7f3d0" title="绿色" aria-label="绿色高亮" onclick="colorScopixSelection('green')"></button>
-            <button type="button" class="annotation-color" style="background:#bfdbfe" title="蓝色" aria-label="蓝色高亮" onclick="colorScopixSelection('blue')"></button>
-            <button type="button" class="annotation-color" style="background:#fbcfe8" title="粉色" aria-label="粉色高亮" onclick="colorScopixSelection('pink')"></button>
+        <div class="flex justify-between items-center gap-2 mb-1">
+            <strong id="scopixToolbarTitle" class="text-sm text-moss">添加阅读批注</strong>
+            <button type="button" onclick="closeAnnotationToolbar()" aria-label="关闭批注工具栏" title="关闭">✕</button>
+        </div>
+        <p id="scopixSelectedText" class="text-xs text-sage mb-3 truncate" title="当前选中的文字"></p>
+        <div class="flex flex-wrap items-center gap-2 mb-3" aria-label="选择高亮样式">
+            <button type="button" class="annotation-color" style="background:#fde68a" title="黄色高亮" aria-label="黄色高亮" onclick="colorScopixSelection('yellow')"></button>
+            <button type="button" class="annotation-color" style="background:#a7f3d0" title="绿色高亮" aria-label="绿色高亮" onclick="colorScopixSelection('green')"></button>
+            <button type="button" class="annotation-color" style="background:#bfdbfe" title="蓝色高亮" aria-label="蓝色高亮" onclick="colorScopixSelection('blue')"></button>
+            <button type="button" class="annotation-color" style="background:#fbcfe8" title="粉色高亮" aria-label="粉色高亮" onclick="colorScopixSelection('pink')"></button>
             <button type="button" onclick="colorScopixSelection('underline')">红色下划线</button>
-            <button type="button" onclick="editScopixAnnotation()">批注</button>
-            <button type="button" id="scopixDeleteMark" hidden onclick="deleteScopixMark()">删除</button>
-            <button type="button" onclick="closeAnnotationToolbar()" aria-label="关闭">×</button>
+        </div>
+        <div class="flex flex-wrap gap-2 mb-2">
+            <button type="button" onclick="editScopixAnnotation()">✎ 写批注</button>
+            <button type="button" id="scopixDeleteMark" hidden onclick="deleteScopixMark()" class="text-red-700">删除标记</button>
         </div>
         <p id="scopixAnnotationFeedback" class="text-xs text-sage bg-wheat/60 rounded px-2 py-1.5 mb-2" role="status" aria-live="polite" hidden></p>
         <div id="scopixNoteEditor" class="annotation-note-editor space-y-2" hidden>
             <label class="text-xs text-sage" for="scopixAnnotationNote">我的阅读批注</label>
             <textarea id="scopixAnnotationNote" maxlength="2000" placeholder="记录对所选词句的理解…"></textarea>
-            <button type="button" onclick="saveScopixNote()">保存批注</button>
+            <button type="button" class="bg-moss text-white hover:text-ink" onclick="saveScopixNote()">保存批注</button>
         </div>
     </div>
     <!-- 核心业务逻辑 -->
