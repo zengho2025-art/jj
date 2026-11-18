@@ -530,10 +530,22 @@
             </form>
             <button id="scopixCloudDbProbe" type="button" onclick="cloudTestStudyDb()" hidden class="px-3 py-2 text-sm border border-sand rounded-lg text-moss">测试云数据库连接（只读）</button>
             <button id="scopixCloudDbWriteProbe" type="button" onclick="cloudTestStudyDbWrite()" hidden class="px-3 py-2 text-sm border border-sand rounded-lg text-moss">创建空白云端测试记录（不会上传学习资料）</button>
+            <section id="scopixCloudSyncActions" hidden class="space-y-2 border-t border-sand pt-3">
+                <h3 class="text-sm font-semibold text-ink">V2.1 个人学习资料 · 手动云端同步测试</h3>
+                <p class="text-xs text-sage">每个账号拥有独立的浏览器工作区。先导出备份，再检查云端；不会自动上传或覆盖其他设备的学习记录。</p>
+                <div class="flex flex-wrap gap-2">
+                    <button type="button" onclick="scopixSyncExport()" class="px-3 py-2 text-sm border border-sand rounded-lg text-moss">导出当前本地备份</button>
+                    <button type="button" onclick="scopixSyncInspect()" class="px-3 py-2 text-sm border border-sand rounded-lg text-moss">检查云端版本（只读）</button>
+                    <button type="button" onclick="scopixSyncPull()" class="px-3 py-2 text-sm border border-sand rounded-lg text-moss">下载云端到本账号</button>
+                    <button type="button" onclick="scopixSyncPush()" class="px-3 py-2 text-sm border border-sand rounded-lg text-moss">上传本账号到云端</button>
+                    <button type="button" onclick="scopixSyncImportGuest()" class="px-3 py-2 text-sm border border-sand rounded-lg text-moss">导入以前的访客本地记录</button>
+                </div>
+                <p id="scopixCloudSyncStatus" class="text-xs text-sage leading-relaxed" role="status" aria-live="polite"></p>
+            </section>
             <button id="scopixCloudLogout" type="button" onclick="cloudSignOut()" hidden class="px-3 py-2 text-sm border border-sand rounded-lg text-moss">退出登录</button>
             <p id="scopixCloudStatus" role="status" aria-live="polite" class="text-xs text-sage leading-relaxed"></p>
         </div>
-        <p class="text-xs text-sage leading-relaxed mt-4">本阶段仅测试身份认证；生词、批注、复习记录仍保存在本浏览器。切勿将 Secret Key 放进网页代码。后续完成用户权限和数据库设计后，再开启真正的云端同步。</p>
+        <p class="text-xs text-sage leading-relaxed mt-4">V2.1 测试：仅在你主动点击上传或下载时处理云端数据；支持版本冲突检查。阅读进度尚未接入。请勿在共用浏览器的多个标签页同时登录不同账号。</p>
     </aside>
     <!-- 核心业务逻辑 -->
     <script>
@@ -1225,6 +1237,7 @@
 
         window.addEventListener('DOMContentLoaded', initApp);
     </script>
+    <script src="cloudbase-sync.js"></script>
     <script src="annotation.js"></script>
     <script src="study.js"></script>
     <script src="review.js"></script>
