@@ -41,15 +41,33 @@
         }
         return true;
     }
+    function isMissingSessionError(err) {
+        const code = String(err?.code || err?.errorCode || '').toLowerCase();
+        const message = String(err?.message || err?.error_description || err || '').toLowerCase();
+        return ['session_not_found', 'no_session', 'credentials_not_found'].includes(code) ||
+            /credentials? not found|session not found|no (active )?session|missing (login )?credentials/.test(message);
+    }
     async function refreshSession() {
         if (!requireAuth()) return;
         try {
             const { data, error } = await auth.getSession();
-            if (error) throw error;
-            user = data?.session ? (data.user || data.session.user || null) : null;
+            // A fresh browser has no login credentials yet; this is expected
+            // before requesting an OTP, not an authentication setup failure.
+            if (error) {
+                if (!isMissingSessionError(error)) throw error;
+                user = null;
+            } else {
+                user = data?.session ? (data.user || data.session.user || null) : null;
+            }
             render();
             status(user ? 'CloudBase 登录成功（仅身份认证测试）。云端学习记录尚未开启。' : 'CloudBase 已连接，请使用邮箱验证码登录。', false);
         } catch (err) {
+            if (isMissingSessionError(err)) {
+                user = null;
+                render();
+                status('CloudBase 已连接，请使用邮箱验证码登录。', false);
+                return;
+            }
             user = null;
             render();
             fail(err, '检查登录状态失败');
