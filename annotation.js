@@ -22,6 +22,7 @@ function persistScopixMarks(items) {
     try {
         localStorage.setItem(SCOPIX_MARKS_KEY, JSON.stringify(items));
         scopixMarks = items;
+        if (typeof scopixCloudLocalChanged === 'function') scopixCloudLocalChanged();
         return true;
     } catch (_) {
         alert('保存失败：浏览器存储不可用或空间不足。');
