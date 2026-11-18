@@ -30,6 +30,7 @@
         if ($('scopixCloudOtpForm')) $('scopixCloudOtpForm').hidden = loggedIn || !verification;
         if ($('scopixCloudLogout')) $('scopixCloudLogout').hidden = !loggedIn;
         if ($('scopixCloudDbProbe')) $('scopixCloudDbProbe').hidden = !loggedIn;
+        if ($('scopixCloudDbWriteProbe')) $('scopixCloudDbWriteProbe').hidden = !loggedIn;
         if ($('scopixAccountButton')) $('scopixAccountButton').textContent = loggedIn ? '☁ 已登录' : '☁ 登录与同步';
     }
     function fail(err, prefix) {
@@ -174,6 +175,56 @@
             if (button) button.disabled = false;
         }
     }
+    async function cloudTestStudyDbWrite() {
+        if (!user || !cloudbaseApp || busy) {
+            if (!user) status('请先登录再测试云端写入。', true);
+            return;
+        }
+        busy = true;
+        const button = $('scopixCloudDbWriteProbe');
+        if (button) button.disabled = true;
+        status('正在检查当前账号是否已有云端记录…');
+        try {
+            const db = cloudbaseApp.rdb();
+            const { data: existing, error: queryError } = await db
+                .from('scopix_study_state_v2')
+                .select('user_id,revision');
+            if (queryError) throw queryError;
+            const records = Array.isArray(existing) ? existing : (existing ? [existing] : []);
+            if (records.length) {
+                status('当前账号已有 ' + records.length + ' 条可见记录。安全起见，不执行插入或覆盖。');
+                return;
+            }
+            // RLS plus the database DEFAULT auth.uid() determine row ownership.
+            // No user ID is supplied by the browser. Deliberately do not upload
+            // vocabulary, annotations or review progress in this test.
+            const { error: insertError } = await db
+                .from('scopix_study_state_v2')
+                .insert({
+                    vocabulary: [],
+                    annotations: [],
+                    reading_progress: {},
+                    revision: 0
+                });
+            if (insertError) throw insertError;
+            const { data: check, error: readError } = await db
+                .from('scopix_study_state_v2')
+                .select('user_id,revision,vocabulary,annotations,reading_progress');
+            if (readError) throw readError;
+            const rows = Array.isArray(check) ? check : (check ? [check] : []);
+            if (rows.length !== 1 || rows[0].revision !== 0 ||
+                !Array.isArray(rows[0].vocabulary) || !Array.isArray(rows[0].annotations)) {
+                status('写入请求已完成，但回读验证未达到预期。请暂停进一步操作并检查数据库记录。', true);
+                return;
+            }
+            status('数据库写入与回读成功！已创建当前账号的空白测试记录（版本 0），未上传或覆盖任何学习资料。');
+        } catch (err) {
+            fail(err, '数据库写入测试失败');
+        } finally {
+            busy = false;
+            if (button) button.disabled = false;
+        }
+    }
     async function cloudSignOut() {
         if (!requireAuth() || busy) return;
         busy = true;
@@ -210,7 +261,7 @@
     function cloudRefresh() { status('本版本仅测试登录，云端数据同步尚未启用。'); }
     function cloudResolve() { status('云端数据同步尚未启用，不会覆盖本地记录。'); }
     Object.assign(window, {
-        cloudSignIn, cloudVerifyOtp, cloudResetOtp, cloudSignOut, cloudTestStudyDb,
+        cloudSignIn, cloudVerifyOtp, cloudResetOtp, cloudSignOut, cloudTestStudyDb, cloudTestStudyDbWrite,
         cloudRefresh, cloudResolve, scopixCloudLocalChanged,
         openScopixCloudPanel, closeScopixCloudPanel
     });
