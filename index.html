@@ -528,6 +528,7 @@
                 <button id="scopixCloudVerifyCode" type="submit" class="w-full p-3 rounded-lg bg-moss text-white font-semibold">验证并登录</button>
                 <button type="button" onclick="cloudResetOtp()" class="px-3 py-2 text-sm border border-sand rounded-lg text-moss">返回邮箱输入</button>
             </form>
+            <button id="scopixCloudDbProbe" type="button" onclick="cloudTestStudyDb()" hidden class="px-3 py-2 text-sm border border-sand rounded-lg text-moss">测试云数据库连接（只读）</button>
             <button id="scopixCloudLogout" type="button" onclick="cloudSignOut()" hidden class="px-3 py-2 text-sm border border-sand rounded-lg text-moss">退出登录</button>
             <p id="scopixCloudStatus" role="status" aria-live="polite" class="text-xs text-sage leading-relaxed"></p>
         </div>
