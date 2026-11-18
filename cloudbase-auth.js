@@ -7,6 +7,7 @@
     'use strict';
     const ENV_ID = 'scopix-dev-d0gw92jjh40131733';
     let auth = null;
+    let cloudbaseApp = null;
     let user = null;
     let verification = null;
     let requestEmail = '';
@@ -28,6 +29,7 @@
         if ($('scopixCloudLogin')) $('scopixCloudLogin').hidden = loggedIn || Boolean(verification);
         if ($('scopixCloudOtpForm')) $('scopixCloudOtpForm').hidden = loggedIn || !verification;
         if ($('scopixCloudLogout')) $('scopixCloudLogout').hidden = !loggedIn;
+        if ($('scopixCloudDbProbe')) $('scopixCloudDbProbe').hidden = !loggedIn;
         if ($('scopixAccountButton')) $('scopixAccountButton').textContent = loggedIn ? '☁ 已登录' : '☁ 登录与同步';
     }
     function fail(err, prefix) {
@@ -138,6 +140,40 @@
         render();
         status('已返回邮箱输入。若要重新发码，请注意邮件发送频率限制。');
     }
+    async function cloudTestStudyDb() {
+        if (!user || !cloudbaseApp) {
+            status('请先使用邮箱验证码登录后再测试数据库。', true);
+            return;
+        }
+        if (busy) return;
+        busy = true;
+        const button = $('scopixCloudDbProbe');
+        if (button) button.disabled = true;
+        status('正在以当前登录用户身份只读检查 PostgreSQL…');
+        try {
+            if (typeof cloudbaseApp.rdb !== 'function') {
+                throw new Error('当前加载的 SDK 缺少 rdb()；需要更新 CloudBase Web SDK。');
+            }
+            // No user ID or secret is passed; the SDK forwards the authenticated
+            // session, and PostgreSQL RLS filters rows by auth.uid().
+            const { data, error } = await cloudbaseApp.rdb()
+                .from('scopix_study_state_v2')
+                .select('user_id,revision,updated_at');
+            if (error) throw error;
+            const rows = Array.isArray(data) ? data : (data ? [data] : []);
+            const currentId = String(user.id || user.sub || user.uid || '');
+            if (rows.some(row => currentId && String(row.user_id) !== currentId)) {
+                status('安全警报：查询结果包含与当前用户不符的记录，请停止测试并检查 RLS。', true);
+                return;
+            }
+            status('云数据库只读查询成功；当前可见学习记录 ' + rows.length + ' 条。没有修改任何生词或批注。');
+        } catch (err) {
+            fail(err, '数据库只读检查失败');
+        } finally {
+            busy = false;
+            if (button) button.disabled = false;
+        }
+    }
     async function cloudSignOut() {
         if (!requireAuth() || busy) return;
         busy = true;
@@ -174,7 +210,7 @@
     function cloudRefresh() { status('本版本仅测试登录，云端数据同步尚未启用。'); }
     function cloudResolve() { status('云端数据同步尚未启用，不会覆盖本地记录。'); }
     Object.assign(window, {
-        cloudSignIn, cloudVerifyOtp, cloudResetOtp, cloudSignOut,
+        cloudSignIn, cloudVerifyOtp, cloudResetOtp, cloudSignOut, cloudTestStudyDb,
         cloudRefresh, cloudResolve, scopixCloudLocalChanged,
         openScopixCloudPanel, closeScopixCloudPanel
     });
@@ -224,6 +260,7 @@
         try {
             await loadCloudBaseSdk();
             const app = window.cloudbase.init({ env: ENV_ID, region: 'ap-shanghai' });
+            cloudbaseApp = app;
             auth = app.auth();
             await refreshSession();
         } catch (err) {
