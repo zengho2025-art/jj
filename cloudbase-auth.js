@@ -166,12 +166,45 @@
             closeScopixCloudPanel();
         }
     });
-    window.addEventListener('DOMContentLoaded', async () => {
-        if (!window.cloudbase?.init) {
-            status('无法加载 CloudBase SDK。请检查 static.cloudbase.net 是否可访问。', true);
-            return;
+    // Load browser SDK on demand: first use the official maintained v3 URL,
+    // then the pinned v3 bundle. Fail with a diagnostic instead of a silent error.
+    async function loadCloudBaseSdk() {
+        if (window.cloudbase?.init) return;
+        const sources = [
+            'https://static.cloudbase.net/cloudbase-js-sdk/latest/cloudbase.full.js',
+            'https://static.cloudbase.net/cloudbase-js-sdk/3.9.1/cloudbase.full.js'
+        ];
+        const failed = [];
+        for (const src of sources) {
+            try {
+                await new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    const timeout = window.setTimeout(() => {
+                        script.remove();
+                        reject(new Error('加载超时'));
+                    }, 12000);
+                    script.src = src;
+                    script.async = true;
+                    script.onload = () => { clearTimeout(timeout); resolve(); };
+                    script.onerror = () => {
+                        clearTimeout(timeout);
+                        script.remove();
+                        reject(new Error('脚本请求失败（检查网络/扩展/CSP）'));
+                    };
+                    document.head.appendChild(script);
+                });
+                if (window.cloudbase?.init) return;
+                failed.push(src + '：脚本已加载但未提供 cloudbase.init');
+            } catch (err) {
+                failed.push(src + '：' + (err.message || String(err)));
+            }
         }
+        throw new Error('无法加载 CloudBase Web SDK。请在浏览器直接访问 static.cloudbase.net 验证可达性，或打开 F12 → Network 查看错误。详情：' + failed.join('；'));
+    }
+    window.addEventListener('DOMContentLoaded', async () => {
+        status('正在加载 CloudBase 登录组件…');
         try {
+            await loadCloudBaseSdk();
             const app = window.cloudbase.init({ env: ENV_ID, region: 'ap-shanghai' });
             auth = app.auth();
             await refreshSession();
