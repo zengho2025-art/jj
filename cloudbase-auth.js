@@ -62,8 +62,9 @@
             } else {
                 user = data?.session ? (data.user || data.session.user || null) : null;
             }
+            if (window.scopixSyncOnAuthChange) await window.scopixSyncOnAuthChange(user, cloudbaseApp);
             render();
-            status(user ? 'CloudBase 登录成功（仅身份认证测试）。云端学习记录尚未开启。' : 'CloudBase 已连接，请使用邮箱验证码登录。', false);
+            status(user ? 'CloudBase 登录成功。V2.1 学习资料支持手动备份和版本保护同步。' : 'CloudBase 已连接，请使用邮箱验证码登录。', false);
         } catch (err) {
             if (isMissingSessionError(err)) {
                 user = null;
@@ -231,10 +232,11 @@
         try {
             const { error } = await auth.signOut();
             if (error) throw error;
+            if (window.scopixSyncOnAuthChange) await window.scopixSyncOnAuthChange(null, cloudbaseApp);
             user = null;
             verification = null;
             render();
-            status('已退出 CloudBase 账号。学习记录仍保存在当前浏览器，请勿在共享设备留下个人资料。');
+            status('已退出 CloudBase 账号；已恢复访客浏览器工作区。');
         } catch (err) {
             fail(err, '退出失败');
         } finally {
@@ -257,7 +259,7 @@
     }
     // Existing study.js / annotation.js may invoke this hook. Do not silently
     // upload unprotected data until the per-user CloudBase DB design is ready.
-    function scopixCloudLocalChanged() {}
+    function scopixCloudLocalChanged() { window.scopixSyncLocalChanged?.(); }
     function cloudRefresh() { status('本版本仅测试登录，云端数据同步尚未启用。'); }
     function cloudResolve() { status('云端数据同步尚未启用，不会覆盖本地记录。'); }
     Object.assign(window, {
