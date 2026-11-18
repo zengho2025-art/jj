@@ -1,0 +1,182 @@
+/* Scopix V2.0 auth-only pilot — CloudBase Shanghai.
+ * IMPORTANT: cloud learning data syncing is intentionally disabled in this pilot.
+ * Do not replace local vocabulary/annotation records with other accounts' data.
+ * CloudBase JS SDK v3: https://docs.cloudbase.net/api-reference/webv3/authentication
+ */
+(function () {
+    'use strict';
+    const ENV_ID = 'scopix-dev-d0gw92jjh40131733';
+    let auth = null;
+    let user = null;
+    let verification = null;
+    let requestEmail = '';
+    let busy = false;
+    let lastSent = 0;
+    const $ = id => document.getElementById(id);
+    function status(message, error) {
+        const node = $('scopixCloudStatus');
+        if (!node) return;
+        node.textContent = message;
+        node.dataset.error = String(Boolean(error));
+    }
+    function getEmail(u) {
+        return u?.email || u?.user_metadata?.email || u?.identities?.find?.(x => x?.identity_data?.email)?.identity_data?.email || '';
+    }
+    function render() {
+        const loggedIn = Boolean(user);
+        if ($('scopixCloudAccount')) $('scopixCloudAccount').textContent = loggedIn ? (getEmail(user) || '已登录') : '尚未登录';
+        if ($('scopixCloudLogin')) $('scopixCloudLogin').hidden = loggedIn || Boolean(verification);
+        if ($('scopixCloudOtpForm')) $('scopixCloudOtpForm').hidden = loggedIn || !verification;
+        if ($('scopixCloudLogout')) $('scopixCloudLogout').hidden = !loggedIn;
+        if ($('scopixAccountButton')) $('scopixAccountButton').textContent = loggedIn ? '☁ 已登录' : '☁ 登录与同步';
+    }
+    function fail(err, prefix) {
+        const message = (err && (err.message || err.error_description)) || String(err || '未知错误');
+        status(prefix + '：' + message, true);
+    }
+    function requireAuth() {
+        if (!auth) {
+            status('CloudBase SDK 未能初始化。请检查脚本加载、网络和 HTTP 网关的跨域设置。', true);
+            return false;
+        }
+        return true;
+    }
+    async function refreshSession() {
+        if (!requireAuth()) return;
+        try {
+            const { data, error } = await auth.getSession();
+            if (error) throw error;
+            user = data?.session ? (data.user || data.session.user || null) : null;
+            render();
+            status(user ? 'CloudBase 登录成功（仅身份认证测试）。云端学习记录尚未开启。' : 'CloudBase 已连接，请使用邮箱验证码登录。', false);
+        } catch (err) {
+            user = null;
+            render();
+            fail(err, '检查登录状态失败');
+        }
+    }
+    async function cloudSignIn() {
+        if (!requireAuth() || busy) return;
+        const email = $('scopixCloudEmail')?.value.trim().toLowerCase();
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            status('请输入正确的邮箱地址。', true);
+            return;
+        }
+        if (Date.now() - lastSent < 60000) {
+            status('验证码已请求发送，请先检查邮箱，至少间隔 60 秒再重试。', true);
+            return;
+        }
+        busy = true;
+        if ($('scopixCloudSendCode')) $('scopixCloudSendCode').disabled = true;
+        status('正在向邮箱发送验证码…');
+        try {
+            // The returned verifyOtp closure binds the verification message ID.
+            const { data, error } = await auth.signInWithOtp({ email });
+            if (error) throw error;
+            if (!data || typeof data.verifyOtp !== 'function') throw new Error('SDK 没有返回验证码校验回调，请确认使用 CloudBase SDK v3。');
+            verification = data.verifyOtp;
+            requestEmail = email;
+            lastSent = Date.now();
+            render();
+            status('已请求发送验证码到 ' + email + '；请输入邮件中的 6 位数字。如未收到，请检查垃圾邮件。');
+            $('scopixCloudOtp')?.focus();
+        } catch (err) {
+            fail(err, '发送验证码失败');
+        } finally {
+            busy = false;
+            if ($('scopixCloudSendCode')) $('scopixCloudSendCode').disabled = false;
+        }
+    }
+    async function cloudVerifyOtp() {
+        if (!requireAuth() || !verification || busy) return;
+        const token = $('scopixCloudOtp')?.value.trim();
+        if (!/^[0-9]{6}$/.test(token || '')) {
+            status('请输入邮件中的 6 位数字验证码。', true);
+            return;
+        }
+        busy = true;
+        if ($('scopixCloudVerifyCode')) $('scopixCloudVerifyCode').disabled = true;
+        status('正在验证邮箱…');
+        try {
+            const { data, error } = await verification({ token });
+            if (error) throw error;
+            if (!data?.session) throw new Error('验证码已验证，但未返回有效会话。');
+            verification = null;
+            const fallbackUser = data.user || data.session.user;
+            user = fallbackUser || { email: requestEmail };
+            render();
+            await refreshSession();
+        } catch (err) {
+            fail(err, '登录验证失败');
+        } finally {
+            busy = false;
+            if ($('scopixCloudVerifyCode')) $('scopixCloudVerifyCode').disabled = false;
+        }
+    }
+    function cloudResetOtp() {
+        verification = null;
+        requestEmail = '';
+        if ($('scopixCloudOtp')) $('scopixCloudOtp').value = '';
+        render();
+        status('已返回邮箱输入。若要重新发码，请注意邮件发送频率限制。');
+    }
+    async function cloudSignOut() {
+        if (!requireAuth() || busy) return;
+        busy = true;
+        try {
+            const { error } = await auth.signOut();
+            if (error) throw error;
+            user = null;
+            verification = null;
+            render();
+            status('已退出 CloudBase 账号。学习记录仍保存在当前浏览器，请勿在共享设备留下个人资料。');
+        } catch (err) {
+            fail(err, '退出失败');
+        } finally {
+            busy = false;
+        }
+    }
+    function openScopixCloudPanel() {
+        if (!$('scopixCloudPanel')) return;
+        $('scopixCloudPanel').hidden = false;
+        $('scopixCloudOverlay').hidden = false;
+        document.body.classList.add('scopix-cloud-open');
+        render();
+        $('scopixCloudClose')?.focus();
+    }
+    function closeScopixCloudPanel() {
+        if (!$('scopixCloudPanel')) return;
+        $('scopixCloudPanel').hidden = true;
+        $('scopixCloudOverlay').hidden = true;
+        document.body.classList.remove('scopix-cloud-open');
+    }
+    // Existing study.js / annotation.js may invoke this hook. Do not silently
+    // upload unprotected data until the per-user CloudBase DB design is ready.
+    function scopixCloudLocalChanged() {}
+    function cloudRefresh() { status('本版本仅测试登录，云端数据同步尚未启用。'); }
+    function cloudResolve() { status('云端数据同步尚未启用，不会覆盖本地记录。'); }
+    Object.assign(window, {
+        cloudSignIn, cloudVerifyOtp, cloudResetOtp, cloudSignOut,
+        cloudRefresh, cloudResolve, scopixCloudLocalChanged,
+        openScopixCloudPanel, closeScopixCloudPanel
+    });
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && $('scopixCloudPanel') && !$('scopixCloudPanel').hidden) {
+            e.preventDefault();
+            closeScopixCloudPanel();
+        }
+    });
+    window.addEventListener('DOMContentLoaded', async () => {
+        if (!window.cloudbase?.init) {
+            status('无法加载 CloudBase SDK。请检查 static.cloudbase.net 是否可访问。', true);
+            return;
+        }
+        try {
+            const app = window.cloudbase.init({ env: ENV_ID, region: 'ap-shanghai' });
+            auth = app.auth();
+            await refreshSession();
+        } catch (err) {
+            fail(err, '初始化 CloudBase 失败');
+        }
+    });
+})();
