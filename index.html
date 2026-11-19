@@ -553,7 +553,8 @@
                     <button type="button" onclick="scopixSyncPush()" class="px-3 py-2 text-sm border border-sand rounded-lg text-moss">上传本账号到云端</button>
                     <button type="button" id="scopixImportGuestButton" onclick="scopixSyncImportGuest()" class="px-3 py-2 text-sm border border-sand rounded-lg text-moss">导入访客本地记录</button>
                 </div>
-                <p id="scopixCloudSyncStatus" class="text-xs text-sage leading-relaxed" role="status" aria-live="polite"></p>
+                <p class="text-xs text-sage">合并后会弹出明确的成功或失败提示；成功后先核对生词和批注，再考虑上传。</p>
+                <p id="scopixCloudSyncStatus" class="text-sm text-moss font-semibold leading-relaxed border border-sand rounded-lg p-2" role="status" aria-live="assertive"></p>
             </section>
             <button id="scopixCloudLogout" type="button" onclick="cloudSignOut()" hidden class="px-3 py-2 text-sm border border-sand rounded-lg text-moss">退出登录</button>
             <p id="scopixCloudStatus" role="status" aria-live="polite" class="text-xs text-sage leading-relaxed"></p>
