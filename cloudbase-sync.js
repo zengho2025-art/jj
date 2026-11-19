@@ -18,6 +18,50 @@
     let app = null;
     let userId = null;
     let busy = false;
+    // V2.2 opt-in, single-page auto-sync pilot. Guest mode is always disabled.
+    const AUTO='scopix_v22_auto_';
+    let autoTimer=null;
+    let autoDebounce=null;
+    let autoRunning=false;
+    let autoPaused=false;
+    let autoOwner=null;
+    function autoEnabled(){return !!userId && !autoPaused && localStorage.getItem(AUTO+userId)==='yes';}
+    function autoMessage(message, isError=false) {
+        const el=$('scopixAutoSyncStatus');
+        if(el) {el.textContent=message;el.dataset.error=String(isError);}
+    }
+    function autoSchedule(ms=1800) {
+        if(!autoEnabled()||autoRunning||document.hidden)return;
+        clearTimeout(autoDebounce);
+        autoDebounce=setTimeout(()=>{autoDebounce=null;void autoTick();},ms);
+    }
+    function stopAutoLoop() {
+        clearInterval(autoTimer);autoTimer=null;
+        clearTimeout(autoDebounce);autoDebounce=null;
+        autoOwner=null;autoPaused=false;
+    }
+    function beginAutoLoop() {
+        clearInterval(autoTimer);
+        autoTimer=null;
+        if(!autoEnabled())return;
+        autoOwner=userId;
+        autoTimer=setInterval(()=>{if(!document.hidden)void autoTick();},30000);
+        autoSchedule(1200);
+    }
+    function autoPause(reason) {
+        autoPaused=true;
+        clearTimeout(autoDebounce);autoDebounce=null;
+        autoMessage('自动同步已暂停：'+reason+'。请先导出备份，然后人工检查云端及本地差异。',true);
+        showAutoControls();
+    }
+    function showAutoControls() {
+        const toggle=$('scopixAutoSyncToggle');
+        const on=autoEnabled();
+        if(toggle){toggle.hidden=!userId;toggle.textContent=on?'关闭自动同步':'开启自动同步（测试版）';}
+        if(!userId)autoMessage('游客模式：仅本地临时保存，不会自动上传。');
+        else if(autoPaused)autoMessage('自动同步已暂停，请检查冲突并手动处理。',true);
+        else if(!on)autoMessage('自动同步未开启；手动上传与下载仍可使用。');
+    }
 
     function parse(key, fallback) {
         try { const raw = localStorage.getItem(key); return raw === null ? fallback : JSON.parse(raw); }
@@ -112,11 +156,12 @@
     catch (e) { window.scopixWorkspaceBootError = e.message||String(e); }
 
     async function onAuth(user, clientApp) {
+        stopAutoLoop();
         app = clientApp || app;
         const next = user && String(user.id || user.uid || user.sub || '');
         const current = localStorage.getItem(ACTIVE);
         if (current===next && next) {
-            userId=next; show();
+            userId=next; show();showAutoControls();beginAutoLoop();
             return;
         }
         try {
@@ -130,7 +175,7 @@
             if (next) localStorage.setItem(ACTIVE,next);
             else localStorage.removeItem(ACTIVE);
             userId=next||null;
-            show();
+            show();showAutoControls();beginAutoLoop();
             if (next) note('账号工作区已隔离。云端同步为手动操作，请先检查云端数据；访客旧记录不会自动上传。');
             else note('当前显示访客本地工作区。');
         } catch (err) {
@@ -169,7 +214,8 @@
         }
         try {
             saveKey(userKey(userId),takeLocal());
-            note('已保存到此账号的浏览器工作区；尚未同步云端。');
+            note(autoEnabled()?'本地已保存，正在等待安全自动同步。':'已保存到此账号的浏览器工作区；尚未同步云端。');
+            autoSchedule();
         } catch (err) { note('保存账号本地工作区失败：'+(err.message||err),true); }
     }
     async function fetchMine() {
@@ -356,7 +402,105 @@
         }catch(e){note('上传失败：'+(e.message||e)+'。本地记录仍然保留。',true);}
         finally{busy=false;}
     }
-    function importGuest() {
+    async function toggleAutoSync() {
+        if(!userId||busy||autoRunning)return;
+        if(localStorage.getItem(AUTO+userId)==='yes'){
+            localStorage.removeItem(AUTO+userId);
+            stopAutoLoop();
+            showAutoControls();
+            autoMessage('自动同步已关闭；现有本地和云端数据均未删除。');
+            return;
+        }
+        busy=true;
+        try{
+            const remote=await fetchMine();
+            if(!remote){
+                autoMessage('首次开启前，需要先通过手动上传建立云端记录。',true);return;
+            }
+            const current=normalized(takeLocal());
+            if(canonical(current)!==canonical(normalized(remote))){
+                autoMessage('本地与云端数据不一致。请先导出备份并人工安全合并、手动上传，确保两边一致后再开启自动同步。',true);return;
+            }
+            if(!confirm('开启 V2.2 自动同步测试版？\n此浏览器登录当前账号后，会在你编辑生词/批注时自动上传；检测到其他设备的新版本时，在本地没有未同步修改的前提下自动下载。冲突时暂停，不自动覆盖。游客模式不启用。')){
+                autoMessage('已取消开启自动同步。');return;
+            }
+            storeBaseline(userId,remote);
+            saveKey(AUTO+userId,'yes');
+            autoPaused=false;
+            showAutoControls();
+            beginAutoLoop();
+            autoMessage('自动同步已开启；当前云端版本 '+remote.revision+'，本地与云端一致。');
+        }catch(e){autoMessage('开启自动同步失败：'+(e.message||e),true);}
+        finally{busy=false;}
+    }
+    async function autoTick() {
+        if(!autoEnabled()||autoRunning||busy||document.hidden)return;
+        const uid=userId;
+        autoRunning=true;
+        try{
+            const baseline=parse(BASE+uid,null);
+            if(!baseline||!Number.isInteger(baseline.revision)||typeof baseline.hash!=='string'){
+                autoPause('尚无可信的云端同步基准');return;
+            }
+            const before=normalized(takeLocal());
+            const startHash=fingerprint(before);
+            const remote=await fetchMine();
+            if(uid!==userId||!autoEnabled())return;
+            if(!remote){autoPause('云端记录不存在');return;}
+            const rev=Number(remote.revision);
+            const remoteHash=fingerprint(remote);
+            const cloudUnchanged=rev===baseline.revision && remoteHash===baseline.hash;
+            const localUnchanged=startHash===baseline.hash;
+            if(!cloudUnchanged&&!localUnchanged) {
+                autoPause('本地和其他设备的云端记录都已变化');return;
+            }
+            if(!cloudUnchanged) {
+                // Pull only when the browser is still exactly on the old
+                // baseline, even if edits occurred during the network request.
+                if(fingerprint(takeLocal())!==startHash){
+                    autoSchedule(800);return;
+                }
+                backupCurrent('auto-before-remote-pull');
+                const state=normalized(remote);
+                saveKey(userKey(uid),state);
+                applyLocal(state);
+                storeBaseline(uid,remote);
+                autoMessage('已安全接收云端版本 '+rev+'：生词 '+state.vocabulary.length+' 条，批注 '+state.annotations.length+' 条。');
+                return;
+            }
+            if(localUnchanged){
+                autoMessage('已同步 · 云端版本 '+rev+'；无新修改。');return;
+            }
+            // Do not upload a stale snapshot after edits made while awaiting
+            // the server response. Scheduled local changes will be retried.
+            if(fingerprint(takeLocal())!==startHash){
+                autoSchedule(800);return;
+            }
+            backupCurrent('auto-before-cloud-upload');
+            const {error,count}=await app.rdb().from(TABLE)
+                .update({vocabulary:before.vocabulary,annotations:before.annotations,
+                    reading_progress:before.reading_progress,revision:rev+1},{count:'exact'})
+                .eq('user_id',uid).eq('revision',rev);
+            if(error)throw error;
+            if(count!==null && count!==undefined && count!==1){
+                autoPause('云端版本已被其他设备更新');return;
+            }
+            const after=await fetchMine();
+            if(uid!==userId||!autoEnabled())return;
+            if(!after||Number(after.revision)!==rev+1||fingerprint(after)!==startHash){
+                autoPause('上传后校验未通过，可能存在并发写入');return;
+            }
+            storeBaseline(uid,after);
+            autoMessage('自动同步成功 · 云端版本 '+after.revision+'；生词 '+before.vocabulary.length+' 条，批注 '+before.annotations.length+' 条。');
+            if(fingerprint(takeLocal())!==startHash)autoSchedule(800);
+        }catch(e){
+            if(uid===userId)autoPause('网络或数据库错误：'+(e.message||e));
+        }finally{autoRunning=false;}
+    }
+    document.addEventListener('visibilitychange',()=>{
+        if(!document.hidden)autoSchedule(500);
+    });
+        function importGuest() {
         if(!userId||busy)return;
         const guest=normalized(parse(GUEST,empty()));
         if(!hasContent(guest)){note('访客工作区没有可导入的学习资料。');show();return;}
@@ -401,6 +545,7 @@
         scopixSyncPull:pull,
         scopixSyncMerge:mergeCloudLocal,
         scopixSyncPush:push,
-        scopixSyncImportGuest:importGuest
+        scopixSyncImportGuest:importGuest,
+        scopixSyncToggleAuto:toggleAutoSync
     });
 })();
