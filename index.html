@@ -555,11 +555,17 @@
                 </div>
                 <p class="text-xs text-sage">合并后会弹出明确的成功或失败提示；成功后先核对生词和批注，再考虑上传。</p>
                 <p id="scopixCloudSyncStatus" class="text-sm text-moss font-semibold leading-relaxed border border-sand rounded-lg p-2" role="status" aria-live="assertive"></p>
+                <section class="mt-3 border-t border-sand pt-3 space-y-2">
+                    <h3 class="text-sm font-semibold text-ink">V2.2 自动云端同步 · 测试版</h3>
+                    <p class="text-xs text-sage">默认关闭，需先让本地与云端数据一致，再明确开启。自动上传生词和批注；无本地修改时可自动恢复其他设备的新版本。发生冲突将暂停，不自动覆盖或合并。</p>
+                    <button type="button" id="scopixAutoSyncToggle" onclick="scopixSyncToggleAuto()" class="px-3 py-2 text-sm border border-sand rounded-lg text-moss">开启自动同步（测试版）</button>
+                    <p id="scopixAutoSyncStatus" role="status" aria-live="polite" class="text-xs text-sage leading-relaxed"></p>
+                </section>
             </section>
             <button id="scopixCloudLogout" type="button" onclick="cloudSignOut()" hidden class="px-3 py-2 text-sm border border-sand rounded-lg text-moss">退出登录</button>
             <p id="scopixCloudStatus" role="status" aria-live="polite" class="text-xs text-sage leading-relaxed"></p>
         </div>
-        <p class="text-xs text-sage leading-relaxed mt-4">V2.1 测试：仅在你主动点击上传或下载时处理云端数据；支持版本冲突检查。阅读进度尚未接入。请勿在共用浏览器的多个标签页同时登录不同账号。</p>
+        <p class="text-xs text-sage leading-relaxed mt-4">V2.2 测试：自动同步默认关闭，开启后才会在安全条件下自动上传和下载；支持版本冲突暂停。阅读进度尚未接入。请勿在共用浏览器的多个标签页同时登录不同账号。</p>
     </aside>
     <!-- 核心业务逻辑 -->
     <script>
