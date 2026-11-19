@@ -223,6 +223,78 @@
         }catch(e){note('下载云端记录失败：'+(e.message||e),true);}
         finally{busy=false;}
     }
+    // Review both snapshots before setting the optimistic concurrency baseline.
+    // Never silently resolve two different entries sharing the same ID.
+    function mergeSnapshots(remoteState, localState) {
+        const remote=normalized(remoteState), local=normalized(localState);
+        function mergeItems(remoteItems, localItems, label) {
+            const merged=remoteItems.slice();
+            const byId=new Map();
+            for(const item of remoteItems) {
+                if(!item || typeof item.id!=='string') throw new Error('云端'+label+'包含无效记录 ID，已中止合并。');
+                if(byId.has(item.id)) throw new Error('云端'+label+'有重复记录 ID，已中止合并。');
+                byId.set(item.id,item);
+            }
+            let added=0;
+            const seenLocal=new Set();
+            for(const item of localItems) {
+                if(!item || typeof item.id!=='string') throw new Error('本地'+label+'包含无效记录 ID，已中止合并。');
+                if(seenLocal.has(item.id)) throw new Error('本地'+label+'包含重复记录 ID，已中止合并。');
+                seenLocal.add(item.id);
+                if(byId.has(item.id)) {
+                    if(canonical(byId.get(item.id))!==canonical(item))
+                        throw new Error(label+'中存在相同 ID 但内容不同的记录（'+item.id.slice(0,16)+'），请保留备份并人工核对，未合并。');
+                } else {
+                    merged.push(item);
+                    byId.set(item.id,item);
+                    added++;
+                }
+            }
+            return {items:merged,added};
+        }
+        const words=mergeItems(remote.vocabulary,local.vocabulary,'生词');
+        const marks=mergeItems(remote.annotations,local.annotations,'批注');
+        const progress={...remote.reading_progress};
+        for(const [key,value] of Object.entries(local.reading_progress)) {
+            if(Object.prototype.hasOwnProperty.call(progress,key) &&
+               canonical(progress[key])!==canonical(value))
+                throw new Error('阅读进度存在同一文章的不同版本，暂不自动合并。');
+            progress[key]=value;
+        }
+        if(words.items.length>1500||marks.items.length>500)
+            throw new Error('合并后的记录超过现有浏览器容量限制，已中止合并，防止数据被截断。');
+        return {
+            snapshot:{vocabulary:words.items,annotations:marks.items,reading_progress:progress},
+            addedWords:words.added,addedMarks:marks.added
+        };
+    }
+    async function mergeCloudLocal() {
+        if(!userId||busy)return;
+        busy=true;
+        try {
+            const row=await fetchMine();
+            if(!row){note('云端没有记录，可以先导出本地备份，再使用上传按钮建立首个云端版本。');return;}
+            const local=normalized(takeLocal());
+            const merged=mergeSnapshots(row,local);
+            if(canonical(merged.snapshot)===canonical(normalized(row))) {
+                // Matching data: inspect/accept remote baseline without touching local.
+                storeBaseline(userId,row);
+                note('云端与本地内容已经一致（云端版本 '+row.revision+'）。已确认同步基准，无需合并。');
+                return;
+            }
+            if(!confirm('安全合并预览：云端版本 '+row.revision+'，保留云端 '+normalized(row).vocabulary.length+' 条生词和 '+normalized(row).annotations.length+' 条批注，加入本地独有生词 '+merged.addedWords+' 条、批注 '+merged.addedMarks+' 条。合并后总共生词 '+merged.snapshot.vocabulary.length+' 条、批注 '+merged.snapshot.annotations.length+' 条。此操作只更改当前账号本地工作区，不会立即上传云端；先保存双方的浏览器备份。继续吗？')) {
+                note('已取消合并，双方资料都没有改变。');return;
+            }
+            const localBackup=backupCurrent('before-cloud-local-merge');
+            const remoteBackupKey=BACKUP+userId+'_remote_'+new Date().toISOString().replace(/[:.]/g,'-');
+            saveKey(remoteBackupKey,{reason:'remote-before-merge',saved_at:new Date().toISOString(),revision:row.revision,snapshot:normalized(row)});
+            applyLocal(merged.snapshot);
+            saveKey(userKey(userId),merged.snapshot);
+            storeBaseline(userId,row);
+            note('安全合并完成（仅本地）：生词 '+merged.snapshot.vocabulary.length+' 条、批注 '+merged.snapshot.annotations.length+' 条。已保存双方备份。云端仍为版本 '+row.revision+'；检查记录无误后可主动上传。');
+        }catch(e){note('合并未完成：'+(e.message||e)+'。请勿上传，先检查本地及备份。',true);}
+        finally{busy=false;}
+    }
     async function push() {
         if(!userId||busy)return;
         busy=true;
@@ -314,6 +386,7 @@
         scopixSyncInspect:inspect,
         scopixSyncExport:downloadJson,
         scopixSyncPull:pull,
+        scopixSyncMerge:mergeCloudLocal,
         scopixSyncPush:push,
         scopixSyncImportGuest:importGuest
     });
