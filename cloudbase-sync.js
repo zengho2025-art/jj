@@ -425,13 +425,13 @@
                 autoMessage('已取消开启自动同步。');return;
             }
             storeBaseline(userId,remote);
-            saveKey(AUTO+userId,'yes');
+            localStorage.setItem(AUTO+userId,'yes');
             autoPaused=false;
             showAutoControls();
             beginAutoLoop();
             autoMessage('自动同步已开启；当前云端版本 '+remote.revision+'，本地与云端一致。');
         }catch(e){autoMessage('开启自动同步失败：'+(e.message||e),true);}
-        finally{busy=false;}
+        finally{busy=false;if(autoEnabled())autoSchedule(300);}
     }
     async function autoTick() {
         if(!autoEnabled()||autoRunning||busy||document.hidden)return;
@@ -492,7 +492,11 @@
             }
             storeBaseline(uid,after);
             autoMessage('自动同步成功 · 云端版本 '+after.revision+'；生词 '+before.vocabulary.length+' 条，批注 '+before.annotations.length+' 条。');
-            if(fingerprint(takeLocal())!==startHash)autoSchedule(800);
+            if(fingerprint(takeLocal())!==startHash) {
+                // The current tick still holds the lock; run again after exit.
+                clearTimeout(autoDebounce);
+                autoDebounce=setTimeout(()=>{autoDebounce=null;void autoTick();},800);
+            }
         }catch(e){
             if(uid===userId)autoPause('网络或数据库错误：'+(e.message||e));
         }finally{autoRunning=false;}
