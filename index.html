@@ -360,6 +360,12 @@
         </div>
     </header>
 
+<div id="scopixGuestBanner" class="border-b border-sand bg-wheat/60 px-6 py-2 text-xs sm:text-sm text-moss" role="status">
+        <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-2">
+            <span id="scopixGuestBannerText">游客模式 · 本地临时保存：批注和生词仅保存在当前浏览器，清理缓存后可能丢失。</span>
+            <button type="button" id="scopixGuestBannerLogin" class="font-semibold underline underline-offset-2" onclick="openScopixCloudPanel()">登录并同步学习资料</button>
+        </div>
+    </div>
     <!-- 主体内容区 -->
     <main class="max-w-6xl mx-auto px-6 py-10 flex-grow w-full">
         <div id="app-view">
@@ -433,7 +439,9 @@
             <button id="scopixDrawerClose" type="button" onclick="closeScopixAnnotationSidebar()"
                     aria-label="关闭阅读批注" class="border border-sand rounded-lg px-3 py-2">✕</button>
         </div>
-        <p class="text-xs text-sage py-3">仅显示当前文章的标记。点击“定位原文”可跳转到对应位置。数据仅保存在本浏览器。</p>
+        <p id="scopixAnnotationStorageNotice" class="text-xs text-sage py-3" role="status">游客模式 · 本地临时保存。批注仅保留在此浏览器，清理缓存后可能丢失；登录后可选择导入并手动同步云端。</p>
+        <button type="button" id="scopixAnnotationGuestLogin" class="text-sm border border-sand rounded-lg px-3 py-2 text-moss mb-3" onclick="closeScopixAnnotationSidebar();openScopixCloudPanel()">登录并同步学习资料</button>
+        <p class="text-xs text-sage mb-3">仅显示当前文章的标记；点击“定位原文”可跳转到对应位置。</p>
         <div id="scopixAnnotationList" class="flex-1 space-y-3 pb-5" aria-live="polite"></div>
     </aside>
 
@@ -443,9 +451,12 @@
         <div class="flex justify-between items-center gap-3 border-b border-sand pb-3 mb-3">
             <div>
                 <h2 id="scopixStudyTitle" class="text-xl text-ink font-bold">我的学习资料</h2>
-                <p class="text-xs text-sage mt-1">生词与阅读批注统一管理 · 仅保存在本浏览器</p>
+                <p id="scopixStudyStorageNotice" class="text-xs text-sage mt-1" role="status">游客模式 · 本地临时保存。清理浏览器数据后可能丢失；登录后可选择导入并同步云端。</p>
             </div>
             <button id="scopixStudyClose" type="button" onclick="closeScopixStudyPanel()" aria-label="关闭学习资料" class="border border-sand rounded-lg px-3 py-2">✕</button>
+        </div>
+        <div id="scopixStudyGuestActions" class="flex flex-wrap gap-2 mb-3">
+            <button type="button" class="text-sm border border-sand rounded-lg px-3 py-2 text-moss" onclick="closeScopixStudyPanel();openScopixCloudPanel()">登录并同步学习资料</button>
         </div>
         <div class="flex gap-2 mb-3" role="tablist" aria-label="学习资料类别">
             <button type="button" role="tab" id="scopixTabWords" aria-controls="scopixStudyList" aria-selected="true" class="scopix-study-tab active" onclick="setScopixStudyTab('words')">生词本（<span id="scopixStudyWordCount">0</span>）</button>
@@ -508,11 +519,12 @@
         <div class="flex justify-between items-center gap-3 pb-3 border-b border-sand">
             <div>
                 <h2 id="scopixCloudTitle" class="text-xl font-bold text-ink">☁ CloudBase 邮箱验证码登录</h2>
-                <p class="text-xs text-sage mt-1">V2.0 测试：先验证邮箱账号；云端生词与批注同步尚未接入。</p>
+                <p class="text-xs text-sage mt-1">V2.1 测试：游客记录临时保存在浏览器；登录后可选择导入，并手动同步到云端。</p>
             </div>
             <button id="scopixCloudClose" type="button" onclick="closeScopixCloudPanel()" class="px-3 py-2 border border-sand rounded-lg" aria-label="关闭账号面板">✕</button>
         </div>
         <div class="bg-white border border-sand rounded-xl p-4 space-y-3 mt-4">
+            <p id="scopixCloudStorageNotice" class="text-xs text-sage leading-relaxed" role="status">游客模式 · 本地临时保存：清理浏览器数据后可能丢失，登录后可选择导入。</p>
             <p class="text-sm"><strong>当前账号：</strong><span id="scopixCloudAccount">检查中…</span></p>
             <form id="scopixCloudLogin" onsubmit="event.preventDefault();cloudSignIn()" class="space-y-3">
                 <label for="scopixCloudEmail" class="block text-sm font-semibold text-ink">邮箱地址</label>
@@ -538,7 +550,7 @@
                     <button type="button" onclick="scopixSyncInspect()" class="px-3 py-2 text-sm border border-sand rounded-lg text-moss">检查云端版本（只读）</button>
                     <button type="button" onclick="scopixSyncPull()" class="px-3 py-2 text-sm border border-sand rounded-lg text-moss">下载云端到本账号</button>
                     <button type="button" onclick="scopixSyncPush()" class="px-3 py-2 text-sm border border-sand rounded-lg text-moss">上传本账号到云端</button>
-                    <button type="button" onclick="scopixSyncImportGuest()" class="px-3 py-2 text-sm border border-sand rounded-lg text-moss">导入以前的访客本地记录</button>
+                    <button type="button" id="scopixImportGuestButton" onclick="scopixSyncImportGuest()" class="px-3 py-2 text-sm border border-sand rounded-lg text-moss">导入访客本地记录</button>
                 </div>
                 <p id="scopixCloudSyncStatus" class="text-xs text-sage leading-relaxed" role="status" aria-live="polite"></p>
             </section>
