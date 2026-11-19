@@ -290,9 +290,22 @@
             saveKey(remoteBackupKey,{reason:'remote-before-merge',saved_at:new Date().toISOString(),revision:row.revision,snapshot:normalized(row)});
             applyLocal(merged.snapshot);
             saveKey(userKey(userId),merged.snapshot);
+            // Verify the actual browser storage after the write, rather than
+            // only trusting that the JavaScript assignment succeeded.
+            const verify=normalized(takeLocal());
+            const persisted=normalized(parse(userKey(userId),empty()));
+            if(canonical(verify)!==canonical(merged.snapshot) ||
+               canonical(persisted)!==canonical(merged.snapshot))
+                throw new Error('本地写入后回读校验不一致，已停止后续操作。');
             storeBaseline(userId,row);
-            note('安全合并完成（仅本地）：生词 '+merged.snapshot.vocabulary.length+' 条、批注 '+merged.snapshot.annotations.length+' 条。已保存双方备份。云端仍为版本 '+row.revision+'；检查记录无误后可主动上传。');
-        }catch(e){note('合并未完成：'+(e.message||e)+'。请勿上传，先检查本地及备份。',true);}
+            const ok='安全合并完成（仅本地）：生词 '+verify.vocabulary.length+' 条、批注 '+verify.annotations.length+' 条。已保存双方备份。云端仍为版本 '+row.revision+'。';
+            note(ok+' 检查记录无误后才可以手动上传。');
+            alert('✅ '+ok+'\\n请打开「我的学习资料」核对记录；此操作尚未上传到云端。'.replace('\\n','\n'));
+        }catch(e){
+            const message='安全合并未确认成功：'+(e.message||String(e))+'。请勿上传；本地原始备份仍保留。';
+            note(message,true);
+            alert('⚠️ '+message);
+        }
         finally{busy=false;}
     }
     async function push() {
