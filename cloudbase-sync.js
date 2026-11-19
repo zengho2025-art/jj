@@ -140,7 +140,27 @@
         }
     }
     function show() {
-        if ($('scopixCloudSyncActions')) $('scopixCloudSyncActions').hidden=!userId;
+        const signedIn=Boolean(userId);
+        if ($('scopixCloudSyncActions')) $('scopixCloudSyncActions').hidden=!signedIn;
+        const messages={
+            guest:'游客模式 · 本地临时保存：批注和生词仅保存在当前浏览器，清理缓存或使用其他设备后可能无法恢复。登录后可选择导入并手动同步云端。',
+            account:'已登录 · 当前账号的浏览器本地资料。只有主动点击「上传本账号到云端」后才会同步；不能保证自动保存到云端。'
+        };
+        const notice=signedIn?messages.account:messages.guest;
+        for (const id of ['scopixAnnotationStorageNotice','scopixStudyStorageNotice','scopixCloudStorageNotice','scopixGuestBannerText']) {
+            if ($(id)) $(id).textContent=notice;
+        }
+        for (const id of ['scopixAnnotationGuestLogin','scopixStudyGuestActions','scopixGuestBannerLogin']) {
+            if ($(id)) $(id).hidden=signedIn;
+        }
+        if ($('scopixGuestBanner')) $('scopixGuestBanner').hidden=signedIn;
+        const guest=normalized(parse(GUEST,empty()));
+        const button=$('scopixImportGuestButton');
+        if(button) {
+            button.disabled=!signedIn||!hasContent(guest);
+            button.title=hasContent(guest)?'将游客学习资料合并到当前账号本地工作区（不会自动上传）':'访客没有待导入的学习资料';
+            button.textContent='导入访客本地记录（生词 '+guest.vocabulary.length+' · 批注 '+guest.annotations.length+'）';
+        }
     }
     function localChanged() {
         if (!userId) {
@@ -254,16 +274,38 @@
     function importGuest() {
         if(!userId||busy)return;
         const guest=normalized(parse(GUEST,empty()));
-        if(!hasContent(guest)){note('访客工作区没有可导入的学习资料。');return;}
-        if(hasContent(normalized(takeLocal()))){
-            note('当前账号已有学习记录。为防止覆盖，暂不支持直接导入访客资料；请先分别导出备份。',true);return;
+        if(!hasContent(guest)){note('访客工作区没有可导入的学习资料。');show();return;}
+        const local=normalized(takeLocal());
+        // Keep the account version on duplicate IDs, so a guest copy can
+        // never silently replace an existing account annotation/review state.
+        function mergeById(accountItems,guestItems) {
+            const known=new Set(accountItems.map(x=>x?.id).filter(Boolean));
+            const additions=[];
+            for(const item of guestItems) {
+                if(!item || typeof item.id!=='string'||known.has(item.id))continue;
+                known.add(item.id);
+                additions.push(item);
+            }
+            return accountItems.concat(additions);
         }
-        if(!confirm('将旧浏览器访客学习记录复制到当前账号的本地工作区？不会自动上传到云端，也不会删除访客记录。'))return;
+        const merged={
+            vocabulary:mergeById(local.vocabulary,guest.vocabulary),
+            annotations:mergeById(local.annotations,guest.annotations),
+            reading_progress:{...guest.reading_progress,...local.reading_progress}
+        };
+        const addedWords=merged.vocabulary.length-local.vocabulary.length;
+        const addedMarks=merged.annotations.length-local.annotations.length;
+        if(addedWords===0&&addedMarks===0&&
+           canonical(merged.reading_progress)===canonical(local.reading_progress)){
+            note('访客记录已存在于当前账号工作区；没有需要导入的新数据。');return;
+        }
+        if(!confirm('准备将访客资料合并到当前账号本地工作区：新增生词 '+addedWords+' 条、批注 '+addedMarks+' 条。相同 ID 保留账号现有记录。将先备份账号本地数据；不会删除游客资料，也不会自动上传云端。是否继续？'))return;
         try {
-            backupCurrent('before-import-guest');
-            applyLocal(guest);
-            saveKey(userKey(userId),guest);
-            note('已复制访客学习记录到当前账号本地工作区；请检查后手动上传。');
+            const key=backupCurrent('before-import-guest');
+            applyLocal(merged);
+            saveKey(userKey(userId),merged);
+            show();
+            note('访客资料已合并：新增生词 '+addedWords+' 条、批注 '+addedMarks+' 条。账号本地备份：'+key+'。仍需主动上传才会同步云端。');
         }catch(e){note('导入访客资料失败：'+(e.message||e),true);}
     }
     Object.assign(window,{
